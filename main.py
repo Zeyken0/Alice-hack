@@ -38,7 +38,7 @@ def start(event, context):
     elif command:
         try:
             if intent["YANDEX.HELP"]:
-                req_save = event["request"]["state"]["session"]["text"]
+                req_save = event["state"]["session"]["text"]
                 if req_save == "start":
                     text = 'Выберите один из следующих вариантов:\n'
                     tts = 'Выберите один из следующих вариантов:\n'
