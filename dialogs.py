@@ -33,7 +33,7 @@ def message_sent(text, tts, version, save, end_session=False, value=1):
         },
         "session_state": {
             "value": value,
-            "text": save['text'],
+            "text": save,
         },
         "version": version
     }
