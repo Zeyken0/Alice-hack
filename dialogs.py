@@ -1,8 +1,4 @@
 def d_start_0(text, tts, version):
-    save = {
-        "value": 1,
-        "text": "start"
-    }
     response = {
         "response": {
             "text": text,
@@ -20,7 +16,8 @@ def d_start_0(text, tts, version):
             ]
         },
         "session_state": {
-            save
+            "value": 1,
+            "text": "start",
         },
         "version": version
     }
@@ -35,7 +32,8 @@ def message_sent(text, tts, version, save, end_session=False):
             "end_session": end_session,
         },
         "session_state": {
-            save
+            "value": save['value'],
+            "text": save['text'],
         },
         "version": version
     }
