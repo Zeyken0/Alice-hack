@@ -27,18 +27,6 @@ def start(event, context):
             tts = "Рады тебя снова видеть в Саге Битв и Приключений. sil <[200]> Ты готов продолжить?"
             save = COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"]
             return message_sent(text=text,tts=tts,version=version,save=save)
-    elif intent["YANDEX.HELP"]:
-        req_save = event["request"]["state"]["session"]["text"]
-        if req_save == "start":
-            text = 'Выберите один из следующих вариантов:\n'
-            tts = 'Выберите один из следующих вариантов:\n'
-            save = {
-                "value": 1,
-                "text": "start"
-            }
-            return message_sent(text, tts, version, save)
-        elif req_save == "start_1":
-            pass
     elif command == "выход":
         text = 'Удачи!!'
         tts = 'Удачи!!'
@@ -48,11 +36,25 @@ def start(event, context):
         }
         message_sent(text, tts, version, save, end_session=True)
     elif command:
-        req_save = event["request"]["state"]["session"]["text"]
-        if req_save == "start":
-            start_1(event, req_save, command, intent)
-        elif req_save == "start_1":
-            pass
+        try:
+            if intent["YANDEX.HELP"]:
+                req_save = event["request"]["state"]["session"]["text"]
+                if req_save == "start":
+                    text = 'Выберите один из следующих вариантов:\n'
+                    tts = 'Выберите один из следующих вариантов:\n'
+                    save = {
+                        "value": 1,
+                        "text": "start"
+                    }
+                    return message_sent(text, tts, version, save)
+                elif req_save == "start_1":
+                    pass
+        except KeyError:
+            req_save = event["request"]["state"]["session"]["text"]
+            if req_save == "start":
+                start_1(event, req_save, command, intent)
+            elif req_save == "start_1":
+                pass
 
 
 def start_1(event, req_save, command, intent):
