@@ -1,11 +1,11 @@
 from config import *
 from dialogs import d_start_0, message_sent
-version = "1.0"
+version = "1.01"
 
 
 def start(event, context):
     command = event['request']['command']
-    intent = event["request"]['nlu']["intents"]
+    intent = event["request"]["intents"]
     if command == "":
         if COLLECTION.count_documents({"id": event["session"]["application"]["application_id"]}) == 0:
             user = {
@@ -38,23 +38,29 @@ def start(event, context):
     elif command:
         try:
             if intent["YANDEX.HELP"]:
-                req_save = event["state"]["session"]["text"]
+                try:
+                    req_save = event["request"]["state"]["session"]["text"]
+                    if req_save == "start":
+                        text = 'Выберите один из следующих вариантов:\n'
+                        tts = 'Выберите один из следующих вариантов:\n'
+                        save = {
+                            "value": 1,
+                            "text": "start"
+                        }
+                        return message_sent(text, tts, version, save)
+                    elif req_save == "start_1":
+                        pass
+                except KeyError:
+                    req_save = " "
+        except KeyError:
+            try:
+                req_save = event["request"]["state"]["session"]["text"]
                 if req_save == "start":
-                    text = 'Выберите один из следующих вариантов:\n'
-                    tts = 'Выберите один из следующих вариантов:\n'
-                    save = {
-                        "value": 1,
-                        "text": "start"
-                    }
-                    return message_sent(text, tts, version, save)
+                    start_1(event, req_save, command, intent)
                 elif req_save == "start_1":
                     pass
-        except KeyError:
-            req_save = event["state"]["session"]["text"]
-            if req_save == "start":
-                start_1(event, req_save, command, intent)
-            elif req_save == "start_1":
-                pass
+            except KeyError:
+                req_save = " "
 
 
 def start_1(event, req_save, command, intent):
