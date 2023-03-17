@@ -17,16 +17,16 @@ def start(event, context):
             COLLECTION.insert_one(user)
             text = "Добро пожаловать в Сагу Битв и Приключений. Ты готов начать?"
             tts = "Добро пожаловать в Сагу Битв и Приключений. sil <[200]> Ты готов начать?"
-            return d_start_0(text, tts, version)
+            d_start_0(text, tts, version)
         elif COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"] == "":
             text = "Добро пожаловать в Сагу Битв и Приключений. Ты готов начать?"
             tts = "Добро пожаловать в Сагу Битв и Приключений. sil <[200]> Ты готов начать?"
-            return d_start_0(text, tts, version)
+            d_start_0(text, tts, version)
         else:
             text = "Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"
             tts = "Рады тебя снова видеть в Саге Битв и Приключений. sil <[200]> Ты готов продолжить?"
             save = COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"]
-            return message_sent(text=text,tts=tts,version=version,save=save)
+            message_sent(text=text,tts=tts,version=version,save=save)
     elif command == "выход":
         text = 'Удачи!!'
         tts = 'Удачи!!'
@@ -47,7 +47,7 @@ def start(event, context):
                             "value": 1,
                             "text": "start"
                         }
-                        return message_sent(text, tts, version, save)
+                        message_sent(text, tts, version, save)
                     elif req_save == "start_1":
                         pass
                 except KeyError:
@@ -61,7 +61,6 @@ def start(event, context):
                     pass
             except KeyError:
                 req_save = " "
-
 
 def start_1(event, req_save, command, intent):
     if intent["YANDEX.CONFIRM"]:
