@@ -1,6 +1,6 @@
 from config import *
 from dialogs import d_start_0, message_sent
-version = "1.1"
+version = "1.0"
 
 
 def start(event, context):
