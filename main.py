@@ -50,7 +50,7 @@ def start(event, context):
                 elif req_save == "start_1":
                     pass
         except KeyError:
-            req_save = event["request"]["state"]["session"]["text"]
+            req_save = event["state"]["session"]["text"]
             if req_save == "start":
                 start_1(event, req_save, command, intent)
             elif req_save == "start_1":
