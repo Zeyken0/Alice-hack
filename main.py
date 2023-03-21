@@ -1,6 +1,7 @@
 from config import *
 from dialogs import message_sent, d_start_0
-from help_dialogs import message_help
+from help_dialogs import message_help, confirm_reject_handler
+
 version = "1.0"
 
 
@@ -31,7 +32,7 @@ def start(event, context):
             text = "Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"
             tts = "Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"
             save = COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"]
-            return message_sent(text=text,tts=tts,version=version,save=save)
+            return message_sent(text=text, tts=tts, version=version, save=save)
     elif command == "выход":
         text = 'Удачи!!'
         tts = 'Удачи!!'
@@ -45,7 +46,6 @@ def start(event, context):
 
             elif req_save == "start":
                 return start_1(req_save, command, intent)
-
             elif req_save == "start_1":
                 return start_2(req_save, command, intent)
 
@@ -129,31 +129,22 @@ def start(event, context):
 
 
 def start_1(req_save, command, intent):
-    COMMANDS = ['начать', 'перед']
+    COMMANDS = ['начать', 'вперед']
     text = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. \nВы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. \n Сегодня вам нужно пойти торговать на рынке.'
     tts = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. Сегодня вам нужно пойти торговать на рынке.'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "start_1"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-            req_save = "start_1"
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'start_1', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def start_2(req_save, command, intent):
     COMMANDS = ['пойти на рынок', 'отправиться на рынок', 'рынок', 'пошли']
     text = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
     tts = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "start_2"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "start_2"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'start_2', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
 
 def start_3(req_save, command, intent):
     COMMANDS = ['пойти с полицией', 'полиция', 'пойти', 'проследовать', 'полицией', 'пройти', 'пошли', 'иду']
@@ -163,34 +154,20 @@ def start_3(req_save, command, intent):
     tts = 'Вы были арестованы и обвинены в ограблении, хотя вы ничего не делали. Вас посадили в тюрьму, и началась ваша борьба за справедливость и свободу. Мотать срок?'
     text_REJECT = 'Вас догоняет один из полицейских и заламывает руки. Вы были арестованы и обвинены в ограблении, хотя вы ничего не делали. Вас посадили в тюрьму, и началась ваша борьба за справедливость и свободу. Вы потеряли 1 единицу здоровья Мотать срок?'
     tts_REJECT = "Вас догоняет один из полицейских и заламывает руки. Вы были арестованы и обвинены в ограблении, хотя вы ничего не делали. Вас посадили в тюрьму, и началась ваша борьба за справедливость и свободу. Вы потеряли 1 единицу здоровья Мотать срок?"
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "start_3"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "start_3"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.REJECT" in intent or command in COMMANDS_REJECT:
-        req_save = "start_3_1"
-        return message_sent(text=text_REJECT, tts=tts_REJECT, save=req_save, version=version)
-    elif "YANDEX.REJECT" not in intent and command in COMMANDS_REJECT:
-        req_save = "start_3_1"
-        return message_sent(text=text_REJECT, tts=tts_REJECT, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'start_3', 'reject': 'start_3_1'}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save, reject_enable=True, reject_commands=COMMANDS_REJECT,
+                                  text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
 def chap(req_save, command, intent):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6/10 Сила: 2 Мана: 0 Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
     tts = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6 из 10 sil <[200]> Сила: 2 sil <[200]> Мана: 0 sil <[200]> Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "chap"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "chap"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'chap', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
 
 def chap_1(req_save, command, intent):
     COMMANDS = ['спорт']
@@ -202,28 +179,25 @@ def chap_1(req_save, command, intent):
     text_1 = 'Вы были вынуждены приспосабливаться к жизни за решеткой, но вы были слишком измучены, чтобы сосредоточиться на чем-то другом, кроме как на сне. Здоровье: 10/10 Сила: 2 Мана: 0 Продолжить мотать срок?'
     tts_1 = 'Вы были вынуждены приспосабливаться к жизни за решеткой, но вы были слишком измучены, чтобы сосредоточиться на чем-то другом, кроме как на сне. Здоровье: 10/10 Сила: 2 Мана: 0 Продолжить мотать срок?'
     if command in COMMANDS:
-        #COLLECTION.update_one()
+        # COLLECTION.update_one()
         req_save = "chap_1"
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_1:
-        #COLLECTION.update_one()
+        # COLLECTION.update_one()
         req_save = "chap_1_1"
         return message_sent(text=text_1, tts=tts_1, save=req_save, version=version)
     else:
         return message_help(req_save, version)
 
+
 def chap_2(req_save, command, intent):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
     tts = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "chap_2"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "chap_2"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'chap_2', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
 
 def chap_3(req_save, command, intent):
     COMMANDS = ['']
@@ -233,20 +207,11 @@ def chap_3(req_save, command, intent):
     tts = 'Вы начинаете работу и слышите, как открывается дверь мастерской. Там оказывается какой-то заключенный, который обращается к вам: "Эй, ты, мелкий фермер! Ты здесь, чтобы работать и зарабатывать, или быть нашим рабом? Посмотри на этот нож. У меня есть свои способы получить, что я хочу, и ты можешь лишь повиноваться мне. Так что, будешь слушаться или тебе придется пожалеть о своем решении?" Соврать или отказаться?'
     text_REJECT = 'Вас толкает начальник и грозит посадить в карцер, вы отправляетесь на работу Вы начинаете работу и слышите, как открывается дверь мастерской. Там оказывается какой-то заключенный, который обращается к вам: "Эй, ты, мелкий фермер! Ты здесь, чтобы работать и зарабатывать, или быть нашим рабом? Посмотри на этот нож. У меня есть свои способы получить, что я хочу, и ты можешь лишь повиноваться мне. Так что, будешь слушаться или тебе придется пожалеть о своем решении?" Соврать или отказаться?'
     tts_REJECT = 'Вас толкает начальник и грозит посадить в карцер, вы отправляетесь на работу Вы начинаете работу и слышите, как открывается дверь мастерской. Там оказывается какой-то заключенный, который обращается к вам: "Эй, ты, мелкий фермер! Ты здесь, чтобы работать и зарабатывать, или быть нашим рабом? Посмотри на этот нож. У меня есть свои способы получить, что я хочу, и ты можешь лишь повиноваться мне. Так что, будешь слушаться или тебе придется пожалеть о своем решении?" Соврать или отказаться?'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "chap_3"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "chap_3"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.REJECT" in intent or command in COMMANDS_REJECT:
-        req_save = "chap_3"
-        return message_sent(text=text_REJECT, tts=tts_REJECT, save=req_save, version=version)
-    elif "YANDEX.REJECT" not in intent and command in COMMANDS_REJECT:
-        req_save = "chap_3"
-        return message_sent(text=text_REJECT, tts=tts_REJECT, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'chap_3', 'reject': 'chap_3'}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save, reject_enable=True, reject_commands=COMMANDS_REJECT,
+                                  text_reject=text_REJECT, tts_reject=tts_REJECT)
+
 
 def chap_4(req_save, command, intent):
     COMMANDS_TRUE = ['отказаться']
@@ -264,18 +229,14 @@ def chap_4(req_save, command, intent):
     else:
         return message_help(req_save, version)
 
+
 def chap_4_1_1(req_save, command, intent):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать"'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать"'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "chap_4_1_1"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "chap_4_1_1"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'chap_4_1_1', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_4_1_x(req_save, command, intent):
@@ -293,31 +254,33 @@ def chap_4_1_x(req_save, command, intent):
         tts = 'Вы попытаетесь закричать, чтобы привлечь внимание охранников, но один из заключенных быстро закрывает вам рот. Вы начинаете чувствовать себя задыхающимся и беспомощным, пытаясь освободиться от его хватки. Другой заключенный в это время начинает обыскивать ваши карманы и забирает все ценности. Вы теряете сознание. Минус 3 единицы здоровья. Очнуться?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_HIT:
-        if 4 == 4:
+        if 4 == 4:  # Поменять на показатель здоровья / силы
             req_save = "chap_4_1_3"
             text = 'Ваши занятия спортом не прошли даром: вы бьете одного заключенного, тот сразу же теряет сознание. Другой преступник, увидев это, убегает. Вы думаете, что нужно сделать с заключенным, находящимся в отключке. Теперь что-то нужно сделать с заключенным: "Оставить в камере", "Позвать охрану", "Убрать в соседнюю камеру"'
             tts = 'Ваши занятия спортом не прошли даром: вы бьете одного заключенного, тот сразу же теряет сознание. Другой преступник, увидев это, убегает. Вы думаете, что нужно сделать с заключенным, находящимся в отключке. Теперь что-то нужно сделать с заключенным: "Оставить в камере", "Позвать охрану", "Убрать в соседнюю камеру"'
             return message_sent(text=text, tts=tts, save=req_save, version=version)
         else:
             req_save = "chap_4_1_7"
-            text = 'Вы чувствуете, что вам нужно защитить себя и быстро делаете решительный шаг, пытаясь ударить преступника, которому отказали в помощи. Однако он быстро увернулся, и вы промахнулись, потеряв при этом равновесие и ударившись головой. Вы теряете сознание. Минус 2 единицы здоровья. Очнуться?'
-            tts = 'Вы чувствуете, что вам нужно защитить себя и быстро делаете решительный шаг, пытаясь ударить преступника, которому отказали в помощи. Однако он быстро увернулся, и вы промахнулись, потеряв при этом равновесие и ударившись головой. Вы теряете сознание. Минус 2 единицы здоровья. Очнуться?'
+            text = '''
+            Вы чувствуете, что вам нужно защитить себя и быстро делаете решительный шаг, пытаясь ударить преступника, 
+            которому отказали в помощи. Однако он быстро увернулся, и вы промахнулись, 
+            потеряв при этом равновесие и ударившись головой. Вы теряете сознание. 
+            Минус 2 единицы здоровья. Очнуться?
+            '''
+            tts = "Вы чувствуете, что вам нужно защитить себя и быстро делаете решительный шаг, пытаясь ударить преступника, которому отказали в помощи. Однако он быстро увернулся, и вы промахнулись, потеряв при этом равновесие и ударившись головой. Вы теряете сознание. Минус 2 единицы здоровья. Очнуться?"
             return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
         return message_help(req_save, version)
+
 
 def chap_4_2_1(req_save, command, intent):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
-    if "YANDEX.CONFIRM" in intent or command in COMMANDS:
-        req_save = "chap_5_1"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "YANDEX.CONFIRM" not in intent and command in COMMANDS:
-        req_save = "chap_5_1"
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    new_save = {'accept': 'chap_5_1', 'reject': 'chap_5_1'}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
 
 def chap_4_1_3_x(req_save, command, version):
     COMMANDS_1 = ['охрана']
@@ -341,6 +304,7 @@ def chap_4_1_3_x(req_save, command, version):
     else:
         return message_help(req_save, version)
 
+
 def chap_5(req_save, command, intent):
     COMMANDS = ['очнуться']
     if command in COMMANDS:
@@ -351,6 +315,7 @@ def chap_5(req_save, command, intent):
     else:
         return message_help("chap_4_1_0", version)
 
+
 def chap_5_1(req_save, command, intent):
     COMMANDS = ['спать']
     if command in COMMANDS:
@@ -360,8 +325,3 @@ def chap_5_1(req_save, command, intent):
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
         return message_help(req_save, version)
-
-
-
-
-
