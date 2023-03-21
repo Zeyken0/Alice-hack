@@ -40,92 +40,47 @@ def start(event, context):
         return message_sent(text, tts, version, save, end_session=True)
     else:
         req_save = event["state"]["session"]["save"]
-        if "YANDEX.HELP" in intent:
-            if intent["YANDEX.HELP"]:
-                return message_help(req_save, version)
+        if req_save == "start":
+            return start_1(req_save, command, intent)
 
-            elif req_save == "start":
-                return start_1(req_save, command, intent)
-            elif req_save == "start_1":
-                return start_2(req_save, command, intent)
+        elif req_save == "start_1":
+            return start_2(req_save, command, intent)
 
-            elif req_save == "start_2":
-                return start_3(req_save, command, intent)
+        elif req_save == "start_2":
+            return start_3(req_save, command, intent)
 
-            elif req_save == "start_3" or req_save == "start_3_1":
-                return chap(req_save, command, intent)
+        elif req_save == "start_3" or req_save == "start_3_1":
+            return chap(req_save, command, intent)
 
-            elif req_save == "chap":
-                return chap_1(req_save, command, intent)
+        elif req_save == "chap":
+            return chap_1(req_save, command, intent)
 
-            elif req_save == "chap_1" or req_save == "chap_1_1":
-                return chap_2(req_save, command, intent)
+        elif req_save == "chap_1" or req_save == "chap_1_1":
+            return chap_2(req_save, command, intent)
 
-            elif req_save == "chap_2":
-                return chap_3(req_save, command, intent)
+        elif req_save == "chap_2":
+            return chap_3(req_save, command, intent)
 
-            elif req_save == "chap_3":
-                return chap_4(req_save, command, intent)
+        elif req_save == "chap_3":
+            return chap_4(req_save, command, intent)
 
-            elif req_save == "chap_4_1":
-                return chap_4_1_1(req_save, command, intent)
+        elif req_save == "chap_4_1":
+            return chap_4_1_1(req_save, command, intent)
 
-            elif req_save == "chap_4_1_1":
-                return chap_4_1_x(req_save, command, intent)
+        elif req_save == "chap_4_1_1":
+            return chap_4_1_x(req_save, command, intent)
 
-            elif req_save == "chap_4_1_2" or req_save == "chap_4_1_4" or req_save == "chap_4_1_7":
-                return chap_5(req_save, command, intent)
+        elif req_save == "chap_4_1_2" or req_save == "chap_4_1_4" or req_save == "chap_4_1_7":
+            return chap_5(req_save, command, intent)
 
-            elif req_save == "chap_4_1_3":
-                return chap_4_1_3_x(req_save, command, intent)
+        elif req_save == "chap_4_1_3":
+            return chap_4_1_3_x(req_save, command, intent)
 
-            elif req_save == "chap_4_2":
-                return chap_4_2_1(req_save, command, intent)
+        elif req_save == "chap_4_2":
+            return chap_4_2_1(req_save, command, intent)
 
-            elif req_save == "chap_5" or req_save == "chap_4_2_1":
-                return chap_5_1(req_save, command, intent)
-        else:
-            if req_save == "start":
-                return start_1(req_save, command, intent)
-
-            elif req_save == "start_1":
-                return start_2(req_save, command, intent)
-
-            elif req_save == "start_2":
-                return start_3(req_save, command, intent)
-
-            elif req_save == "start_3" or req_save == "start_3_1":
-                return chap(req_save, command, intent)
-
-            elif req_save == "chap":
-                return chap_1(req_save, command, intent)
-
-            elif req_save == "chap_1" or req_save == "chap_1_1":
-                return chap_2(req_save, command, intent)
-
-            elif req_save == "chap_2":
-                return chap_3(req_save, command, intent)
-
-            elif req_save == "chap_3":
-                return chap_4(req_save, command, intent)
-
-            elif req_save == "chap_4_1":
-                return chap_4_1_1(req_save, command, intent)
-
-            elif req_save == "chap_4_1_1":
-                return chap_4_1_x(req_save, command, intent)
-
-            elif req_save == "chap_4_1_2" or req_save == "chap_4_1_4" or req_save == "chap_4_1_7":
-                return chap_5(req_save, command, intent)
-
-            elif req_save == "chap_4_1_3":
-                return chap_4_1_3_x(req_save, command, intent)
-
-            elif req_save == "chap_4_2":
-                return chap_4_2_1(req_save, command, intent)
-
-            elif req_save == "chap_5" or req_save == "chap_4_2_1":
-                return chap_5_1(req_save, command, intent)
+        elif req_save == "chap_5" or req_save == "chap_4_2_1":
+            return chap_5_1(req_save, command, intent)
 
 
 def start_1(req_save, command, intent):
@@ -282,7 +237,7 @@ def chap_4_2_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_4_1_3_x(req_save, command, version):
+def chap_4_1_3_x(req_save, command, intent):
     COMMANDS_1 = ['охрана']
     COMMANDS_2 = ['оставить']
     COMMANDS_3 = ['убрать']
