@@ -17,6 +17,11 @@ def d_start_0(text, tts, version):
         },
         "session_state": {
             "save": "start",
+            "name": "default",
+            "health": 6,
+            "power": 2,
+            "mana": 0,
+            "score": 0
         },
         "version": version
     }
@@ -37,7 +42,12 @@ def message_sent(text, tts, version, save, end_session=False):
             ],
         },
         "session_state": {
-            "save": save,
+            "save": save["save"],
+            "name": save["name"],
+            "health": save["health"],
+            "power": save["power"],
+            "mana": save["mana"],
+            "score": save["score"]
         },
         "version": version
     }

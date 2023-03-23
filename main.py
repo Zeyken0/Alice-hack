@@ -8,15 +8,16 @@ version = "1.0"
 def start(event, context):
     command = event['request']['command']
     intent = event["request"]['nlu']["intents"]
+    user_id = event["session"]["user"]["user_id"]
     if command == "":
-        if COLLECTION.count_documents({"id": event["session"]["application"]["application_id"]}) == 0:
+        if COLLECTION.count_documents({"id": user_id}) == 0:
             user = {
-                "id": event["session"]["application"]["application_id"],
-                "name": "",
+                "id": user_id,
+                "name": "default",
                 "save": "",
-                "health": "",
-                "power": "",
-                "mane": "",
+                "health": 6,
+                "power": 2,
+                "mana": 0,
                 "inventory": [""],
                 "other": [""]
             }
@@ -24,14 +25,14 @@ def start(event, context):
             text = 'Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'
             tts = 'Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'
             return d_start_0(text, tts, version)
-        elif COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"] == "":
+        elif COLLECTION.find_one({"id": user_id})["save"] == "":
             text = "Добро пожаловать в Сагу Битв и Приключений. Ты готов начать?"
             tts = "Добро пожаловать в Сагу Битв и Приключений. Ты готов начать?"
             return d_start_0(text, tts, version)
         else:
             text = "Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"
             tts = "Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"
-            save = COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})["save"]
+            save = COLLECTION.find_one({"id": user_id})["save"]
             return message_sent(text=text, tts=tts, version=version, save=save)
     elif command == "выход":
         text = 'Удачи!!'
@@ -39,61 +40,70 @@ def start(event, context):
         save = ""
         return message_sent(text, tts, version, save, end_session=True)
     else:
-        req_save = event["state"]["session"]["save"]
-        user_id = COLLECTION.find_one({"id": event["session"]["application"]["application_id"]})
-        if req_save == "start":
-            return start_1(req_save, command, intent, user_id)
+        req_save = {
+            "save": event["state"]["session"]["save"],
+            "name": event["state"]["session"]["name"],
+            "health": event["state"]["session"]["health"],
+            "power": event["state"]["session"]["power"],
+            "mana": event["state"]["session"]["mana"],
+            "score": event["state"]["session"]["score"]
+        }
+        if req_save["save"] == "start":
+            return start_1(req_save, command, intent)
 
-        elif req_save == "start_1":
-            return start_2(req_save, command, intent, user_id)
+        elif req_save["save"] == "start_1":
+            return start_2(req_save, command, intent)
 
-        elif req_save == "start_2":
-            return start_3(req_save, command, intent, user_id)
+        elif req_save["save"] == "start_2":
+            return start_3(req_save, command, intent)
 
-        elif req_save == "start_3" or req_save == "start_3_1":
-            return chap(req_save, command, intent, user_id)
+        elif req_save["save"] == "start_3" or req_save["save"] == "start_3_1":
+            return chap(req_save, command, intent)
 
-        elif req_save == "chap":
-            return chap_1(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap":
+            return chap_1(req_save, command, intent)
 
-        elif req_save == "chap_1" or req_save == "chap_1_1":
-            return chap_2(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_1" or req_save["save"] == "chap_1_1":
+            return chap_2(req_save, command, intent)
 
-        elif req_save == "chap_2":
-            return chap_3(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_2":
+            return chap_3(req_save, command, intent)
 
-        elif req_save == "chap_3":
-            return chap_4(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_3":
+            return chap_4(req_save, command, intent)
 
-        elif req_save == "chap_4_1":
-            return chap_4_1_1(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_4_1":
+            return chap_4_1_1(req_save, command, intent)
 
-        elif req_save == "chap_4_1_1":
-            return chap_4_1_x(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_4_1_1":
+            return chap_4_1_x(req_save, command, intent)
 
-        elif req_save == "chap_4_1_2" or req_save == "chap_4_1_4" or req_save == "chap_4_1_7":
-            return chap_5(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_4_1_2" or req_save["save"] == "chap_4_1_4" or req_save["save"] == "chap_4_1_7":
+            return chap_5(req_save, command, intent)
 
-        elif req_save == "chap_4_1_3":
-            return chap_4_1_3_x(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_4_1_3":
+            return chap_4_1_3_x(req_save, command, intent)
 
-        elif req_save == "chap_4_2":
-            return chap_4_2_1(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_4_2":
+            return chap_4_2_1(req_save, command, intent)
 
-        elif req_save == "chap_5" or req_save == "chap_4_2_1":
-            return chap_5_1(req_save, command, intent, user_id)
+        elif req_save["save"] == "chap_5" or req_save == "chap_4_2_1":
+            return chap_5_1(req_save, command, intent)
+
+        else:
+            return message_sent(text="чо", tts="чо", version=version, save=req_save)
 
 
-def start_1(req_save, command, intent, user_id):
+def start_1(req_save, command, intent):
     COMMANDS = ['начать', 'вперед']
-    text = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. \nВы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. \n Сегодня вам нужно пойти торговать на рынке.'
+    text = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. Сегодня вам нужно пойти торговать на рынке. Пойти на рынок?'
     tts = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. Сегодня вам нужно пойти торговать на рынке.'
     new_save = {'accept': 'start_1', 'reject': ''}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save)
 
 
-def start_2(req_save, command, intent, user_id):
+def start_2(req_save, command, intent):
     COMMANDS = ['пойти на рынок', 'отправиться на рынок', 'рынок', 'пошли']
     text = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
     tts = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
@@ -102,7 +112,7 @@ def start_2(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 
-def start_3(req_save, command, intent, user_id):
+def start_3(req_save, command, intent):
     COMMANDS = ['пойти с полицией', 'полиция', 'пойти', 'проследовать', 'полицией', 'пройти', 'пошли', 'иду']
     COMMANDS_REJECT = ['сбежать', 'убежать', 'бег', 'побег']
 
@@ -116,7 +126,7 @@ def start_3(req_save, command, intent, user_id):
                                   text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
-def chap(req_save, command, intent, user_id):
+def chap(req_save, command, intent):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6/10 Сила: 2 Мана: 0 Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
     tts = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6 из 10 sil <[200]> Сила: 2 sil <[200]> Мана: 0 sil <[200]> Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
@@ -125,7 +135,7 @@ def chap(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 
-def chap_1(req_save, command, intent, user_id):
+def chap_1(req_save, command, intent):
     COMMANDS = ['спорт']
     COMMANDS_1 = ['спать']
 
@@ -135,18 +145,18 @@ def chap_1(req_save, command, intent, user_id):
     text_1 = 'Вы были вынуждены приспосабливаться к жизни за решеткой, но вы были слишком измучены, чтобы сосредоточиться на чем-то другом, кроме как на сне. Здоровье: 10/10 Сила: 2 Мана: 0 Продолжить мотать срок?'
     tts_1 = 'Вы были вынуждены приспосабливаться к жизни за решеткой, но вы были слишком измучены, чтобы сосредоточиться на чем-то другом, кроме как на сне. Здоровье: 10/10 Сила: 2 Мана: 0 Продолжить мотать срок?'
     if command in COMMANDS:
-        # COLLECTION.update_one()
-        req_save = "chap_1"
+        req_save["power"] = 4
+        req_save["save"] = "chap_1"
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_1:
-        # COLLECTION.update_one()
-        req_save = "chap_1_1"
+        req_save["health"] = 10
+        req_save["save"] = "chap_1_1"
         return message_sent(text=text_1, tts=tts_1, save=req_save, version=version)
     else:
         return message_help(req_save, version)
 
 
-def chap_2(req_save, command, intent, user_id):
+def chap_2(req_save, command, intent):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
     tts = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
@@ -155,7 +165,7 @@ def chap_2(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 
-def chap_3(req_save, command, intent, user_id):
+def chap_3(req_save, command, intent):
     COMMANDS = ['']
     COMMANDS_REJECT = ['']
 
@@ -169,16 +179,17 @@ def chap_3(req_save, command, intent, user_id):
                                   text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
-def chap_4(req_save, command, intent, user_id):
+def chap_4(req_save, command, intent):
     COMMANDS_TRUE = ['отказаться']
     COMMANDS_LIE = ['солгать']
     if command in COMMANDS_TRUE:
-        req_save = "chap_4_1"
+        req_save["save"] = "chap_4_1"
         text = 'Преступник: "Ты думаешь, что можешь отказаться от меня? Я сделаю твою жизнь адом, если ты не будешь слушаться меня". Преступник уходит. Вы ошеломлены произошедшим, закончить работать?'
         tts = 'Преступник: "Ты думаешь, что можешь отказаться от меня? Я сделаю твою жизнь адом, если ты не будешь слушаться меня". Преступник уходит. Вы ошеломлены произошедшим, закончить работать?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_LIE:
-        req_save = "chap_4_2"
+        req_save["health"] -= 2
+        req_save["save"] = "chap_4_2"
         text = 'Вы решаете соврать и согласиться с предложением преступника. Преступник резко поднялся со стула и подошел к вам, ухмыляясь. Вы попытались отойти назад, но он настиг вас и ударил рукой. Минус 2 единицы здоровья. Преступник: "Ты думал, что я не пойму, что ты врешь, мелкий? Я тебя здесь научу говорить правду, это первое и последнее предупреждение". Преступник уходит. Вы ошеломлены произошедшим, закончить работать?'
         tts = 'Вы решаете соврать и согласиться с предложением преступника. Преступник резко поднялся со стула и подошел к вам, ухмыляясь. Вы попытались отойти назад, но он настиг вас и ударил рукой. Минус 2 единицы здоровья. Преступник: "Ты думал, что я не пойму, что ты врешь, мелкий? Я тебя здесь научу говорить правду, это первое и последнее предупреждение". Преступник уходит. Вы ошеломлены произошедшим, закончить работать?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
@@ -186,7 +197,7 @@ def chap_4(req_save, command, intent, user_id):
         return message_help(req_save, version)
 
 
-def chap_4_1_1(req_save, command, intent, user_id):
+def chap_4_1_1(req_save, command, intent):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать"'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать"'
@@ -195,29 +206,31 @@ def chap_4_1_1(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 
-def chap_4_1_x(req_save, command, intent, user_id):
+def chap_4_1_x(req_save, command, intent):
     COMMANDS_RUN = ['убежать']
     COMMANDS_HIT = ['ударить']
     COMMANDS_SHOUT = ['закричать']
     if command in COMMANDS_RUN:
-        req_save = "chap_4_1_2"
+        req_save["save"] = "chap_4_1_2"
+        req_save["health"] -= 1
         text = 'Вы резко поворачиваетесь, чтобы убежать, но один из заключенных быстро подбегает к вам и хватает за руку. Вы пытаетесь вырваться, но он удерживает вас и начинает толкать к стене. Вы чувствуете удар в голову, и все исчезает перед глазами. Минус 1 единица здоровья. Очнуться?'
         tts = 'Вы резко поворачиваетесь, чтобы убежать, но один из заключенных быстро подбегает к вам и хватает за руку. Вы пытаетесь вырваться, но он удерживает вас и начинает толкать к стене. Вы чувствуете удар в голову, и все исчезает перед глазами. Минус 1 единица здоровья. Очнуться?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_SHOUT:
-        req_save = "chap_4_1_4"
+        req_save["save"] = "chap_4_1_4"
+        req_save["health"] -= 3
         text = 'Вы попытаетесь закричать, чтобы привлечь внимание охранников, но один из заключенных быстро закрывает вам рот. Вы начинаете чувствовать себя задыхающимся и беспомощным, пытаясь освободиться от его хватки. Другой заключенный в это время начинает обыскивать ваши карманы и забирает все ценности. Вы теряете сознание. Минус 3 единицы здоровья. Очнуться?'
         tts = 'Вы попытаетесь закричать, чтобы привлечь внимание охранников, но один из заключенных быстро закрывает вам рот. Вы начинаете чувствовать себя задыхающимся и беспомощным, пытаясь освободиться от его хватки. Другой заключенный в это время начинает обыскивать ваши карманы и забирает все ценности. Вы теряете сознание. Минус 3 единицы здоровья. Очнуться?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_HIT:
-        if COLLECTION.find_one({"id": user_id})["power"] == 4:  # Поменять на показатель здоровья / силы
-            req_save = "chap_4_1_3"
+        if req_save["power"] == 4:  # Поменять на показатель здоровья / силы
+            req_save["save"] = "chap_4_1_3"
             text = 'Ваши занятия спортом не прошли даром: вы бьете одного заключенного, тот сразу же теряет сознание. Другой преступник, увидев это, убегает. Вы думаете, что нужно сделать с заключенным, находящимся в отключке. Теперь что-то нужно сделать с заключенным: "Оставить в камере", "Позвать охрану", "Убрать в соседнюю камеру"'
             tts = 'Ваши занятия спортом не прошли даром: вы бьете одного заключенного, тот сразу же теряет сознание. Другой преступник, увидев это, убегает. Вы думаете, что нужно сделать с заключенным, находящимся в отключке. Теперь что-то нужно сделать с заключенным: "Оставить в камере", "Позвать охрану", "Убрать в соседнюю камеру"'
             return message_sent(text=text, tts=tts, save=req_save, version=version)
         else:
-            req_save = "chap_4_1_7"
-            COLLECTION.updateOne({"id": user_id}, {"$set": {"health": 3}})
+            req_save["save"] = "chap_4_1_7"
+            req_save["health"] -= 2
             text = '''
             Вы чувствуете, что вам нужно защитить себя и быстро делаете решительный шаг, пытаясь ударить преступника, 
             которому отказали в помощи. Однако он быстро увернулся, и вы промахнулись, 
@@ -230,7 +243,7 @@ def chap_4_1_x(req_save, command, intent, user_id):
         return message_help(req_save, version)
 
 
-def chap_4_2_1(req_save, command, intent, user_id):
+def chap_4_2_1(req_save, command, intent):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
@@ -239,22 +252,22 @@ def chap_4_2_1(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 
-def chap_4_1_3_x(req_save, command, intent, user_id):
+def chap_4_1_3_x(req_save, command, intent):
     COMMANDS_1 = ['охрана']
     COMMANDS_2 = ['оставить']
     COMMANDS_3 = ['убрать']
     if command in COMMANDS_1:
-        req_save = "chap_4_1_3_1"
+        req_save["save"] = "chap_4_1_3_1"
         text = 'Вы зовете охрану. Вас обвиняют в нападении на заключенного, и теперь вы находитесь в карцере. Начать сначала?'
         tts = 'Вы зовете охрану. Вас обвиняют в нападении на заключенного, и теперь вы находитесь в карцере. Начать сначала?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_2:
-        req_save = "chap_4_1_3_2"
+        req_save["save"] = "chap_4_1_3_2"
         text = 'Мимо вашей камеры проходит охранник, увидев лежачего заключенного, вас обвиняют в нападении, теперь вы находитесь в карцере. Начать сначала?'
         tts = 'Мимо вашей камеры проходит охранник, увидев лежачего заключенного, вас обвиняют в нападении, теперь вы находитесь в карцере. Начать сначала?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_3:
-        req_save = "chap_4_1_3_3"
+        req_save["save"] = "chap_4_1_3_3"
         text = 'Вы осматриваетесь вокруг и не замечаете охранников, решаете перенести заключенного в другую камеру. Но когда вы выходите на перекличку, надзиратели находят одного из заключенных без сознания и обвиняют владельца камеры в нападении на него. Вам нужно восстановить силы. Лечь спать?'
         tts = 'Вы осматриваетесь вокруг и не замечаете охранников, решаете перенести заключенного в другую камеру. Но когда вы выходите на перекличку, надзиратели находят одного из заключенных без сознания и обвиняют владельца камеры в нападении на него. Вам нужно восстановить силы. Лечь спать?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
@@ -262,10 +275,10 @@ def chap_4_1_3_x(req_save, command, intent, user_id):
         return message_help(req_save, version)
 
 
-def chap_5(req_save, command, intent, user_id):
+def chap_5(req_save, command, intent):
     COMMANDS = ['очнуться']
     if command in COMMANDS:
-        req_save = "chap_5"
+        req_save["save"] = "chap_5"
         text = 'Когда вы приходите в сознание, вы лежите на полу в своей камере. Вам кажется, что прошло несколько часов, но вы не уверены. Вы пытаетесь подняться, но чувствуете резкую боль в голове и ощущение тошноты. Открыв глаза, вы замечаете, что на вашем лице красуется синяк, а на ваших руках видны следы ударов. Вам нужно восстановить силы. Лечь спать?'
         tts = 'Когда вы приходите в сознание, вы лежите на полу в своей камере. Вам кажется, что прошло несколько часов, но вы не уверены. Вы пытаетесь подняться, но чувствуете резкую боль в голове и ощущение тошноты. Открыв глаза, вы замечаете, что на вашем лице красуется синяк, а на ваших руках видны следы ударов. Вам нужно восстановить силы. Лечь спать?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
@@ -273,10 +286,10 @@ def chap_5(req_save, command, intent, user_id):
         return message_help("chap_4_1_0", version)
 
 
-def chap_5_1(req_save, command, intent, user_id):
+def chap_5_1(req_save, command, intent):
     COMMANDS = ['спать']
     if command in COMMANDS:
-        req_save = "chap_5_1"
+        req_save["save"] = "chap_5_1"
         text = 'В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере. Мотать срок.'
         tts = 'В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере. Мотать срок.'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
