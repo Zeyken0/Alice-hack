@@ -570,7 +570,7 @@ def chap_12_x(req_save, command, intent):
               'Осмотреться?'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif command in COMMANDS_2:
-        COMMANDS = ['осмотреться']
+        COMMANDS = ['начать ']
         text = 'На полу вы заметили моток веревки. Вы взяли его с собой.' \
                'Начать делать рукоятку?'
         tts = 'На полу вы заметили моток веревки. Вы взяли его с собой.' \
@@ -582,8 +582,33 @@ def chap_12_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13(req_save, command, intent):
-    req_save["save"] = "chap_13"
+def chap_12(req_save, command, intent):
+    COMMANDS_1 = ['осмотреться']
+    if command in COMMANDS_1:
+        COMMANDS = ['дальше']
+        text = 'На полу вы заметили моток веревки. Вы взяли его с собой.'
+        tts = 'На полу вы заметили моток веревки. Вы взяли его с собой.'
+        new_save = {'accept': 'chap_13', 'reject': ''}
+        return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                      new_save=new_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_12_1(req_save, command, intent):
+    COMMANDS_1 = ['начать']
+    if command in COMMANDS_1:
+        COMMANDS = ['дальше']
+        text = 'На токарном станке вы изготовили рукоять.'
+        tts = 'На токарном станке вы изготовили рукоять.'
+        new_save = {'accept': 'chap_13', 'reject': ''}
+        return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                      new_save=new_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_13(req_save, command, intent):  # 13_1 доводит к этому
     if req_save["other"]["knife"]:
         COMMANDS = ['отправиться к михаилу']
         text = "Все предметы собраны! Отправиться к Михаилу?"
@@ -675,6 +700,193 @@ def chap_17(req_save, command, intent):
         tts = 'Вы заходите в камеру к Михаилу и замечаете, что он лежит на полу без сознания.' \
               'Проверить пульс или убежать?'
         req_save["save"] = 'chap_18'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_18(req_save, command, intent):
+    COMMANDS_1 = ['проверить пульс']
+    COMMANDS_2 = ['убежать']
+    if command in COMMANDS_1:
+        text = 'Вы решаете проверить пульс у Михаила. Однако, пульс отсутствует, и вы осознаете, что Михаил умер.' \
+               'Убежать или осмотреть комнату?'
+        tts = 'Вы решаете проверить пульс у Михаила. Однако, пульс отсутствует, и вы осознаете, что Михаил умер.' \
+              'Убежать или осмотреть комнату?'
+        req_save["save"] = 'chap_18_1'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_2:
+        text = 'Вы начинаете бежать, но спотыкаетесь и замечаете листок, лежащий под кроватью. Вы решаете взять его с собой. По прибытии в камеру вы обнаруживаете, что это план побега.' \
+               'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        tts = 'Вы начинаете бежать, но спотыкаетесь и замечаете листок, лежащий под кроватью. Вы решаете взять его с собой. По прибытии в камеру вы обнаруживаете, что это план побега.' \
+              'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        req_save["save"] = 'chap_18_2'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_18_1(req_save, command, intent):
+    COMMANDS_1 = ['осмотреть комнату']
+    COMMANDS_2 = ['убежать']
+    if command in COMMANDS_1:
+        text = 'Где наилучшим образом начать искать - в тумбочке, на полу или в кровати?'
+        tts = 'Где наилучшим образом начать искать - в тумбочке, на полу или в кровати?'
+        req_save["save"] = 'chap_19'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_2:
+        text = 'Вы начинаете бежать, но спотыкаетесь и замечаете листок, лежащий под кроватью. Вы решаете взять его с собой. По прибытии в камеру вы обнаруживаете, что это план побега.' \
+               'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        tts = 'Вы начинаете бежать, но спотыкаетесь и замечаете листок, лежащий под кроватью. Вы решаете взять его с собой. По прибытии в камеру вы обнаруживаете, что это план побега.' \
+              'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        req_save["save"] = 'chap_18_2'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_18_2(req_save, command, intent):
+    COMMANDS = ['спрятать под одеждой', 'оставить в камере']
+    if command in COMMANDS:
+        text = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
+               'Перепрятать предметы?'
+        tts = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
+              'Перепрятать предметы?'
+        req_save["save"] = "chap_21"
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_19(req_save, command, intent):
+    COMMANDS_1 = ['искать в тумбочке']
+    COMMANDS_2 = ['искать на полу']
+    COMMANDS_3 = ['искать в кровати']
+    if command in COMMANDS_1:
+        text = 'В тумбочке вы находите кошелек Михаила.' \
+               'Взять его с собой или продолжить искать на полу либо в кровати?'
+        tts = 'В тумбочке вы находите кошелек Михаила.' \
+              'Взять его с собой или продолжить искать на полу либо в кровати?'
+        req_save["save"] = 'chap_19_1'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_2:
+        text = 'На полу вы ничего не нашли.' \
+               'Обыскать кровать?'
+        tts = 'На полу вы ничего не нашли.' \
+              'Обыскать кровать?'
+        req_save["save"] = 'chap_19_2'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_3:
+        text = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+               'Желаете вернуться в камеру?'
+        tts = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+              'Желаете вернуться в камеру?'
+        req_save["save"] = 'chap_19_3'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+
+
+def chap_19_1(req_save, command, intent):
+    COMMANDS_1 = ['взять кошелек']
+    COMMANDS_2 = ['искать на полу']
+    COMMANDS_3 = ['искать в кровати']
+    if command in COMMANDS_1:
+        text = 'Вы берете кошелек Михаила.' \
+               'Где продолжить искать - на полу или в кровати?'
+        tts = 'Вы берете кошелек Михаила.' \
+              'Где продолжить искать - на полу или в кровати?'
+        req_save["save"] = 'chap_19_1_1'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_2:
+        text = 'На полу вы ничего не нашли.' \
+               'Обыскать кровать?'
+        tts = 'На полу вы ничего не нашли.' \
+              'Обыскать кровать?'
+        req_save["save"] = 'chap_19_2'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_3:
+        text = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+               'Желаете вернуться в камеру?'
+        tts = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+              'Желаете вернуться в камеру?'
+        req_save["save"] = 'chap_19_3'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+
+
+def chap_19_2(req_save, command, intent):
+    COMMANDS_3 = ['искать в кровати']
+    if command in COMMANDS_3:
+        text = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+               'Желаете вернуться в камеру?'
+        tts = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+              'Желаете вернуться в камеру?'
+        req_save["save"] = 'chap_19_3'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_19_1_1(req_save, command, intent):
+    COMMANDS_2 = ['искать на полу']
+    COMMANDS_3 = ['искать в кровати']
+    if command in COMMANDS_2:
+        text = 'На полу вы ничего не нашли.' \
+               'Обыскать кровать?'
+        tts = 'На полу вы ничего не нашли.' \
+              'Обыскать кровать?'
+        req_save["save"] = 'chap_19_2'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_3:
+        text = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+               'Желаете вернуться в камеру?'
+        tts = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
+              'Желаете вернуться в камеру?'
+        req_save["save"] = 'chap_19_3'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_19_3(req_save, command, intent):
+    COMMANDS = ['вернуться в камеру']
+    if command in COMMANDS:
+        text = 'После возвращения в камеру вы изучаете листок и осознаете, что это план побега.' \
+               'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        tts = 'После возвращения в камеру вы изучаете листок и осознаете, что это план побега.' \
+              'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
+        req_save["save"] = 'chap_20'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_20(req_save, command, intent):
+    COMMANDS = ['спрятать под одеждой', 'оставить в камере']
+    if command in COMMANDS:
+        text = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
+               'Перепрятать предметы?'
+        tts = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
+              'Перепрятать предметы?'
+        req_save["save"] = "chap_21"
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+def chap_21(req_save, command, intent):
+    COMMANDS_1 = ['да']
+    COMMANDS_2 = ['нет']
+    if command in COMMANDS_1:
+        text = 'Вы начинаете прятать предметы, но охранник замечает вас и вы отправляетесь в карцер.' \
+               'Загрузить последнее сохранение?'
+        tts =  'Вы начинаете прятать предметы, но охранник замечает вас и вы отправляетесь в карцер.' \
+               'Загрузить последнее сохранение?'
+        req_save["save"] = 'chap_21_1'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_2:
+        text = 'Охранник мчится мимо вашей камеры, и тревога заканчивается. Вы замечаете, как Михаила уносят на носилках куда-то.' \
+               'Вы ошеломлены произошедшим, хотите лечь спать?'
+        tts = 'Охранник мчится мимо вашей камеры, и тревога заканчивается. Вы замечаете, как Михаила уносят на носилках куда-то.' \
+               'Вы ошеломлены произошедшим, хотите лечь спать?'
+        req_save["save"] = 'chap_21_2'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
         return message_help(req_save, version)
