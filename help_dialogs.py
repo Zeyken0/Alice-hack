@@ -3,17 +3,24 @@ from dialogs import message_sent
 
 
 def message_help(req_save, version):
-    text = main_data[req_save]['text']
-    tts = main_data[req_save]['tts']
+    text = main_data[req_save["save"]]['text']
+    tts = main_data[req_save["save"]]['tts']
     response = {
         "response": {
             "text": text,
             "tts": tts,
             "end_session": False,
-            "buttons": main_data[req_save]['buttons']
+            "buttons": main_data[req_save["save"]]['buttons']
         },
         "session_state": {
-            "save": req_save,
+            "save": req_save["save"],
+            "name": req_save["name"],
+            "health": req_save["health"],
+            "power": req_save["power"],
+            "mana": req_save["mana"],
+            "score": req_save["score"],
+            "inventory": req_save["inventory"],
+            "other": req_save["other"]
         },
         "version": version
     }
@@ -25,26 +32,80 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                            reject_commands=None, new_save=None, text_reject='', tts_reject=''):
     if reject_enable:
         if "YANDEX.REJECT" in intent or command in reject_commands:
-            req_save = new_save['reject']
-            return message_sent(text=text_reject, tts=tts_reject, save=req_save, version=version)
+            save = {
+                "save": new_save['reject'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text_reject, tts=tts_reject, save=save, version=version)
         elif "YANDEX.REJECT" not in intent and command in reject_commands:
-            req_save = new_save['reject']
-            return message_sent(text=text_reject, tts=tts_reject, save=req_save, version=version)
+            save = {
+                "save": new_save['reject'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text_reject, tts=tts_reject, save=save, version=version)
         elif ("YANDEX.CONFIRM" in intent) or (command in text_commands):
-            req_save = new_save['accept']
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            save = {
+                "save": new_save['accept'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text, tts=tts, save=save, version=version)
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
-            req_save = new_save['accept']
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            save = {
+                "save": new_save['accept'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text, tts=tts, save=save, version=version)
         else:
             return message_help(req_save, version)
     else:
         if ("YANDEX.CONFIRM" in intent) or (command in text_commands):
-            req_save = new_save['accept']
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            save = {
+                "save": new_save['accept'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text, tts=tts, save=save, version=version)
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
-            req_save = new_save['accept']
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            save = {
+                "save": new_save['accept'],
+                "name": req_save["name"],
+                "health": req_save["health"],
+                "power": req_save["power"],
+                "mana": req_save["mana"],
+                "score": req_save["score"],
+                "inventory": req_save["inventory"],
+                "other": req_save["other"]
+            }
+            return message_sent(text=text, tts=tts, save=save, version=version)
         else:
             return message_help(req_save, version)
 
