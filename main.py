@@ -63,8 +63,8 @@ def start(event, context):
             "chap_1_1": chapter_1.chap_2,
             "chap_2": chapter_1.chap_3,
             "chap_3": chapter_1.chap_4,
-            "chap_4_1": chapter_1.chap_5,
-            "chap_4_1_1": chapter_1.chap_4_1_1,
+            "chap_4_1": chapter_1.chap_4_1_1,
+            "chap_4_1_1": chapter_1.chap_4_1_x,
             "chap_4_1_2": chapter_1.chap_5,
             "chap_4_1_3": chapter_1.chap_4_1_3_x,
             "chap_4_1_3_1": chapter_1.chap_4_1_3_x_end,
@@ -103,10 +103,38 @@ def start(event, context):
             "chap_13_0": chapter_1.chap_14,
             "chap_13_4": chapter_1.chap_14,
             "chap_14": chapter_1.chap_15,
-            "chap_15": chapter_1.chap_15
+            "chap_15": chapter_1.chap_15,
+            "chap_17": chapter_1.chap_13_0,
+            "chap_13_2": chapter_1.chap_13_2,
+            "chap_18": chapter_1.chap_18,
+            "chap_13_3": chapter_1.chap_13_3,
+            "chap_16": chapter_1.chap_16,
+            "chap_11_0": chapter_1.chap_16,
+            "chap_18_1": chapter_1.chap_18_1,
+            "chap_18_2": chapter_1.chap_18_2,
+            "chap_19": chapter_1.chap_19,
+            "chap_19_1": chapter_1.chap_19_1,
+            "chap_19_2": chapter_1.chap_19_2,
+            "chap_19_3": chapter_1.chap_19_3,
+            "chap_19_1_1": chapter_1.chap_19_1_1,
+            "chap_21": chapter_1.chap_21_x,
+            "chap_20": chapter_1.chap_21,
+            "chap_21_1": chapter_1.chap_21_1,
+            "chap_21_2": chapter_1.chap_21_2,
+            "chap_22": chapter_1.chap_22,
+            "chap_22_1": chapter_1.chap_22_1,
+            "chap_22_2": chapter_1.chap_22_2,
+            "chap_24": chapter_1.chap_24,
+            "chap_23": chapter_1.chap_23,
+            "chap_23_2": chapter_1.chap_23_2,
+            "chap_24_1": chapter_1.chap_24_1,
+            "chap_24_2": chapter_1.chap_24_2,
+            "chap_25": chapter_1.chap_25,
+            "chap_25_1": chapter_1.chap_25_1,
+            "chap_25_2": chapter_1.chap_25_2,
+            "chap_25_1_2": chapter_1.chap_25_1_2
         }
         if req_save["save"] in saves:
             return saves[req_save["save"]](req_save, command, intent, user_id)
-
         else:
             return message_sent(text="чо", tts="чо", version=version, save=req_save)
