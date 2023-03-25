@@ -67,8 +67,8 @@ def start(event, context):
             "chap_4_1_1": chapter_1.chap_4_1_1,
             "chap_4_1_2": chapter_1.chap_5,
             "chap_4_1_3": chapter_1.chap_4_1_3_x,
-            "chap_4_1_3_1": chapter_1.start_1,
-            "chap_4_1_3_2": chapter_1.start_1,
+            "chap_4_1_3_1": chapter_1.chap_4_1_3_x_end,
+            "chap_4_1_3_2": chapter_1.chap_4_1_3_x_end,
             "chap_4_1_3_3": chapter_1.chap_5_1,
             "chap_4_1_4": chapter_1.chap_5,
             "chap_4_1_7": chapter_1.chap_5,
@@ -106,7 +106,7 @@ def start(event, context):
             "chap_15": chapter_1.chap_15
         }
         if req_save["save"] in saves:
-            return saves[req_save["save"]](req_save, command, intent)
+            return saves[req_save["save"]](req_save, command, intent, user_id)
 
         else:
             return message_sent(text="чо", tts="чо", version=version, save=req_save)
