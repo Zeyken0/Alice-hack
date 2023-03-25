@@ -110,6 +110,3 @@ def start(event, context):
 
         else:
             return message_sent(text="чо", tts="чо", version=version, save=req_save)
-
-
-
