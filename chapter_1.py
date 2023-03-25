@@ -1,8 +1,11 @@
 from dialogs import message_sent, d_start_0
 from help_dialogs import message_help, confirm_reject_handler
+from config import *
+
+version = "1.0"
 
 
-def start_1(req_save, command, intent):
+def start_1(req_save, command, intent, user_id):
     COMMANDS = ['начать', 'вперед']
     text = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. Сегодня вам нужно пойти торговать на рынке. Пойти на рынок?'
     tts = 'В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли. Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений. Сегодня вам нужно пойти торговать на рынке.'
@@ -11,7 +14,7 @@ def start_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def start_2(req_save, command, intent):
+def start_2(req_save, command, intent, user_id):
     COMMANDS = ['пойти на рынок', 'отправиться на рынок', 'рынок', 'пошли']
     text = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
     tts = 'Но однажды, когда вы были на рынке, чтобы продать свой урожай, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении. Проследовать за полицией или попробовать сбежать?'
@@ -20,7 +23,7 @@ def start_2(req_save, command, intent):
                                   new_save=new_save)
 
 
-def start_3(req_save, command, intent):
+def start_3(req_save, command, intent, user_id):
     COMMANDS = ['пойти с полицией', 'полиция', 'пойти', 'проследовать', 'полицией', 'пройти', 'пошли', 'иду']
     COMMANDS_REJECT = ['сбежать', 'убежать', 'бег', 'побег']
 
@@ -34,7 +37,7 @@ def start_3(req_save, command, intent):
                                   text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
-def chap(req_save, command, intent):
+def chap(req_save, command, intent, user_id):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6/10 Сила: 2 Мана: 0 Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
     tts = 'В тюрьме вы понимаете, что жизнь здесь не так проста, как казалась. Вы оказываетесь среди преступников, которые ненавидят вас и считают "мелким фермером". Они издеваются над вами, отбирают еду и уважают только тех, кто сильнее и жестче. Здоровье: 6 из 10 sil <[200]> Сила: 2 sil <[200]> Мана: 0 sil <[200]> Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.'
@@ -43,7 +46,7 @@ def chap(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_1(req_save, command, intent):
+def chap_1(req_save, command, intent , user_id):
     COMMANDS = ['спорт']
     COMMANDS_1 = ['спать']
 
@@ -64,7 +67,7 @@ def chap_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_2(req_save, command, intent):
+def chap_2(req_save, command, intent, user_id):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи']
     text = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
     tts = 'Наступает день выбора работы. Вам достается работа в мастерской. Начать работать?'
@@ -73,7 +76,7 @@ def chap_2(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_3(req_save, command, intent):
+def chap_3(req_save, command, intent, user_id):
     COMMANDS = ['']
     COMMANDS_REJECT = ['']
 
@@ -87,7 +90,7 @@ def chap_3(req_save, command, intent):
                                   text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
-def chap_4(req_save, command, intent):
+def chap_4(req_save, command, intent, user_id):
     COMMANDS_TRUE = ['отказаться']
     COMMANDS_LIE = ['солгать']
     if command in COMMANDS_TRUE:
@@ -105,7 +108,7 @@ def chap_4(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_4_1_1(req_save, command, intent):
+def chap_4_1_1(req_save, command, intent, user_id):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать".'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость и решаете вернуться в свою камеру для отдыха. Вы открываете дверь своей камеры и видите, что там уже находятся двое заключенных, один из которых был тот преступник, которому вы отказали в помощи. Вы понимаете, что они настроены решительно и не будут договариваться с вами. Что лучше сделать: "Ударить заключенного", "Убежать", "Закричать"'
@@ -114,7 +117,7 @@ def chap_4_1_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_4_1_x(req_save, command, intent):
+def chap_4_1_x(req_save, command, intent, user_id):
     COMMANDS_RUN = ['убежать']
     COMMANDS_HIT = ['ударить']
     COMMANDS_SHOUT = ['закричать']
@@ -151,7 +154,7 @@ def chap_4_1_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_4_2_1(req_save, command, intent):
+def chap_4_2_1(req_save, command, intent, user_id):
     COMMANDS = ['']
     text = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
     tts = 'После тяжелого дня работы в мастерской вы чувствуете сильную усталость. Вы направляетесь на перекличку, а затем решаете вернуться в свою камеру, чтобы отдохнуть. Лечь спать?'
@@ -160,7 +163,7 @@ def chap_4_2_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_4_1_3_x(req_save, command, intent):
+def chap_4_1_3_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['охрана']
     COMMANDS_2 = ['оставить']
     COMMANDS_3 = ['убрать']
@@ -183,7 +186,22 @@ def chap_4_1_3_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_5(req_save, command, intent):
+def chap_4_1_3_x_end(req_save, command, intent, user_id):
+    COMMANDS = ['начать сначала']
+    if command in COMMANDS:
+        req_save["save"] = "start_1"
+        text = "В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли." \
+               "Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений." \
+               "Сегодня вам нужно пойти торговать на рынке. Пойти на рынок?"
+        tts = "В магическом мире, который окутан злом, люди выживают только за огромными стенами замков. Вокруг них бродят опасные монстры, готовые напасть на любого, кто попадется у них на пути. Однако, несмотря на опасности, внутри замков процветает жизнь, и люди делают все, чтобы защитить свои земли." \
+              "Вы, герой нашего рассказа, жили на ферме, которую наследовали от своих предков. Ваша семья занималась земледелием и животноводством уже несколько поколений." \
+              "Сегодня вам нужно пойти торговать на рынке. Пойти на рынок?"
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
+
+
+def chap_5(req_save, command, intent, user_id):
     COMMANDS = ['очнуться']
     if command in COMMANDS:
         req_save["save"] = "chap_5"
@@ -195,7 +213,7 @@ def chap_5(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_5_1(req_save, command, intent):
+def chap_5_1(req_save, command, intent, user_id):
     COMMANDS = ['спать']
     if command in COMMANDS:
         req_save["save"] = "chap_5_1"
@@ -206,7 +224,7 @@ def chap_5_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_6(req_save, command, intent):  # Без сохранения
+def chap_6(req_save, command, intent, user_id):  # Без сохранения
     COMMANDS = ['']
     text = 'Однажды, работая в мастерской, вы слышите крик заключенного из соседней камеры. Что думаете, стоит ли посмотреть?'
     tts = 'Однажды, работая в мастерской, вы слышите крик заключенного из соседней камеры. Что думаете, стоит ли посмотреть?'
@@ -215,7 +233,7 @@ def chap_6(req_save, command, intent):  # Без сохранения
                                   new_save=new_save)
 
 
-def chap_6_x(req_save, command, intent):  # Без сохранения
+def chap_6_x(req_save, command, intent, user_id):  # Без сохранения
     COMMANDS_1 = ['посмотреть']
     COMMANDS_2 = ['продолжить']
     text = 'Вы решили посмотреть, что происходит в соседней камере, и замечаете, что двое других заключенных избивают третьего. Помочь или продолжить работать?'
@@ -228,7 +246,7 @@ def chap_6_x(req_save, command, intent):  # Без сохранения
                                   tts_reject=tts_reject, new_save=new_save)
 
 
-def chap_6_0_x(req_save, command, intent):  # Без сохранения
+def chap_6_0_x(req_save, command, intent, user_id):  # Без сохранения
     COMMANDS_1 = ['помочь']
     COMMANDS_2 = ['продолжить работать', 'работать']
     if command in COMMANDS_1:
@@ -252,7 +270,7 @@ def chap_6_0_x(req_save, command, intent):  # Без сохранения
         return message_help(req_save, version)
 
 
-def chap_7(req_save, command, intent):
+def chap_7(req_save, command, intent, user_id):
     COMMANDS = ['продолжить мотать']
     text = 'В течение следующих месяцев ничего интересного не происходило, однако однажды во время обеда заключенные начали избивать другого заключенного.' \
            'Помочь заключенному?'
@@ -263,7 +281,7 @@ def chap_7(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_7_x(req_save, command, intent):
+def chap_7_x(req_save, command, intent, user_id):
     COMMANDS_TRUE = ['помочь']
     COMMANDS_FALSE = ['продолжить смотреть']
     if command in COMMANDS_TRUE:
@@ -296,7 +314,7 @@ def chap_7_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_7_end(req_save, command, intent):
+def chap_7_end(req_save, command, intent, user_id):
     COMMANDS_TRUE = ['начать сначала']
     if command in COMMANDS_TRUE:
         req_save["save"] = 'start_1'
@@ -312,8 +330,8 @@ def chap_7_end(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_8(req_save, command, intent):
-    # СОХРАНЕНИЕ
+def chap_8(req_save, command, intent, user_id):
+    #COLLECTION.update_one({"id": req_save[]}, {"$set": {"name": name, "save": save}})
     COMMANDS = ['отправиться в лазарет']
     COMMANDS_REJECT = ['']
     text = 'После того, как заключенные начали бить вас, надзиратели немедленно вмешались и разогнали драку. Они отвели вас в лазарет, где вам была оказана необходимая медицинская помощь.' \
@@ -336,7 +354,7 @@ def chap_8(req_save, command, intent):
                                   text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
-def chap_9(req_save, command, intent):
+def chap_9(req_save, command, intent, user_id):
     COMMANDS_TRUE = ['продолжить']
     text = "Через некоторое время вас выписывают из лазарета, и вы отправляетесь обратно в свою камеру, " \
            "но замечаете, что заработанные вами деньги пропали." \
@@ -349,7 +367,7 @@ def chap_9(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_10(req_save, command, intent):
+def chap_10(req_save, command, intent, user_id):
     # проверка на имя
     req_save["save"] = 'chap_10'
     req_save["name"] = command
@@ -358,7 +376,7 @@ def chap_10(req_save, command, intent):
     return message_sent(text=text, tts=tts, save=req_save, version=version)
 
 
-def chap_10_x(req_save, command, intent):
+def chap_10_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['почему ты хочешь помочь мне']
     COMMANDS_2 = ['и как же']
     if command in COMMANDS_1:
@@ -379,7 +397,7 @@ def chap_10_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_11_x(req_save, command, intent):
+def chap_11_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['пойти в столовую']
     COMMANDS_2 = ['пойти на работу']
     if command in COMMANDS_1:
@@ -404,7 +422,7 @@ def chap_11_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_11_2_1(req_save, command, intent):
+def chap_11_2_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['купить заточку']
     if command in COMMANDS_1:
         req_save["other"]["knife"] = True
@@ -418,7 +436,7 @@ def chap_11_2_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_11_1(req_save, command, intent):
+def chap_11_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['подойти к торговцу']
     text = 'Вы спросили у торговца, сможет ли он достать железную заточку. Торговец ответил: "Конечно, это малая услуга для моего спасителя".' \
            ' Затем он отдал ее вам. Теперь осталось достать только веревку и рукоятку. Хотите осмотреться или пойти на работу'
@@ -430,7 +448,7 @@ def chap_11_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_14(req_save, command, intent):
+def chap_14(req_save, command, intent, user_id):
     COMMANDS_1 = ['осмотреться']
     COMMANDS_2 = ['пойти на работу']
     if command in COMMANDS_1:
@@ -450,7 +468,7 @@ def chap_14(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_15(req_save, command, intent):
+def chap_15(req_save, command, intent, user_id):
     COMMANDS = ['пойти на работу']
     text = 'Вы пришли в мастерскую. Хотите осмотреться или сделать рукоятку?'
     tts = 'Вы пришли в мастерскую. Хотите осмотреться или сделать рукоятку?'
@@ -459,7 +477,7 @@ def chap_15(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_12_x(req_save, command, intent):
+def chap_12_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['сделать рукоятку']
     COMMANDS_2 = ['осмотреться']
     if command in COMMANDS_1:
@@ -480,7 +498,7 @@ def chap_12_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13(req_save, command, intent):
+def chap_13(req_save, command, intent, user_id):
     COMMANDS_1 = ['осмотреться']
     if ("YANDEX.CONFIRM" in intent) or (command in COMMANDS_1):
         if req_save["other"]["trader"]:
@@ -516,7 +534,7 @@ def chap_13(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13_1(req_save, command, intent):
+def chap_13_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['начать']
     if ("YANDEX.CONFIRM" in intent) or (command in COMMANDS_1):
         if req_save["other"]["knife"]:
@@ -552,7 +570,7 @@ def chap_13_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13_0(req_save, command, intent):
+def chap_13_0(req_save, command, intent, user_id):
     COMMANDS = ['отправиться к михаилу']
     if command in COMMANDS:
         text = 'Вы заходите в камеру к Михаилу и замечаете, что он лежит на полу без сознания.' \
@@ -565,7 +583,7 @@ def chap_13_0(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13_2(req_save, command, intent):
+def chap_13_2(req_save, command, intent, user_id):
     if req_save['other']['trader']:
         text = "Когда вы зашли в столовую, вы заметили торговца, которому вы спасли жизнь. Хотите подойти к нему?"
         tts = "Когда вы зашли в столовую, вы заметили торговца, которому вы спасли жизнь. Хотите подойти к нему?"
@@ -582,7 +600,7 @@ def chap_13_2(req_save, command, intent):
         return message_sent(text=text, tts=tts, save=req_save, version=version)
 
 
-def chap_13_3(req_save, command, intent):
+def chap_13_3(req_save, command, intent, user_id):
     COMMANDS = ['подойти к торговцу']
     if command in COMMANDS:
         req_save["save"] = "chap_13_4"
@@ -595,7 +613,7 @@ def chap_13_3(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_13_4(req_save, command, intent):
+def chap_13_4(req_save, command, intent, user_id):
     COMMANDS = ['отправиться к михаилу']
     if command in COMMANDS:
         text = 'Вы заходите в камеру к Михаилу и замечаете, что он лежит на полу без сознания. \nПроверить пульс или убежать?'
@@ -606,7 +624,7 @@ def chap_13_4(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_16(req_save, command, intent):
+def chap_16(req_save, command, intent, user_id):
     COMMANDS = ['купить заточку']
     if command in COMMANDS:
         req_save["save"] = 'chap_17'
@@ -618,7 +636,7 @@ def chap_16(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_17(req_save, command, intent):  # chap_13_0 такой же
+def chap_17(req_save, command, intent, user_id):  # chap_13_0 такой же
     COMMANDS = ['отправиться к михаилу']
     if command in COMMANDS:
         text = 'Вы заходите в камеру к Михаилу и замечаете, что он лежит на полу без сознания.' \
@@ -631,7 +649,7 @@ def chap_17(req_save, command, intent):  # chap_13_0 такой же
         return message_help(req_save, version)
 
 
-def chap_18(req_save, command, intent):
+def chap_18(req_save, command, intent, user_id):
     COMMANDS_1 = ['проверить пульс']
     COMMANDS_2 = ['убежать']
     if command in COMMANDS_1:
@@ -652,7 +670,7 @@ def chap_18(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_18_1(req_save, command, intent):
+def chap_18_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['осмотреть комнату']
     COMMANDS_2 = ['убежать']
     if command in COMMANDS_1:
@@ -671,7 +689,7 @@ def chap_18_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_18_2(req_save, command, intent):
+def chap_18_2(req_save, command, intent, user_id):
     COMMANDS = ['спрятать под одеждой', 'оставить в камере']
     if command in COMMANDS:
         text = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
@@ -684,7 +702,7 @@ def chap_18_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_19(req_save, command, intent):
+def chap_19(req_save, command, intent, user_id):
     COMMANDS_1 = ['искать в тумбочке']
     COMMANDS_2 = ['искать на полу']
     COMMANDS_3 = ['искать в кровати']
@@ -713,7 +731,7 @@ def chap_19(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_19_1(req_save, command, intent):
+def chap_19_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['взять кошелек']
     COMMANDS_2 = ['искать на полу']
     COMMANDS_3 = ['искать в кровати']
@@ -742,7 +760,7 @@ def chap_19_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_19_2(req_save, command, intent):
+def chap_19_2(req_save, command, intent, user_id):
     COMMANDS_3 = ['искать в кровати']
     if command in COMMANDS_3:
         text = 'Вы использовали железную заточку, чтобы разрезать матрас, и заметили там листок с чертежами.' \
@@ -755,7 +773,7 @@ def chap_19_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_19_1_1(req_save, command, intent):
+def chap_19_1_1(req_save, command, intent, user_id):
     COMMANDS_2 = ['искать на полу']
     COMMANDS_3 = ['искать в кровати']
     if command in COMMANDS_2:
@@ -776,7 +794,7 @@ def chap_19_1_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_19_3(req_save, command, intent):
+def chap_19_3(req_save, command, intent, user_id):
     COMMANDS = ['вернуться в камеру']
     text = 'После возвращения в камеру вы изучаете листок и осознаете, что это план побега.' \
            'Пришло время для вечерней переклички. Что лучше - спрятать предметы под одежду или оставить их в камере?'
@@ -787,7 +805,7 @@ def chap_19_3(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_21(req_save, command, intent):
+def chap_21(req_save, command, intent, user_id):
     COMMANDS = ['спрятать под одеждой', 'оставить в камере']
     if command in COMMANDS:
         text = 'Вы направляетесь на перекличку, но надзиратель замечает отсутствие Михаила. Это приводит к объявлению об обыске, после которого всех заключенных отводят обратно в камеры.' \
@@ -800,7 +818,7 @@ def chap_21(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_21_x(req_save, command, intent):
+def chap_21_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['да']
     COMMANDS_2 = ['нет']
     if command in COMMANDS_1:
@@ -821,7 +839,7 @@ def chap_21_x(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_21_1(req_save, command, intent):
+def chap_21_1(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение']
     if command in COMMANDS:
         text = 'Через некоторое время вас выписывают из лазарета, и вы отправляетесь обратно в свою камеру, но замечаете, что заработанные вами деньги пропали.' \
@@ -834,7 +852,7 @@ def chap_21_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_21_2(req_save, command, intent):
+def chap_21_2(req_save, command, intent, user_id):
     COMMANDS = ['сохранить игру']
     if command in COMMANDS:
         text = 'Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.' \
@@ -847,7 +865,7 @@ def chap_21_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_22(req_save, command, intent):
+def chap_22(req_save, command, intent, user_id):
     COMMANDS_1 = ['начать побег в обед']
     COMMANDS_2 = ['начать побег сейчас']
     if command in COMMANDS_1:
@@ -868,7 +886,7 @@ def chap_22(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_22_1(req_save, command, intent):
+def chap_22_1(req_save, command, intent, user_id):
     COMMANDS = ['войти в комнату']
     text = 'Вы отодвигаете картину, осторожно пролезаете в комнату и обнаруживаете решетку, которая ведет в канализацию. Чтобы создать что-то полезное вы решаете использовать имеющиеся у вас железную заточку, веревку и рукоятку' \
            'Необходимо определить, что изготовить - самодельный топор или самодельную кирку.' \
@@ -889,7 +907,7 @@ def chap_22_1(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_22_2(req_save, command, intent):
+def chap_22_2(req_save, command, intent, user_id):
     COMMANDS_1 = ['войти в комнату']
     COMMANDS_2 = ['осмотреться']
     if command in COMMANDS_1:
@@ -906,7 +924,7 @@ def chap_22_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_23(req_save, command, intent):
+def chap_23(req_save, command, intent, user_id):
     COMMANDS_1 = ['войти в комнату']
     COMMANDS_2 = ['вернуться в обед']
     if command in COMMANDS_1:
@@ -923,7 +941,7 @@ def chap_23(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_23_1(req_save, command, intent):  # == chap_22_1
+def chap_23_1(req_save, command, intent, user_id):  # == chap_22_1
     COMMANDS = ['войти в комнату']
     if command in COMMANDS:
         text = 'Вы отодвигаете картину, осторожно пролезаете в комнату и обнаруживаете решетку, которая ведет в канализацию. Чтобы создать что-то полезное вы решаете использовать имеющиеся у вас железную заточку, веревку и рукоятку' \
@@ -946,7 +964,7 @@ def chap_23_1(req_save, command, intent):  # == chap_22_1
         return message_help(req_save, version)  # можно удалить
 
 
-def chap_23_2(req_save, command, intent):
+def chap_23_2(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение']
     if command in COMMANDS:
         req_save['save'] = 'chap_22'
@@ -957,7 +975,7 @@ def chap_23_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_24(req_save, command, intent):
+def chap_24(req_save, command, intent, user_id):
     COMMANDS_1 = ['сделать кирку']
     COMMANDS_2 = ['сделать топор']
     if command in COMMANDS_1:
@@ -976,7 +994,7 @@ def chap_24(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_24_1(req_save, command, intent):
+def chap_24_1(req_save, command, intent, user_id):
     COMMANDS = ['продолжить ломать решетку']
     if command in COMMANDS:
         text = 'Вы начинаете бить решетку самодельным топором, звук постепенно усиливается. После нескольких ударов прутья решетки ломаются, вы их загибаете и пролезаете в канализационный тоннель.' \
@@ -989,7 +1007,7 @@ def chap_24_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_24_2(req_save, command, intent):
+def chap_24_2(req_save, command, intent, user_id):
     COMMANDS = ['начать ломать решетку']
     text = 'Вы начинаете бить решетку самодельным топором, звук постепенно усиливается. После нескольких ударов прутья решетки ломаются, вы их загибаете и пролезаете в канализационный тоннель.' \
            'Звук ломающейся решетки привлек внимание охраны, и вы услышали звук сирены. Стоит ли бежать из города?'
@@ -1000,7 +1018,7 @@ def chap_24_2(req_save, command, intent):
                                   new_save=new_save)
 
 
-def chap_25(req_save, command, intent):
+def chap_25(req_save, command, intent, user_id):
     COMMANDS_1 = ['да']
     COMMANDS_2 = ['нет']
     text = 'Вы вылезаете из канализации и бежите к воротам города, но они оказываются тщательно запертыми.' \
@@ -1017,7 +1035,7 @@ def chap_25(req_save, command, intent):
                                   tts_reject=tts_reject, new_save=new_save)
 
 
-def chap_25_1(req_save, command, intent):
+def chap_25_1(req_save, command, intent, user_id):
     COMMANDS_1 = ['сломать']
     COMMANDS_2 = ['ждать']
     if command in COMMANDS_1:
@@ -1038,7 +1056,7 @@ def chap_25_1(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_25_1_1(req_save, command, intent):
+def chap_25_1_1(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение']
     if command in COMMANDS:
         text = 'Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.' \
@@ -1051,7 +1069,7 @@ def chap_25_1_1(req_save, command, intent):
         return message_help(req_save, version)  # == chap_23_2
 
 
-def chap_25_1_2(req_save, command, intent):
+def chap_25_1_2(req_save, command, intent, user_id):
     COMMANDS = ['сохранить игру']
     if command in COMMANDS:
         text = 'Поздравляем, вы успешно завершили 1 главу!!!!' \
@@ -1064,7 +1082,7 @@ def chap_25_1_2(req_save, command, intent):
         return message_help(req_save, version)
 
 
-def chap_25_2(req_save, command, intent):
+def chap_25_2(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение']
     if command in COMMANDS:
         text = 'Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.' \
