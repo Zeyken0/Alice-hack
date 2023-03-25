@@ -5,7 +5,7 @@ from dialogs import message_sent, d_start_0
 version = "1.0"
 
 
-# Сделать сохранения, сделать ifы
+# Сделать сохранения
 
 def start(event, context):
     command = event['request']['command']
