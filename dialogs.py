@@ -21,7 +21,9 @@ def d_start_0(text, tts, version):
             "health": 6,
             "power": 2,
             "mana": 0,
-            "score": 0
+            "score": 0,
+            "inventory": {},
+            "other": {}
         },
         "version": version
     }
