@@ -12,7 +12,11 @@ def d_start_0(text, tts, version):
                 {
                     "title": 'Помощь',
                     "hide": True
-                }
+                },
+                {
+                    "title": 'Что ты умеешь?',
+                    "hide": True
+                },
             ]
         },
         "session_state": {
