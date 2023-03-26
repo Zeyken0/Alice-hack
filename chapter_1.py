@@ -143,7 +143,7 @@ def chap_4_1_1(req_save, command, intent, user_id):
     COMMANDS = ['закончить', 'заканчивай', 'кончить', 'кончай', 'прекращай', 'прекрати', 'прекратить', 'прекратить', 'хватит', 'достаточно']
     text = alice_dict['chap_4_1_1']['text']
     tts = alice_dict['chap_4_1_1']['tts']
-    new_save = {'accept': 'chap_4_1_1', 'reject': ''}
+    new_save = {'accept': 'chap_4', 'reject': ''}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save)
 
