@@ -11,9 +11,10 @@ version = "1.0"
 
 def start(event, context):
     command = event['request']['command']
+    original_utterance = event['request']['original_utterance']
     intent = event["request"]['nlu']["intents"]
     user_id = event["session"]["user"]["user_id"]
-    if command == "":
+    if original_utterance == "":
         if COLLECTION.count_documents({"id": user_id}) == 0:
             user = {
                 "id": user_id,
