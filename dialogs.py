@@ -12,7 +12,11 @@ def d_start_0(text, tts, version):
                 {
                     "title": 'Помощь',
                     "hide": True
-                }
+                },
+                {
+                    "title": 'Что ты умеешь?',
+                    "hide": True
+                },
             ]
         },
         "session_state": {
@@ -23,7 +27,7 @@ def d_start_0(text, tts, version):
             "mana": 0,
             "score": 0,
             "inventory": {},
-            "other": {}
+            "other": {"trader": False, "knife": False}
         },
         "version": version
     }
