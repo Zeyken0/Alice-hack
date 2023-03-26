@@ -376,7 +376,7 @@ def chap_10(req_save, command, intent, user_id):
     # проверка на имя
     req_save["save"] = 'chap_10'
     req_save["name"] = command
-    text = alice_dict['chap_10']['text']
+    text = alice_dict['chap_10']['text'] + command + alice_dict['chap_10']['text_1']
     tts = alice_dict['chap_10']['tts']
     return message_sent(text=text, tts=tts, save=req_save, version=version)
 
