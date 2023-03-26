@@ -55,16 +55,18 @@ def start_2(req_save, command, intent, user_id):
 def start_3(req_save, command, intent, user_id):
     COMMANDS = ['пойти с полицией', 'полиция', 'пойти', 'проследовать', 'полицией', 'пройти', 'пошли', 'иду', 'отправиться за полицией', 'проследовать за полицией']
     COMMANDS_REJECT = ['сбежать', 'убежать', 'бег', 'побег', 'валим', 'уходим', 'бежим', 'убегай', 'беги', 'побежали', 'сбежать от полиции']
-
-    text = alice_dict['start_3']['text']
-    tts = alice_dict['start_3']['tts']
-    text_REJECT = alice_dict['start_3_1']['text']
-    tts_REJECT = alice_dict['start_3_1']['tts']
-    new_save = {'accept': 'start_3', 'reject': 'start_3_1'}
-    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save, reject_enable=True, reject_commands=COMMANDS_REJECT,
-                                  text_reject=text_REJECT, tts_reject=tts_REJECT)
-
+    if command in COMMANDS:
+        text = alice_dict['start_3']['text']
+        tts = alice_dict['start_3']['tts']
+        req_save["save"] = 'start_3'
+        return message_sent(text=text, tts=tts, save=req_save, version=version)
+    elif command in COMMANDS_REJECT:
+        text_REJECT = alice_dict['start_3_1']['text']
+        tts_REJECT = alice_dict['start_3_1']['tts']
+        req_save["save"] = 'start_3_1'
+        return message_sent(text=text_REJECT, tts=tts_REJECT, save=req_save, version=version)
+    else:
+        return message_help(req_save, version)
 
 def chap(req_save, command, intent, user_id):
     COMMANDS = ['мотать срок', 'мотать', 'срок', 'продолжи', 'мотай', 'мотай срок']
