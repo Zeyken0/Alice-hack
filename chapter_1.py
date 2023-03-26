@@ -40,9 +40,16 @@ def start_2(req_save, command, intent, user_id):
     req_save["health"] = 6
     text = alice_dict['start_2']['text']
     tts = alice_dict['start_2']['tts']
-    new_save = {'accept': 'start_2', 'reject': ''}
+    text_REJECT = '''Сегодня вы не поехали на рынок. 
+    Весь вечер вы пытались найти хоть кусочек хлеба ,но безуспешно.
+    Обстоятельства вынудили вас отправиться на рынок.'''
+    tts_REJECT = '''Сегодня вы не поехали на рынок. 
+    Весь вечер вы пытались найти хоть кусочек хлеба ,но безуспешно.
+    Обстоятельства вынудили вас отправиться на рынок.'''
+    new_save = {'accept': 'start_2', 'reject': 'start_2'}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save)
+                                  new_save=new_save,reject_enable=True,
+                                  text_reject=text_REJECT, tts_reject=tts_REJECT)
 
 
 def start_3(req_save, command, intent, user_id):
