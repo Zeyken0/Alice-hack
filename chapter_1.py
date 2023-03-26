@@ -36,20 +36,22 @@ def start_1(req_save, command, intent, user_id):
 
 def start_2(req_save, command, intent, user_id):
     COMMANDS = ['отправиться на рынок', 'сходить на рынок', 'пойти на рынок', 'поехать на рынок', 'зайти на рынок', 'рынок', 'пошли', 'пойти']
+    COMMANDS_1 = ['']
     req_save["power"] = 2
     req_save["health"] = 6
     text = alice_dict['start_2']['text']
     tts = alice_dict['start_2']['tts']
-    text_REJECT = '''Сегодня вы не поехали на рынок. 
-    Весь вечер вы пытались найти хоть кусочек хлеба ,но безуспешно.
-    Обстоятельства вынудили вас отправиться на рынок.'''
+    text_REJECT = '''Сегодня вы не поехали на рынок. Весь вечер вы пытались найти хоть кусочек хлеба ,но безуспешно.
+    Обстоятельства вынудили вас отправиться на рынок. На рынке, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении.
+    Проследовать за полицией или попробовать сбежать?'''
     tts_REJECT = '''Сегодня вы не поехали на рынок. 
     Весь вечер вы пытались найти хоть кусочек хлеба ,но безуспешно.
-    Обстоятельства вынудили вас отправиться на рынок.'''
+    Обстоятельства вынудили вас отправиться на рынок. На рынке, вы стали свидетелем ограбления. Вы попытались остановить преступников, но они сбежали. На следующий день к вам приходит полиция и обвиняет вас в ограблении.
+    Проследовать за полицией или попробовать сбежать?'''
     new_save = {'accept': 'start_2', 'reject': 'start_2'}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save,reject_enable=True,
-                                  text_reject=text_REJECT, tts_reject=tts_REJECT)
+                                  text_reject=text_REJECT, tts_reject=tts_REJECT, reject_commands=COMMANDS_1)
 
 
 def start_3(req_save, command, intent, user_id):
@@ -183,6 +185,7 @@ def chap_4_1_x(req_save, command, intent, user_id):
 
 def chap_4_2_1(req_save, command, intent, user_id):
     COMMANDS = ['закончить', 'заканчивай', 'кончить', 'кончай', 'прекращай', 'прекрати', 'прекратить', 'прекратить', 'хватит', 'достаточно']
+    COMMANDS_1 = ['']
     text = alice_dict['chap_4_2_1']['text']
     tts = alice_dict['chap_4_2_1']['tts']
     text_reject = '''Вы проявляли прекрасную выдержку, но уютная домашняя атмосфера тюрьмы заставила вас уснуть через 20 минут.
@@ -193,7 +196,7 @@ def chap_4_2_1(req_save, command, intent, user_id):
     Мотать срок.'''
     new_save = {'accept': 'chap_5_1', 'reject': 'chap_5_1'}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save, reject_enable=True,text_reject=text_reject, tts_reject=tts_reject)
+                                  new_save=new_save, reject_enable=True,text_reject=text_reject, tts_reject=tts_reject, reject_commands=COMMANDS_1)
 
 
 def chap_4_1_3_x(req_save, command, intent, user_id):
