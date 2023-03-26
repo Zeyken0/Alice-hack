@@ -268,7 +268,7 @@ def chap_6_x(req_save, command, intent, user_id):  # Без сохранения
 
 
 def chap_6_0_x(req_save, command, intent, user_id):  # Без сохранения
-    COMMANDS_1 = ['помочь', 'помочь заключенному', 'помочь зеку']
+    COMMANDS_1 = ['помочь', 'помочь заключенному', 'помочь зеку','да','спасти', 'конечно', 'ага']
     COMMANDS_2 = ['продолжить работать', 'работать', 'продолжить', 'продолжай', 'работай', 'дальше']
     if command in COMMANDS_1:
         req_save["save"] = 'chap_6_0'
@@ -295,7 +295,7 @@ def chap_7(req_save, command, intent, user_id):
 
 
 def chap_7_x(req_save, command, intent, user_id):
-    COMMANDS_TRUE = ['помочь', 'помочь заключенному', 'помочь зеку', 'да', 'конечно', 'ага']
+    COMMANDS_TRUE = ['помочь', 'помочь заключенному', 'помочь зеку','да','спасти', 'конечно', 'ага']
     COMMANDS_FALSE = ['продолжить смотреть', 'продолжить', 'смотреть', 'пусть', 'смотреть дальше', 'смотри', 'я продолжу смотреть']
     if command in COMMANDS_TRUE:
         if req_save["health"] > 3:
