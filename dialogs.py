@@ -27,7 +27,7 @@ def d_start_0(text, tts, version):
             "mana": 0,
             "score": 0,
             "inventory": {},
-            "other": {}
+            "other": {"trader": False, "knife": False}
         },
         "version": version
     }
