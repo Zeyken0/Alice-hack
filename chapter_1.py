@@ -197,19 +197,11 @@ def chap_4_1_x(req_save, command, intent, user_id):
 
 
 def chap_4_2_1(req_save, command, intent, user_id):
-    COMMANDS = ['закончить', 'заканчивай', 'кончить', 'кончай', 'прекращай', 'прекрати', 'прекратить', 'прекратить', 'хватит', 'достаточно']
-    COMMANDS_1 = ['']
+    COMMANDS = ['закончить', 'заканчивай', 'кончить', 'кончай', 'прекращай', 'прекрати', 'прекратить', 'прекратить', 'хватит', 'достаточно', 'закончить работать', 'закончить работу']
     text = alice_dict['chap_4_2_1']['text']
     tts = alice_dict['chap_4_2_1']['tts']
-    text_reject = '''Вы проявляли прекрасную выдержку, но уютная домашняя атмосфера тюрьмы заставила вас уснуть через 20 минут.
-В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере.
-Мотать срок.'''
-    tts_reject = '''Вы проявляли прекрасную выдержку, но уютная домашняя атмосфера тюрьмы заставила вас уснуть через 20 минут.
-    В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере.
-Мотать срок.'''
-    new_save = {'accept': 'chap_5_1', 'reject': 'chap_5_1'}
-    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save, reject_enable=True,text_reject=text_reject, tts_reject=tts_reject, reject_commands=COMMANDS_1)
+    new_save = {'accept': 'chap_5', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts, new_save=new_save)
 
 
 def chap_4_1_3_x(req_save, command, intent, user_id):
@@ -268,11 +260,18 @@ def chap_5(req_save, command, intent, user_id):
 
 def chap_5_1(req_save, command, intent, user_id):
     COMMANDS = ['спать', 'лечь', 'лечь спать', 'ложись спать', 'спать я сказал', 'начать спать', 'лечь поспать']
+    COMMANDS_1 = ['нет']
     text = alice_dict['chap_5_1']['text']
     tts = alice_dict['chap_5_1']['tts']
-    new_save = {'accept': 'chap_5_1', 'reject': ''}
+    text_reject = '''Вы проявляли прекрасную выдержку, но уютная домашняя атмосфера тюрьмы заставила вас уснуть через 20 минут.
+В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере.
+Мотать срок?'''
+    tts_reject = '''Вы проявляли прекрасную выдержку, но уютная домашняя атмосфера тюрьмы заставила вас уснуть через 20 минут.
+        В течение следующих дней вы стараетесь держаться подальше от других заключенных, опасаясь повторной атаки. Вы также продолжаете работать и складывать деньги в своей камере.
+    Мотать срок?'''
+    new_save = {'accept': 'chap_5_1', 'reject': 'chap_5_1'}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save)
+                                  new_save=new_save, reject_enable=True, reject_commands=COMMANDS_1, text_reject=text_reject, tts_reject=tts_reject)
 
 
 def chap_6(req_save, command, intent, user_id):  # Без сохранения
@@ -438,15 +437,13 @@ def chap_11_x(req_save, command, intent, user_id):
 
 
 def chap_11_2_1(req_save, command, intent, user_id):
-    COMMANDS_1 = ['купить заточку', 'купить', 'заточку', 'покупаю', 'покупай', 'покупай заточку']
-    if command in COMMANDS_1:
-        req_save["other"]["knife"] = True
-        req_save["save"] = 'chap_11_2_1'
-        text = alice_dict['chap_11_2_1']['text']
-        tts = alice_dict['chap_11_2_1']['tts']
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    COMMANDS = ['купить заточку', 'купить', 'заточку', 'покупаю', 'покупай', 'покупай заточку']
+    req_save["other"]["knife"] = True
+    text = alice_dict['chap_11_2_1']['text']
+    tts = alice_dict['chap_11_2_1']['tts']
+    new_save = {'accept': 'chap_11_2_1', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_11_1(req_save, command, intent, user_id):
@@ -545,7 +542,7 @@ def chap_13_1(req_save, command, intent, user_id):
         if req_save["other"]["knife"]:
             text = 'На токарном станке вы изготовили рукоять. \nВсе предметы собраны! Отправиться к Михаилу?'
             tts = 'На токарном станке вы изготовили рукоять. Все предметы собраны! Отправиться к Михаилу?'
-            req_save["save"] = "chap_18"
+            req_save["save"] = "chap_18_0"
             return message_sent(text=text, tts=tts, save=req_save, version=version)
         else:
             text = 'На токарном станке вы изготовили рукоять.\nПойти в столовую? '
@@ -560,7 +557,7 @@ def chap_13_1(req_save, command, intent, user_id):
         if req_save["other"]["knife"]:
             text = 'На токарном станке вы изготовили рукоять. \nВсе предметы собраны! Отправиться к Михаилу?'
             tts = 'На токарном станке вы изготовили рукоять. Все предметы собраны! Отправиться к Михаилу?'
-            req_save["save"] = "chap_18"
+            req_save["save"] = "chap_18_0"
             return message_sent(text=text, tts=tts, save=req_save, version=version)
         else:
             text = 'На токарном станке вы изготовили рукоять.\nПойти в столовую? '
@@ -620,11 +617,19 @@ def chap_13_4(req_save, command, intent, user_id):
     else:
         return message_help(req_save, version)
 
-
 def chap_16(req_save, command, intent, user_id):
+    COMMANDS = ['пойти в столовую', 'в столовую', 'столовая', 'пойти']
+    text = alice_dict['chap_16']['text']
+    tts = alice_dict['chap_16']['tts']
+    new_save = {'accept': 'chap_17', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap_17(req_save, command, intent, user_id):
     COMMANDS = ['купить заточку', 'купить', 'заточку', 'покупаю', 'покупай', 'покупай заточку']
     if command in COMMANDS:
-        req_save["save"] = 'chap_17'
+        req_save["save"] = 'chap_18_0'
         text = "Вы купили заточку. Все предметы собраны. Отправляемся к Михаилу?"
         tts = "Вы купили заточку. Все предметы собраны. Отправляемся к Михаилу?"
         return message_sent(text=text, tts=tts, save=req_save, version=version)
@@ -633,15 +638,13 @@ def chap_16(req_save, command, intent, user_id):
         return message_help(req_save, version)
 
 
-def chap_17(req_save, command, intent, user_id):  # chap_13_0 такой же
+def chap_18_0(req_save, command, intent, user_id):  # chap_13_0 такой же
     COMMANDS = ['отправиться к михаилу', 'к михаилу', 'к михе', 'отправиться', 'к михалычу', 'михаилу', 'отправиться к мише', 'мише']
-    if command in COMMANDS:
-        text = alice_dict['chap_18']['text']
-        tts = alice_dict['chap_18']['tts']
-        req_save["save"] = 'chap_18'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    text = alice_dict['chap_18']['text']
+    tts = alice_dict['chap_18']['tts']
+    new_save = {'accept': 'chap_18', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_18(req_save, command, intent, user_id):
@@ -798,27 +801,22 @@ def chap_21_x(req_save, command, intent, user_id):
 
 def chap_21_1(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение', 'загрузить', 'последнее', 'загружай', 'загрухи сохранение', 'загрузить сохранение']
-    if command in COMMANDS:
-        COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_9'}})
-        text = alice_dict['chap_9']['text']
-        tts = alice_dict['chap_9']['tts']
-        req_save["save"] = 'chap_9'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
-
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_9'}})
+    text = alice_dict['chap_9']['text']
+    tts = alice_dict['chap_9']['tts']
+    new_save = {'accept': 'chap_9', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 def chap_21_2(req_save, command, intent, user_id):
-    COMMANDS = ['сохранить игру', 'сохранить']
-    if command in COMMANDS:
-        COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22', "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
-        text= '''Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.\n
+    COMMANDS = ['сохранить игру', 'сохранить', 'лечь', 'спать', 'лечь спать']
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22', "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
+    text= '''Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.\n
 Начать побег сейчас или во время обеда?'''
-        tts='''Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня. Начать побег сейчас или во время обеда?'''
-        req_save['save'] = 'chap_22'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    tts='''Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня. Начать побег сейчас или во время обеда?'''
+    new_save = {'accept': 'chap_22', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_22(req_save, command, intent, user_id):
@@ -894,14 +892,12 @@ def chap_23_1(req_save, command, intent, user_id):  # == chap_22_1
 
 def chap_23_2(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение', 'загрузить', 'загружай', 'сохранение', 'последнее сохранение']
-    if command in COMMANDS:
-        COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
-        req_save['save'] = 'chap_22'
-        text = alice_dict['chap_22']['text']
-        tts = alice_dict['chap_22']['tts']
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
+    text = alice_dict['chap_22']['text']
+    tts = alice_dict['chap_22']['tts']
+    new_save = {'accept': 'chap_22', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_24(req_save, command, intent, user_id):
@@ -971,14 +967,12 @@ def chap_25_1(req_save, command, intent, user_id):
 
 def chap_25_1_1(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение', 'загрузить', 'последнее', 'сохранение', 'последнее сохранение']
-    if command in COMMANDS:
-        COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
-        text = alice_dict['chap_22']['text']
-        tts = alice_dict['chap_22']['tts']
-        req_save["save"] = 'chap_22'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)  # == chap_23_2
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
+    text = alice_dict['chap_22']['text']
+    tts = alice_dict['chap_22']['tts']
+    new_save = {'accept': 'chap_22', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
 
 
 def chap_25_1_2(req_save, command, intent, user_id):
@@ -997,10 +991,9 @@ def chap_25_1_2(req_save, command, intent, user_id):
 
 def chap_25_2(req_save, command, intent, user_id):
     COMMANDS = ['загрузить последнее сохранение', 'загрузить', 'последнее', 'сохранение', 'последнее сохранение']
-    if command in COMMANDS:
-        text = alice_dict['chap_22']['text']
-        tts = alice_dict['chap_22']['tts']
-        req_save["save"] = 'chap_22'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
-    else:
-        return message_help(req_save, version)  # == chap_23_2
+    text = alice_dict['chap_22']['text']
+    tts = alice_dict['chap_22']['tts']
+    req_save["save"] = 'chap_22'
+    new_save = {'accept': 'chap_22', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
