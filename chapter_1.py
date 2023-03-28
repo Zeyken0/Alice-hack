@@ -92,9 +92,20 @@ def chap(req_save, command, intent, user_id):
         "items": [
             {
                 "image_id": "1030494/628705743a5ab80c90ea",
-                "title": "Заголовок для изображения.",
-                "description": "Описание изображения.",
-            }
+                "title": "Здоровье",
+                "description": f"{req_save['health']}",
+            },
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Сила",
+                "description": f"{req_save['power']}",
+            },
+            
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Мана",
+                "description": f"{req_save['mana']}",
+            },
         ],
         "footer": {
             "text": "Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.",
