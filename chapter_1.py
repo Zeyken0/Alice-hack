@@ -545,7 +545,7 @@ def chap_13(req_save, command, intent, user_id):
 
 
 def chap_13_1(req_save, command, intent, user_id):
-    COMMANDS_1 = ['начать', 'вперед', 'поехали', 'начинай', 'быстрее', 'ну']
+    COMMANDS_1 = ['начать', 'вперед', 'поехали', 'начинай', 'быстрее', 'ну', 'сделать рукоятку', 'сделать']
     if ("YANDEX.CONFIRM" in intent) or (command in COMMANDS_1):
         if req_save["other"]["knife"]:
             text = 'На токарном станке вы изготовили рукоять. \nВсе предметы собраны! Отправиться к Михаилу?'
