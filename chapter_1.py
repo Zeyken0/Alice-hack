@@ -478,7 +478,7 @@ def chap_14(req_save, command, intent, user_id):
         req_save['save'] = 'chap_11'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
-        req_save["save"] = 'chap_14'
+        #req_save["save"] = 'chap_14'
         return message_help(req_save, version)
 
 
