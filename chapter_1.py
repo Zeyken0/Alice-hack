@@ -131,9 +131,63 @@ def chap_1(req_save, command, intent, user_id):
         if a == 0:
             text = alice_dict['chap_1']['text_2']
             tts = alice_dict['chap_1']['tts_2']
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text,
+                },
+                "items": [
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Здоровье",
+                        "description": f"{req_save['health']}",
+                    },
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Сила",
+                        "description": f"{req_save['power']}",
+                    },
+
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Мана",
+                        "description": f"{req_save['mana']}",
+                    },
+                ],
+                "footer": {
+                    "text": "Продолжить мотать срок?",
+                }
+            }
+            return message_sent_with_card(text=text, tts=tts, save=req_save, version=version)
         else:
-            return message_sent(text=text, tts=tts, save=req_save, version=version)
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text,
+                },
+                "items": [
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Здоровье",
+                        "description": f"{req_save['health']}",
+                    },
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Сила",
+                        "description": f"{req_save['power']}",
+                    },
+
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Мана",
+                        "description": f"{req_save['mana']}",
+                    },
+                ],
+                "footer": {
+                    "text": "Продолжить мотать срок?",
+                }
+            }
+            return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     elif command in COMMANDS_1:
         req_save["health"] = 10
         req_save["save"] = "chap_1_1"
@@ -141,9 +195,63 @@ def chap_1(req_save, command, intent, user_id):
         if a == 0:
             text_1 = alice_dict['chap_1_1']['text_2']
             tts_1 = alice_dict['chap_1_1']['tts_2']
-            return message_sent(text=text_1, tts=tts_1, save=req_save, version=version)
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text_1,
+                },
+                "items": [
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Здоровье",
+                        "description": f"{req_save['health']}",
+                    },
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Сила",
+                        "description": f"{req_save['power']}",
+                    },
+
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Мана",
+                        "description": f"{req_save['mana']}",
+                    },
+                ],
+                "footer": {
+                    "text": "Продолжить мотать срок?",
+                }
+            }
+            return message_sent_with_card(text=text_1, tts=tts_1, save=req_save, version=version, card=card)
         else:
-            return message_sent(text=text_1, tts=tts_1, save=req_save, version=version)
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text_1,
+                },
+                "items": [
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Здоровье",
+                        "description": f"{req_save['health']}",
+                    },
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Сила",
+                        "description": f"{req_save['power']}",
+                    },
+
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Мана",
+                        "description": f"{req_save['mana']}",
+                    },
+                ],
+                "footer": {
+                    "text": "Продолжить мотать срок?",
+                }
+            }
+            return message_sent(text=text_1, tts=tts_1, save=req_save, version=version, card=card)
     else:
         return message_help(req_save, version)
 
