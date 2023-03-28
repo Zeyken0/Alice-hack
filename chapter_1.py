@@ -110,6 +110,7 @@ def chap(req_save, command, intent, user_id):
                 "payload": {}
             }
         }
+    }
     return confirm_reject_handler_with_card(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save, card= card)
 
