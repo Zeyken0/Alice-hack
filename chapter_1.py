@@ -84,8 +84,7 @@ def chap(req_save, command, intent, user_id):
     text = alice_dict['chap']['text']
     tts = alice_dict['chap']['tts']
     new_save = {'accept': 'chap', 'reject': ''}
-    card = 
-    {
+    card = {
         "type": "ItemsList",
         "header": {
             "text": "Заголовок списка изображений",
