@@ -97,7 +97,7 @@ def chap(req_save, command, intent, user_id):
             }
         ],
         "footer": {
-            "text": "Текст блока под изображением.",
+            "text": "Для того, чтобы сделать свой досуг более интересным, выберите, чем заняться: спортом или отдыхом в виде сна.",
         }
     }
     return confirm_reject_handler_with_card(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
