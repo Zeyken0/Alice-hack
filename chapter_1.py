@@ -164,7 +164,7 @@ def chap_4(req_save, command, intent, user_id):
 
 def chap_4_1_1(req_save, command, intent, user_id):
     COMMANDS = ['закончить', 'заканчивай', 'кончить', 'кончай', 'прекращай', 'прекрати', 'прекратить', 'прекратить', 'хватит', 'достаточно']
-    req_save["save"] = "chap_4"
+    #req_save["save"] = "chap_4"
     text = alice_dict['chap_4_1_1']['text']
     tts = alice_dict['chap_4_1_1']['tts']
     new_save = {'accept': 'chap_4_1_1', 'reject': ''}
