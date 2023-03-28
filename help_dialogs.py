@@ -1,5 +1,5 @@
 from dictionary import main_data
-from dialogs import message_sent
+from dialogs import message_sent, message_sent_with_card
 
 
 def message_help(req_save, version):
