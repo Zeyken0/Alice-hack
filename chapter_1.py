@@ -1,5 +1,5 @@
 from dialogs import message_sent, d_start_0
-from help_dialogs import message_help, confirm_reject_handler
+from help_dialogs import message_help, confirm_reject_handler, message_sent_with_card, confirm_reject_handler_with_card
 from config import *
 from alice_says import alice_dict
 import random
