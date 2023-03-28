@@ -34,7 +34,34 @@ def d_start_0(text, tts, version):
     return response
 
 
-def message_sent(text, tts, version, save, end_session=False, buttons=[], card={}):
+def message_sent(text, tts, version, save, end_session=False, buttons=[]):
+    response = {
+        "response": {
+            "text": text,
+            "tts": tts,
+            "end_session": end_session,
+            "buttons": [
+                {
+                    "title": 'Помощь',
+                    "hide": True
+                }
+            ]+buttons,
+        },
+        "session_state": {
+            "save": save["save"],
+            "name": save["name"],
+            "health": save["health"],
+            "power": save["power"],
+            "mana": save["mana"],
+            "score": save["score"],
+            "inventory": save["inventory"],
+            "other": save["other"],
+        },
+        "version": version
+    }
+    return response
+
+def message_sent_with_card(text, tts, version, save, end_session=False, buttons=[], card = {}):
     response = {
         "response": {
             "text": text,
