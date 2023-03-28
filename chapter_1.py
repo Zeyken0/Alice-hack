@@ -983,9 +983,30 @@ def chap_22_1(req_save, command, intent, user_id):
     COMMANDS = ['войти в комнату', 'войти', 'в комнату', 'комната', 'зайти в комнату', 'зайти']
     text = alice_dict['chap_24']['text']
     tts = alice_dict['chap_24']['tts']
+    card = {
+        "type": "ItemsList",
+        "header": {
+            "text": text,
+        },
+        "items": [
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Самодельный топор",
+                "description": "Хорош для всех рубящих ударов",
+            },
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Самодельная кирка",
+                "description": "Хорошо подходит для копания шахт",
+            },
+        ],
+        "footer": {
+            "text": "Необходимо определить, что изготовить - самодельный топор или самодельную кирку.",
+            }
+        }
     new_save = {'accept': 'chap_24', 'reject': ''}
-    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save)
+    return confirm_reject_handler_with_card(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save, card=card)
 
 
 def chap_22_2(req_save, command, intent, user_id):
@@ -1028,7 +1049,28 @@ def chap_23_1(req_save, command, intent, user_id):  # == chap_22_1
         text = alice_dict['chap_24']['text']
         tts = alice_dict['chap_24']['tts']
         req_save['save'] = 'chap_24'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
+        card = {
+        "type": "ItemsList",
+        "header": {
+            "text": text,
+        },
+        "items": [
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Самодельный топор",
+                "description": "Хорош для всех рубящих ударов",
+            },
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Самодельная кирка",
+                "description": "Хорошо подходит для копания шахт",
+            },
+        ],
+        "footer": {
+            "text": "Необходимо определить, что изготовить - самодельный топор или самодельную кирку.",
+            }
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     else:
         return message_help(req_save, version)  # можно удалить
 
