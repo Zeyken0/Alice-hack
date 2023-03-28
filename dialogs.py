@@ -34,7 +34,7 @@ def d_start_0(text, tts, version):
     return response
 
 
-def message_sent(text, tts, version, save, end_session=False):
+def message_sent(text, tts, version, save, end_session=False, buttons=[]):
     response = {
         "response": {
             "text": text,
@@ -45,7 +45,7 @@ def message_sent(text, tts, version, save, end_session=False):
                     "title": 'Помощь',
                     "hide": True
                 }
-            ],
+            ]+buttons,
         },
         "session_state": {
             "save": save["save"],
