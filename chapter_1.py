@@ -84,8 +84,34 @@ def chap(req_save, command, intent, user_id):
     text = alice_dict['chap']['text']
     tts = alice_dict['chap']['tts']
     new_save = {'accept': 'chap', 'reject': ''}
-    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                  new_save=new_save)
+    card = 
+    {
+        "type": "ItemsList",
+        "header": {
+            "text": "Заголовок списка изображений",
+        },
+        "items": [
+            {
+                "image_id": "1030494/628705743a5ab80c90ea",
+                "title": "Заголовок для изображения.",
+                "description": "Описание изображения.",
+                "button": {
+                    "text": "Надпись на кнопке",
+                    "url": "https://example.com/",
+                    "payload": {}
+                }
+            }
+        ],
+        "footer": {
+            "text": "Текст блока под изображением.",
+            "button": {
+                "text": "Надпись на кнопке",
+                "url": "https://example.com/",
+                "payload": {}
+            }
+        }
+    return confirm_reject_handler_with_card(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save, card= card)
 
 
 def chap_1(req_save, command, intent, user_id):
