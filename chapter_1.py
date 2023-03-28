@@ -32,7 +32,15 @@ def start_1(req_save, command, intent, user_id):
               'Отлично! \n' \
               'Чтобы начать игру, скажите "Начать"'
         req_save['save'] = 'start'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
+        buttons = [{
+                    "title": 'Что ты умеешь?',
+                    "hide": True
+                },
+                {
+                    "title":"Начать",
+                    "hide": True
+                }]
+        return message_sent(text=text, tts=tts, save=req_save, version=version, buttons = buttons)
 
 
 def start_2(req_save, command, intent, user_id):
