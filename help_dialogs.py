@@ -29,9 +29,10 @@ def message_help(req_save, version):
 
 def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, version="1.0",
                            reject_enable=False,
-                           reject_commands=None, new_save=None, text_reject='', tts_reject=''):
+                           reject_commands=None, new_save=None, text_reject='', tts_reject='', reject_command=''):
     if reject_enable:
-        if "YANDEX.REJECT" in intent or command in reject_commands:
+        reject_command = command if reject_command == '' else reject_command
+        if "YANDEX.REJECT" in intent or reject_command in reject_commands:
             save = {
                 "save": new_save['reject'],
                 "name": req_save["name"],
@@ -43,7 +44,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "other": req_save["other"]
             }
             return message_sent(text=text_reject, tts=tts_reject, save=save, version=version)
-        elif "YANDEX.REJECT" not in intent and command in reject_commands:
+        elif "YANDEX.REJECT" not in intent and reject_command in reject_commands:
             save = {
                 "save": new_save['reject'],
                 "name": req_save["name"],
