@@ -1164,11 +1164,13 @@ def chap_25_1_2(req_save, command, intent, user_id):
     COMMANDS = ['сохранить игру', 'сохранить', 'сохраняй']
     if command in COMMANDS:
         COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
-        text = '''Поздравляем, вы успешно завершили 1 главу!!!!
-Спасибо за игру (2 глава находится на тестировании)'''
-        tts = '''Поздравляем, вы успешно завершили 1 главу!!!!
-Спасибо за игру (2 глава находится на тестировании)'''
-        req_save['save'] = 'start'
+        text = '''Добро пожаловать во вторую главу "Приключения только начинаются!".
+        Неизвестно, сколько часов вы уже бежите.
+        Хотите остановиться?'''
+        tts = '''Добро пожаловать во вторую главу "Приключения только начинаются!".
+        Неизвестно, сколько часов вы уже бежите.
+        Хотите остановиться?'''
+        req_save['save'] = 'chap2'
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
         return message_help(req_save, version)
