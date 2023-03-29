@@ -1,4 +1,5 @@
 import chapter_1
+import chapter_2
 from config import *
 from dialogs import message_sent, d_start_0
 
@@ -84,7 +85,44 @@ saves = {
     "chap_25": chapter_1.chap_25,
     "chap_25_1": chapter_1.chap_25_1,
     "chap_25_2": chapter_1.chap_25_2,
-    "chap_25_1_2": chapter_1.chap_25_1_2
+    "chap_25_1_2": chapter_1.chap_25_1_2,
+
+    "chap2": chapter_2.chap2,
+    "chap2_1_x": chapter_2.chap2_1_x,
+    "chap2_2": chapter_2.chap2_2,
+    "chap2_3_x": chapter_2.chap2_3_x,
+    "chap2_3_1x": chapter_2.chap2_3_1x,
+    "chap2_3_2x": chapter_2.chap2_3_2x,
+    "chap2_3_3x": chapter_2.chap2_3_3x,
+    "chap_2_3_1_1x": chapter_2.chap2_3_end,
+    "chap_2_3_1_2x": chapter_2.chap2_3_end,
+    "chap2_3_2_2": chapter_2.chap2_3_2_2,
+    "chap2_3_2_2_2_0": chapter_2.chap2_3_2_2_2_0,
+    "chap2_3_2_2_2_1_0": chapter_2.chap2_3_2_2_2_1_0,
+    "chap2_3_2_2_2_1x": chapter_2.chap2_3_2_2_2_1x,
+    "chap2_3_2_2_2_1_x": chapter_2.chap2_3_2_2_2_1_x,
+    "chap2_3_2_2_2_1_1x": chapter_2.chap2_3_end,
+    "chap2_3_2_2_2_1_2": chapter_2.chap2_3_2_2_2_1_2,
+    "chap2_3_3_1x": chapter_2.chap2_3_end,
+    "chap2_3_3_1": chapter_2.chap2_3_3_1,
+    "chap2_3_3_2": chapter_2.chap2_3_3_2,
+    "chap2_3_3_2_x": chapter_2.chap2_3_3_2_x,
+    "chap2_3_3_2_1x": chapter_2.chap2_3_end,
+    "chap2_3_3_2_1": chapter_2.chap2_3_3_2_1,
+    "chap2_3_3_2_2": chapter_2.chap2_3_3_2_2,
+    "chap2_3_3_2_2_x": chapter_2.chap2_3_3_2_2_x,
+    "chap2_3_3_2_2_1x": chapter_2.chap2_3_end,
+    "chap2_3_2_1_x": chapter_2.chap2_3_2_1_x,
+    "chap2_3_2_1_2": chapter_2.chap2_3_2_1_2,
+    "chap2_3_2_1_2_x": chapter_2.chap2_3_2_1_2_x,
+    "chap2_3_2_1_2_1x": chapter_2.chap2_3_end,
+    "chap2_3_2_1_2_0x": chapter_2.chap2_3_2_1_2_0x,
+    "chap2_3_2_1_2_2": chapter_2.chap2_3_2_1_2_2,
+    "chap2_3_2_1_2_2_x": chapter_2.chap2_3_2_1_2_2_x,
+    "chap2_3_2_1_2_2_1x": chapter_2.chap2_3_end,
+    "chap2_3_0": chapter_2.chap2_3_0,
+    "chap2_4": chapter_2.chap2_4,
+
 }
 
 # Сделать сохранения
