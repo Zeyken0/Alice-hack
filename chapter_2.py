@@ -50,12 +50,12 @@ def chap2_3x(req_save, command, intent, user_id):
     elif command in COMMANDS_2:
         text = alice_dict['2_chap_3_2x']['text']
         tts = alice_dict['2_chap_3_2x']['tts']
-        req_save['save'] = 'chap2_3_x'
+        req_save['save'] = 'chap2_3_2_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif command in COMMANDS_3:
         text = alice_dict['2_chap_3_3x']['text']
         tts = alice_dict['2_chap_3_3x']['tts']
-        req_save['save'] = 'chap2_3_x'
+        req_save['save'] = 'chap2_3_3_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
         return message_help(req_save, version)
@@ -67,12 +67,226 @@ def chap2_3_1_x(req_save, command, intent, user_id):
     if command in COMMANDS_1:
         text = alice_dict['2_chap_3_1_1x']['text']
         tts = alice_dict['2_chap_3_1_1x']['tts']
-        req_save['save'] = 'chap2'  # вернуть на последнее сохранение
+        req_save['save'] = 'chap_2_3_1_1x'  # вернуть на последнее сохранение
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif command in COMMANDS_2:
         text = alice_dict['2_chap_3_1_2x']['text']
         tts = alice_dict['2_chap_3_1_2x']['tts']
+        req_save['save'] = 'chap2_3_1_2x'  # вернуть на последнее сохранение
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+# def chap2_3_1_1x(req_save, command, intent, user_id): ==== END
+
+
+# def chap2_3_1_2x(req_save, command, intent, user_id): ==== END
+
+
+def chap2_3_3x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['резко']
+    COMMANDS_2 = ['медленно']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_3_1x']['text']
+        tts = alice_dict['2_chap_3_3_1x']['tts']
         req_save['save'] = 'chap2'  # вернуть на последнее сохранение
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_3x']['text']
+        tts = alice_dict['2_chap_3_3x']['tts']
+        req_save['save'] = 'chap2_3_3_1'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+# def chap2_3_3_1x(req_save, command, intent, user_id): ==== END
+
+
+def chap2_3_3_1(req_save, command, intent, user_id):
+    COMMANDS = ['плыть', 'прощупывать дно палкой']
+    if command in COMMANDS:
+        text = alice_dict['2_chap_3_3_1']['text']
+        tts = alice_dict['2_chap_3_3_1']['tts']
+        req_save['save'] = 'chap2_3_3_2'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_3_2(req_save, command, intent, user_id):
+    COMMANDS = ['идти дальше']
+    text = alice_dict['2_chap_3_3_2']['text']
+    tts = alice_dict['2_chap_3_3_2']['tts']
+    new_save = {'accept': 'chap2_3_3_2_x', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_3_3_2_x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['перепрыгнуть']
+    COMMANDS_2 = ['мост']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_3_2_1x']['text']
+        tts = alice_dict['2_chap_3_3_2_1x']['tts']
+        req_save['save'] = 'chap2_3_3_2_1x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_3_2_x']['text']
+        tts = alice_dict['2_chap_3_3_2_x']['tts']
+        req_save['save'] = 'chap2_3_3_2_1'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+# def chap2_3_3_2_1x(req_save, command, intent, user_id): ===== END
+
+
+def chap2_3_3_2_1(req_save, command, intent, user_id):
+    COMMANDS = ['инвентарь']
+    if command in COMMANDS:
+        text = alice_dict['2_chap_3_3_2_1']['text']
+        tts = alice_dict['2_chap_3_3_2_1']['tts']
+        req_save['save'] = 'chap2_3_3_2_2'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_3_2_2(req_save, command, intent, user_id):
+    COMMANDS = ['взять самодельный топор']
+    if command in COMMANDS:
+        text = alice_dict['2_chap_3_3_2_2']['text']
+        tts = alice_dict['2_chap_3_3_2_2']['tts']
+        req_save['save'] = 'chap2_3_3_2_2_x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_3_2_2_x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['отправиться']
+    COMMANDS_2 = ['не отправиться']
+    text = alice_dict['2_chap_3_3_2_2_x']['text']
+    tts = alice_dict['2_chap_3_3_2_2_x']['tts']
+    text_reject = alice_dict['2_chap_3_3_2_2_1x']['text']
+    tts_reject = alice_dict['2_chap_3_3_2_2_1x']['tts']
+    new_save = {'accept': 'chap2_3_0', 'reject': 'chap2_3_3_2_2_1x'}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS_1, text=text, tts=tts,
+                                  reject_enable=True, reject_commands=COMMANDS_2, text_reject=text_reject,
+                                  tts_reject=tts_reject, new_save=new_save)
+
+
+# chap2_3_3_2_2_1x(req_save, command, intent, user_id):   ======== END
+
+
+def chap2_3_2_x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['сразиться']
+    COMMANDS_2 = ['пройти мимо']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_2_1x']['text']
+        tts = alice_dict['2_chap_3_2_1x']['tts']
+        req_save['save'] = 'chap2_3_2_1_x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_2_x']['text']
+        tts = alice_dict['2_chap_3_2_x']['tts']
+        req_save['save'] = 'chap2_3_2_2'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_2_2(req_save, command, intent, user_id):
+    COMMANDS = ['спустить']
+    text = alice_dict['2_chap_3_2_2']['text']
+    tts = alice_dict['2_chap_3_2_2']['tts']
+    new_save = {'accept': 'chap2_3_2_2_2_0', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_3_2_2_2_0(req_save, command, intent, user_id):
+    COMMANDS_1 = ['лечь спать']
+    COMMANDS_2 = ['обыскать шлюпку']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_2_2_2_1_1']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_0'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_2_2_2']['text']
+        tts = alice_dict['2_chap_3_2_2_2']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_2_2_2_1x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['лечь спать']
+    COMMANDS_2 = ['перекусить']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_2_2_2_1_1']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_0'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_2_2_2_1']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_2_2_2_1_x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['остаться']
+    COMMANDS_2 = ['выпрыгнуть']
+    if command in COMMANDS_1:
+        text = alice_dict['2_chap_3_2_2_2_1_x']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_x']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_0'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        text = alice_dict['2_chap_3_2_2_2_1_1x']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_1x']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_1x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_end(req_save, command, intent, user_id):
+    COMMANDS = ['загрузить последнее сохранение']
+    if command in COMMANDS:
+        text = alice_dict['2_chap']['text']
+        tts = alice_dict['2_chap']['tts']
+        req_save['save'] = 'chap2_1x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_2_2_2_1_0(req_save, command, intent, user_id):
+    COMMANDS = ['инвентарь']
+    if command in COMMANDS:
+        text = alice_dict['2_chap_3_2_2_2_1_0']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_0']['tts']
+        req_save['save'] = 'chap2_3_2_2_2_1_2'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
+
+
+def chap2_3_2_2_2_1_2(req_save, command, intent, user_id):
+    COMMANDS = ['взять самодельный топор']
+    if command in COMMANDS:
+        text = alice_dict['2_chap_3_2_2_2_1_2']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_2']['tts']
+        req_save['save'] = 'chap2_3_0'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
         return message_help(req_save, version)
