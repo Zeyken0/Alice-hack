@@ -401,3 +401,133 @@ def chap2_7(req_save, command, intent, user_id):
         new_save = {'accept': 'chap2_7_x', 'reject': ''}
         return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                       new_save=new_save)
+def chap2_7_x(req_save, command, intent, user_id):
+    COMMANDS_1 = ['']
+    COMMANDS_2 = ['']
+    text = alice_dict['2_chap_7_2']['text']
+    tts = alice_dict['2_chap_7_2']['tts']
+    text_reject = alice_dict['2_chap_7_1']['text']
+    tts_reject = alice_dict['2_chap_7_1']['tts']
+    new_save = {'accept': 'chap2_7_2_fight', 'reject': 'chap2_7_1'}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS_1, text=text, tts=tts,
+                                  reject_enable=True, reject_commands=COMMANDS_2, text_reject=text_reject,
+                                  tts_reject=tts_reject, new_save=new_save)
+
+
+def chap2_7_1(req_save, command, intent, user_id):
+    COMMANDS = ['отправиться в пещеру']
+    text = alice_dict['2_chap_7_2']['text']
+    tts = alice_dict['2_chap_7_2']['tts']
+    new_save = {'accept': 'chap2_7_2_fight', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_7_2_fight(req_save, command, intent, user_id):
+    COMMANDS_1 = ['мощная атака']
+    COMMANDS_2 = ['слабая атака']
+    COMMANDS_3 = ['отдохнуть']
+    if command in COMMANDS_1:
+        if req_save['stamina'] < 30:
+            text = 'Вы устали, можете немного отдохнуть или ударить лёгкой атакой'
+            tts = 'Вы устали, можете немного отдохнуть или ударить лёгкой атакой'
+            req_save['save'] = 'chap2_7_2_fight'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        else:
+            if random.random() < 0.5:  # v1 тяжелая
+                text = 'Тяжелая атака v1(-0)'
+                tts = 'Тяжелая атака v1(-0)'
+                if random.random() < 0.5:
+                    text += 'Ответ v1(-0)'
+                    tts += 'Ответ v1(-0)'
+                else:
+                    text += 'Ответ v2(-4)'
+                    tts += 'Ответ v2(-4)'
+                    req_save['health'] -= 4
+                if req_save['health'] <= 5:
+                    text = alice_dict['2_chap_8']['text']
+                    tts = alice_dict['2_chap_8']['tts']
+                    req_save['save'] = 'chap2_9'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+                else:
+                    req_save['save'] = 'chap2_7_2_fight'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+            else:
+                text = 'Тяжелая атака v2(-4)'
+                tts = 'Тяжелая атака v2(-4)'
+                if random.random() < 0.5:
+                    text += 'Ответ v1(-0)'
+                    tts += 'Ответ v1(-0)'
+                else:
+                    text += 'Ответ v2(-4)'
+                    tts += 'Ответ v2(-4)'
+                    req_save['health'] -= 4
+                if req_save['health'] <= 5:
+                    text = alice_dict['2_chap_8']['text']
+                    tts = alice_dict['2_chap_8']['tts']
+                    req_save['save'] = 'chap2_9'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+                else:
+                    req_save['save'] = 'chap2_7_2_fight'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_2:
+        if req_save['stamina'] < 15:
+            text = 'Вы слишком устали, вам нужно отдохнуть'
+            tts = 'Вы слишком устали, вам нужно отдохнуть'
+            req_save['save'] = 'chap2_7_2_fight'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        else:
+            if random.random() < 0.5:  # v1 лёгкая
+                text = 'Лёгкая атака v1(-0)'
+                tts = 'Лёгкая атака v1(-0)'
+                if random.random() < 0.5:
+                    text += 'Ответ v1(-0)'
+                    tts += 'Ответ v1(-0)'
+                else:
+                    text += 'Ответ v2(-4)'
+                    tts += 'Ответ v2(-4)'
+                    req_save['health'] -= 4
+                if req_save['health'] <= 5:
+                    text = alice_dict['2_chap_8']['text']
+                    tts = alice_dict['2_chap_8']['tts']
+                    req_save['save'] = 'chap2_9'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+                else:
+                    req_save['save'] = 'chap2_7_2_fight'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+            else:
+                text = 'Лёгкая атака v2(-2)'
+                tts = 'Лёгкая атака v2(-2)'
+                if random.random() < 0.5:
+                    text += 'Ответ v1(-0)'
+                    tts += 'Ответ v1(-0)'
+                else:
+                    text += 'Ответ v2(-4)'
+                    tts += 'Ответ v2(-4)'
+                    req_save['health'] -= 4
+                if req_save['health'] <= 5:
+                    text = alice_dict['2_chap_8']['text']
+                    tts = alice_dict['2_chap_8']['tts']
+                    req_save['save'] = 'chap2_9'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+                else:
+                    req_save['save'] = 'chap2_7_2_fight'
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_3:
+        if req_save['stamina']>60:
+            text='Вы хорошо отдохнули'
+            tts='Вы хорошо отдохнули'
+            req_save['health'] -= 2
+            req_save['stamina'] = 100
+            req_save['save'] = 'chap2_7_2_fight'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        else:
+            req_save['health'] -= 2
+            req_save['stamina'] += 40
+            text = 'Вы немного отдышались'
+            tts = 'Вы немного отдышались'
+            req_save['save'] = 'chap2_7_2_fight'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help('2_chap_7_2', version)
+  
