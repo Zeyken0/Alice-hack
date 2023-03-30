@@ -355,3 +355,20 @@ def chap2_4(req_save, command, intent, user_id):
     new_save = {'accept': 'chap2_5', 'reject': ''}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save)
+
+def chap2_5(req_save, command, intent, user_id):
+    COMMANDS = ['помочь']
+    text = alice_dict['2_chap_5']['text']
+    tts = alice_dict['2_chap_5']['tts']
+    new_save = {'accept': 'chap2_6', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_6(req_save, command, intent, user_id):
+    COMMANDS = ['открыть инвентарь']
+    text = alice_dict['2_chap_6']['text']
+    tts = alice_dict['2_chap_6']['tts']
+    new_save = {'accept': 'chap2_7', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
