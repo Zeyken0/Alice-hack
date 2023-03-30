@@ -372,3 +372,32 @@ def chap2_6(req_save, command, intent, user_id):
     new_save = {'accept': 'chap2_7', 'reject': ''}
     return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
                                   new_save=new_save)
+
+
+def chap2_7(req_save, command, intent, user_id):
+    gear_dict = { #ДОПИСАТЬ ВЕЩИ!!!! НЕТУ ПРОВЕРКИ НА ОРУЖИЕ
+        'Потрепанный шлем': ('helmet',),
+        'Потрепанный нагрудник': ('chest',)
+    }
+    all_items_boolean = False
+    for gear, keys in gear_dict.items():
+        if gear in command:
+            if keys[0] == 'axe' or keys[0] == 'sword':
+                req_save["other"]['weapon'][keys[0]]["broken"]["activity"] = True
+                req_save["other"]['weapon'][keys[0]]["broken"]["is_gear"] = True
+                break
+            else:
+                req_save["other"]['armor'][keys[0]]["broken"]["activity"] = True
+                req_save["other"]['armor'][keys[0]]["broken"]["is_gear"] = True
+                break
+        if req_save["other"]['armor'][keys[0]]["broken"]["is_gear"]:
+            all_items_boolean = True
+        else:
+            all_items_boolean = False
+    if all_items_boolean:
+        COMMANDS = ['']
+        text = alice_dict['2_chap_7']['text']
+        tts = alice_dict['2_chap_7']['tts']
+        new_save = {'accept': 'chap2_7_x', 'reject': ''}
+        return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                      new_save=new_save)
