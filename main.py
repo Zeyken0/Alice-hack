@@ -166,8 +166,7 @@ def start(event, context):
                 "power": 2,
                 "mana": 0,
                 "score": 0,
-                "inventory": {},
-                "other": {"trader": False, "knife": False, "armor": {'helmet': {
+                "inventory": { "armor": {'helmet': {
                     'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False},
                 },
                     'chest': {
@@ -179,14 +178,15 @@ def start(event, context):
                     'boots': {
                         'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False},
                     }},
-                          "weapon": {
-                              "axe": {
+                 "weapon": {
+                     "axe": {
                                   'broken': {'name': 'Потрескавшийся меч', 'activity': False, 'is_gear': False}
                               },
-                              "sword": {
+                     "sword": {
                                   'broken': {'name': 'Самодельный топор', 'activity': False, 'is_gear': False}
                               },
-                          }}
+                          }},
+                "other": {"trader": False, "knife": False}
             }
             COLLECTION.insert_one(user)
             text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
