@@ -531,3 +531,29 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
     else:
         return message_help('2_chap_7_2', version)
   
+def chap2_9(req_save, command, intent, user_id):
+    COMMANDS = ['расспросить']
+    text = alice_dict['2_chap_9']['text']
+    tts = alice_dict['2_chap_9']['tts']
+    new_save = {'accept': 'chap2_10', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_10(req_save, command, intent, user_id):
+    COMMANDS = ['начать убираться']
+    text = alice_dict['2_chap_10']['text']
+    tts = alice_dict['2_chap_10']['tts']
+    new_save = {'accept': 'chap2_11', 'reject': ''}
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
+
+
+def chap2_11(req_save, command, intent, user_id):
+    COMMANDS = ['лечь спать']
+    text = alice_dict['2_chap_11']['text']
+    tts = alice_dict['2_chap_11']['tts']
+    new_save = {'accept': 'chap2_12', 'reject': ''}
+    # СОХРАНЕНИЕ
+    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
+                                  new_save=new_save)
