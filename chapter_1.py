@@ -1,7 +1,7 @@
-from dialogs import message_sent, d_start_0, message_sent_with_card
+from dialogs import message_sent, message_sent_with_card
 from help_dialogs import message_help, confirm_reject_handler, confirm_reject_handler_with_card
 from config import *
-from alice_says import alice_dict
+from Replicas.alice_says import alice_dict
 import random
 
 version = "1.0"

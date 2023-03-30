@@ -21,6 +21,7 @@ def d_start_0(text, tts, version):
         },
         "session_state": {
             "save": "start",
+            "chapter" "chapter_1"
             "name": "default",
             "health": 6,
             "power": 2,
@@ -32,7 +33,6 @@ def d_start_0(text, tts, version):
         "version": version
     }
     return response
-
 
 def message_sent(text, tts, version, save, end_session=False, buttons=[]):
     response = {
@@ -49,6 +49,7 @@ def message_sent(text, tts, version, save, end_session=False, buttons=[]):
         },
         "session_state": {
             "save": save["save"],
+            "chapter": save["chapter"],
             "name": save["name"],
             "health": save["health"],
             "power": save["power"],
@@ -77,6 +78,7 @@ def message_sent_with_card(text, tts, version, save, end_session=False, buttons=
         },
         "session_state": {
             "save": save["save"],
+            "chapter": save["chapter"],
             "name": save["name"],
             "health": save["health"],
             "power": save["power"],

@@ -4,7 +4,7 @@ from config import *
 from dialogs import message_sent, d_start_0
 
 version = "1.0"
-saves = {
+chapter1 = {
     "start": chapter_1.start_1,
     "start_1": chapter_1.start_2,
     "start_2": chapter_1.start_3,
@@ -86,8 +86,10 @@ saves = {
     "chap_25_1": chapter_1.chap_25_1,
     "chap_25_2": chapter_1.chap_25_2,
     "chap_25_1_2": chapter_1.chap_25_1_2,
-
     "chap2": chapter_2.chap2,
+}
+
+chapter2 = {
     "chap2_1_x": chapter_2.chap2_1_x,
     "chap2_2": chapter_2.chap2_2,
     "chap2_3_x": chapter_2.chap2_3_x,
@@ -122,7 +124,6 @@ saves = {
     "chap2_3_2_1_2_2_1x": chapter_2.chap2_3_end,
     "chap2_3_0": chapter_2.chap2_3_0,
     "chap2_4": chapter_2.chap2_4,
-
 }
 
 # Сделать сохранения
@@ -135,6 +136,7 @@ def start(event, context):
         if "save" in event["state"]["session"]:
             req_save = {
                 "save": event["state"]["session"]["save"],
+                "chapter": event["state"]["session"]["chapter"],
                 "name": event["state"]["session"]["name"],
                 "health": event["state"]["session"]["health"],
                 "power": event["state"]["session"]["power"],
@@ -143,13 +145,23 @@ def start(event, context):
                 "inventory": event["state"]["session"]["inventory"],
                 "other": event["state"]["session"]["other"],
             }
-            if req_save["save"] in saves:
-                return saves[req_save["save"]](req_save, command, intent, user_id)
+            if req_save["chapter"] == "chapter_1":
+                if req_save["save"] in chapter1:
+                    return chapter1[req_save["save"]](req_save, command, intent, user_id)
+                else:
+                    return message_sent(text="чо", tts="чо", version=version, save=req_save)
+
+            elif req_save["chapter"] == "chapter_2":
+                if req_save["save"] in chapter2:
+                    return chapter2[req_save["save"]](req_save, command, intent, user_id)
+                else:
+                    return message_sent(text="чо", tts="чо", version=version, save=req_save)
         elif COLLECTION.count_documents({"id": user_id}) == 0:
             user = {
                 "id": user_id,
                 "name": "default",
                 "save": "",
+                "chapter": "",
                 "health": 6,
                 "power": 2,
                 "mana": 0,
@@ -169,6 +181,7 @@ def start(event, context):
             save = {
                 "save": COLLECTION.find_one({"id": user_id})["save"],
                 "name": COLLECTION.find_one({"id": user_id})["name"],
+                "chapter": COLLECTION.find_one({"id": user_id})["chapter"],
                 "health": COLLECTION.find_one({"id": user_id})["health"],
                 "power": COLLECTION.find_one({"id": user_id})["power"],
                 "mana": COLLECTION.find_one({"id": user_id})["mana"],
@@ -176,8 +189,9 @@ def start(event, context):
                 "inventory": COLLECTION.find_one({"id": user_id})["inventory"],
                 "other": COLLECTION.find_one({"id": user_id})["other"],
             }
-            text = '''"Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"'''
-            tts = '''"Рады тебя снова видеть в Саге Битв и Приключений. Ты готов продолжить?"'''
+
+            text = '''Рады тебя снова видеть в Саге Битв и Приключений. Загрузить последнее сохранение или начать игру сначала?'''
+            tts = '''Рады тебя снова видеть в Саге Битв и Приключений. Загрузить последнее сохранение или начать игру сначала?'''
             return message_sent(text=text, tts=tts, version=version, save=save)
     elif command == "выход":
         text = 'Удачи!!'
@@ -187,6 +201,7 @@ def start(event, context):
     else:
         req_save = {
             "save": event["state"]["session"]["save"],
+            "chapter": event["state"]["session"]["chapter"],
             "name": event["state"]["session"]["name"],
             "health": event["state"]["session"]["health"],
             "power": event["state"]["session"]["power"],
@@ -195,7 +210,42 @@ def start(event, context):
             "inventory": event["state"]["session"]["inventory"],
             "other": event["state"]["session"]["other"],
         }
-        if req_save["save"] in saves:
-            return saves[req_save["save"]](req_save, command, intent, user_id)
-        else:
-            return message_sent(text="чо", tts="чо", version=version, save=req_save)
+        if "RESTART" in intent:
+            req_save['save'] = 'RESTART' + req_save['save']
+            text = "Вы уверены, что хотите начать игру сначала? Весь прогресс будет потерян!"
+            tts = "Вы уверены, что хотите начать игру сначала? Весь прогресс будет потерян!"
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        if req_save['save'] == "RESTART":
+            if "YANDEX.COMPLETE" in intent:
+                user = {
+                    "id": user_id,
+                    "name": "default",
+                    "save": "",
+                    "chapter": "",
+                    "health": 6,
+                    "power": 2,
+                    "mana": 0,
+                    "score": 0,
+                    "inventory": {},
+                    "other": {"trader": False, "knife": False}
+                }
+                COLLECTION.update_one({"id": user_id}, {"$set": user})
+                text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
+                tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
+                return d_start_0(text, tts, version)
+            elif "YANDEX.REJECT" in intent:
+                req_save['save'] = req_save['save'].replace("RESTART", "")
+                text = '''Загрузка... Для продолжения скажите "Начать"'''
+                tts = '''Загрузка... sil <[500]> Для продолжения скажите "Начать'''
+                return message_sent(text=text, tts=tts, version=version, save=req_save)
+        if req_save["chapter"] == "chapter_1":
+            if req_save["save"] in chapter1:
+                return chapter1[req_save["save"]](req_save, command, intent, user_id)
+            else:
+                return message_sent(text="чо", tts="чо", version=version, save=req_save)
+
+        elif req_save["chapter"] == "chapter_2":
+            if req_save["save"] in chapter2:
+                return chapter2[req_save["save"]](req_save, command, intent, user_id)
+            else:
+                return message_sent(text="чо", tts="чо", version=version, save=req_save)

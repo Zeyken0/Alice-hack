@@ -1,14 +1,13 @@
-from dialogs import message_sent, d_start_0, message_sent_with_card
-from help_dialogs import message_help, confirm_reject_handler, confirm_reject_handler_with_card
-from config import *
-from alice_says import alice_dict
-import random
+from dialogs import message_sent
+from help_dialogs import message_help, confirm_reject_handler
+from Replicas.alice_says import alice_dict
 
 version = "1.0"
 
 
 def chap2(req_save, command, intent, user_id):
     req_save['save'] = 'chap2_1_x'
+    req_save['chapter'] = 'chapter_2'
     text = alice_dict['2_chap']['text']
     tts = alice_dict['2_chap']['tts']
     return message_sent(text=text, tts=tts, version=version, save=req_save)

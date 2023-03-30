@@ -1,4 +1,4 @@
-from dictionary import main_data
+from Replicas.dictionary import main_data
 from dialogs import message_sent, message_sent_with_card
 
 
@@ -14,6 +14,7 @@ def message_help(req_save, version):
         },
         "session_state": {
             "save": req_save["save"],
+            "chapter": req_save["chapter"],
             "name": req_save["name"],
             "health": req_save["health"],
             "power": req_save["power"],
@@ -35,6 +36,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         if "YANDEX.REJECT" in intent or reject_command in reject_commands:
             save = {
                 "save": new_save['reject'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -47,6 +49,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         elif "YANDEX.REJECT" not in intent and reject_command in reject_commands:
             save = {
                 "save": new_save['reject'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -59,6 +62,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         elif ("YANDEX.CONFIRM" in intent) or (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -71,6 +75,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -86,6 +91,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         if ("YANDEX.CONFIRM" in intent) or (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -98,6 +104,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -120,6 +127,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         if "YANDEX.REJECT" in intent or command in reject_commands:
             save = {
                 "save": new_save['reject'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -132,6 +140,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         elif "YANDEX.REJECT" not in intent and command in reject_commands:
             save = {
                 "save": new_save['reject'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -144,6 +153,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         elif ("YANDEX.CONFIRM" in intent) or (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -156,6 +166,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -171,6 +182,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         if ("YANDEX.CONFIRM" in intent) or (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
@@ -183,6 +195,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
         elif ("YANDEX.CONFIRM" not in intent) and (command in text_commands):
             save = {
                 "save": new_save['accept'],
+                "chapter": req_save["chapter"],
                 "name": req_save["name"],
                 "health": req_save["health"],
                 "power": req_save["power"],
