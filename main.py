@@ -186,7 +186,9 @@ def start(event, context):
                                   'broken': {'name': 'Самодельный топор', 'activity': False, 'is_gear': False}
                               },
                           }},
-                "other": {"trader": False, "knife": False}
+                "other": {"trader": False, "knife": False, "runes":{"fire": False,
+                                                                   "water": False,
+                                                                   "earth": False}}
             }
             COLLECTION.insert_one(user)
             text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
