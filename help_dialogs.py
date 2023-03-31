@@ -19,6 +19,7 @@ def message_help(req_save, version):
             "health": req_save["health"],
             "power": req_save["power"],
             "mana": req_save["mana"],
+            "stamina": req_save["stamina"],
             "score": req_save["score"],
             "inventory": req_save["inventory"],
             "other": req_save["other"]
@@ -41,6 +42,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -54,6 +56,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -67,6 +70,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -80,6 +84,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -96,6 +101,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -109,6 +115,7 @@ def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, 
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -132,6 +139,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -145,6 +153,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -158,6 +167,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -171,6 +181,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -187,6 +198,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
@@ -200,6 +212,7 @@ def confirm_reject_handler_with_card(req_save, command, intent, text_commands, t
                 "health": req_save["health"],
                 "power": req_save["power"],
                 "mana": req_save["mana"],
+                "stamina": req_save["stamina"],
                 "score": req_save["score"],
                 "inventory": req_save["inventory"],
                 "other": req_save["other"]
