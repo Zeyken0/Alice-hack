@@ -580,7 +580,7 @@ def chap2_10(req_save, command, intent, user_id):
 
 
 def chap2_11(req_save, command, intent, user_id):
-    COMMANDS = ['лечь спать']
+    COMMANDS = ['лечь спать', 'загрузить последнее сохранение']
     text = alice_dict['2_chap_11']['text']
     tts = alice_dict['2_chap_11']['tts']
     new_save = {'accept': 'chap2_12', 'reject': ''}
@@ -670,21 +670,56 @@ def chap2_16_x(req_save, command, intent, user_id):
     COMMANDS_1 = ['земля']
     COMMANDS_2 = ['вода']
     COMMANDS_3 = ['огонь']
+    water = req_save['other']['runes']['water']
+    fire = req_save['other']['runes']['fire']
+    terra = req_save['other']['runes']['earth']
     if command in COMMANDS_1:
-        text = alice_dict['2_chap_16_1x']['text']
-        tts = alice_dict['2_chap_16_1x']['tts']
-        req_save['save'] = 'chap2_17'
+        if terra and fire:
+            text = alice_dict['2_chap_16_2x']['text'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            tts = alice_dict['2_chap_16_2x']['tts'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            req_save['save'] = 'chap2_17'
+        elif not terra and fire:
+            text = alice_dict['2_chap_16_2x']['text'] + '''Зажжешь руну земли?'''
+            tts = alice_dict['2_chap_16_2x']['tts'] + '''Зажжешь руну земли?'''
+            req_save['save'] = 'chap2_16_x'
+        elif terra and not fire:
+            text = alice_dict['2_chap_16_2x']['text'] + '''Зажжешь руну огня?'''
+            tts = alice_dict['2_chap_16_2x']['tts'] + '''Зажжешь руну огня?'''
+            req_save['save'] = 'chap2_16_x'
+        else:
+            text = 'Вторая руна зажжена! Использовать "Землю" или "Огонь"'
+            tts = 'Вторая руна зажжена! Использовать "Землю" или "Огонь"'
+            req_save['save'] = 'chap2_16_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif command in COMMANDS_2:
-        text = alice_dict['2_chap_16_2x']['text']
-        tts = alice_dict['2_chap_16_2x']['tts']
-        req_save['save'] = 'chap2_17'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
-    elif command in COMMANDS_3:
-        text = alice_dict['2_chap_16_3x']['text']
-        tts = alice_dict['2_chap_16_3x']['tts']
+        text = alice_dict['2_chap_16_3x']
+        tts = alice_dict['2_chap_16_3x']
         req_save['save'] = 'chap2_16_3x_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
+    elif command in COMMANDS_3:
+        if water and fire:
+            text = alice_dict['2_chap_16_1x']['text'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            tts = alice_dict['2_chap_16_1x']['tts'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            req_save['save'] = 'chap2_17'
+        elif not water and fire:
+            text = alice_dict['2_chap_16_1x']['text'] + '''Зажжешь руну воды?'''
+            tts = alice_dict['2_chap_16_1x']['tts'] + '''Зажжешь руну воды?'''
+            req_save['save'] = 'chap2_16_x'
+        elif water and not fire:
+            text = alice_dict['2_chap_16_1x']['text'] + '''Зажжешь руну огня?'''
+            tts = alice_dict['2_chap_16_1x']['tts'] + '''Зажжешь руну огня?'''
+            req_save['save'] = 'chap2_16_x'
+        else:
+            text = 'Вторая руна зажжена! Использовать "Воду" или "Огонь".'
+            tts = 'Вторая руна зажжена! Использовать "Воду" или "Огонь".'
+            req_save['save'] = 'chap2_16_x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        return message_help(req_save, version)
 
 
 def chap2_16_3x_x(req_save, command, intent, user_id):
@@ -694,10 +729,26 @@ def chap2_16_3x_x(req_save, command, intent, user_id):
         text = alice_dict['2_chap_16_3x_1x']['text']
         tts = alice_dict['2_chap_16_3x_1x']['tts']
         req_save['save'] = 'chap2_11'  # загрузка последнего сохранения
-        # ЗДЕСЬ НЕПРАВИЛЬНО НАПИСАНО
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif command in COMMANDS_2:
-        text = alice_dict['2_chap_16_3x_x']['text']
-        tts = alice_dict['2_chap_16_3x_x']['tts']
-        req_save['save'] = 'chap2_17'
+        water = req_save['other']['runes']['water']
+        terra = req_save['other']['runes']['earth']
+        if water and terra:
+            text = alice_dict['2_chap_16_3x_x']['text'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            tts = alice_dict['2_chap_16_3x_x']['tts'] + '''Все руны загораются, но никаких изменений не происходит.
+             Прикоснуться к стене?'''
+            req_save['save'] = 'chap2_17'
+        elif not water and terra:
+            text = alice_dict['2_chap_16_3x_x']['text'] + '''Зажжешь руну воды?'''
+            tts = alice_dict['2_chap_16_3x_x']['tts'] + '''Зажжешь руну воды?'''
+            req_save['save'] = 'chap2_16_x'
+        elif water and not terra:
+            text = alice_dict['2_chap_16_3x_x']['text'] + '''Зажжешь руну земли?'''
+            tts = alice_dict['2_chap_16_3x_x']['tts'] + '''Зажжешь руну земли?'''
+            req_save['save'] = 'chap2_16_x'
+        else:
+            text = 'Вторая руна зажжена! Использовать "Землю" или "Воду".'
+            tts = 'Вторая руна зажжена! Использовать "Землю" или "Воду".'
+            req_save['save'] = 'chap2_16_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
