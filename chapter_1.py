@@ -149,7 +149,7 @@ def chap_1(req_save, command, intent, user_id):
                     "text": "Продолжить мотать срок?",
                 }
             }
-            return message_sent_with_card(text=text, tts=tts, save=req_save, version=version)
+            return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
         else:
             card = {
                 "type": "ItemsList",
