@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
-from dialogs import message_sent
-from help_dialogs import message_help, confirm_reject_handler
+from dialogs import message_sent, message_sent_with_card
+from help_dialogs import message_help, confirm_reject_handler, , confirm_reject_handler_with_card
 from Replicas.alice_says import alice_dict
 import random
 
@@ -35,7 +35,34 @@ def chap2_2(req_save, command, intent, user_id): # СПИСОК
         text = alice_dict['2_chap_2']['text']
         tts = alice_dict['2_chap_2']['tts']
         req_save['save'] = 'chap2_3_x'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
+        card = {
+            "type": "ItemsList",
+            "header": {
+                "text": text,
+            },
+            "items": [
+                {
+                    "image_id": Health_icon,
+                    "title": "Здоровье",
+                    "description": f"{req_save['health']}",
+                },
+                {
+                    "image_id": Power_icon,
+                    "title": "Сила",
+                    "description": f"{req_save['power']}",
+                },
+
+                {
+                    "image_id": Mana_icon,
+                    "title": "Мана",
+                    "description": f"{req_save['mana']}",
+                },
+            ],
+            "footer": {
+                "text": 'Перед вами 3 неизвестных дороги. Куда решите пойти: "Вперед", "Влево", "Вправо"',
+            }
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     else:
         return message_help(req_save, version)
 
@@ -128,7 +155,20 @@ def chap2_3_3_2_1(req_save, command, intent, user_id):
         text = alice_dict['2_chap_3_3_2_1']['text']
         tts = alice_dict['2_chap_3_3_2_1']['tts']
         req_save['save'] = 'chap2_3_3_2_2'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
+        card = {
+            "type": "ItemsList",
+            "header": {
+                "text": text,
+            },
+            "items": [
+                {
+                    "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
+                    "title": "Самодельный топор",
+                    "description": "Хорош для всех рубящих ударов",
+                },
+            ]
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     else:
         return message_help(req_save, version)
 
@@ -174,7 +214,20 @@ def chap2_3_2_1_x(req_save, command, intent, user_id):
         text = alice_dict['2_chap_3_2_1_1']['text']
         tts = alice_dict['2_chap_3_2_1_1']['tts']
         req_save['save'] = 'chap2_3_2_1_2'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
+        card = {
+            "type": "ItemsList",
+            "header": {
+                "text": text,
+            },
+            "items": [
+                {
+                    "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
+                    "title": "Самодельный топор",
+                    "description": "Хорош для всех рубящих ударов",
+                },
+            ]
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     elif "chap2_3_2_1_x.TAKE" in intent:
         text = alice_dict['2_chap_3_2_1_2']['text']
         tts = alice_dict['2_chap_3_2_1_2']['tts']
@@ -275,7 +328,20 @@ def chap2_3_2_2_2_1x(req_save, command, intent, user_id):
         text = alice_dict['2_chap_3_2_2_2_1_1']['text']
         tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
         req_save['save'] = 'chap2_3_2_2_2_1_0'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
+        card = {
+            "type": "ItemsList",
+            "header": {
+                "text": text,
+            },
+            "items": [
+                {
+                    "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
+                    "title": "Самодельный топор",
+                    "description": "Хорош для всех рубящих ударов",
+                },
+            ]
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     elif "chap2_3_2_2_2_1x.EAT" in intent:
         text = alice_dict['2_chap_3_2_2_2_1']['text']
         tts = alice_dict['2_chap_3_2_2_2_1']['tts']
@@ -365,8 +431,48 @@ def chap2_6(req_save, command, intent, user_id):################################
     text = alice_dict['2_chap_6']['text']
     tts = alice_dict['2_chap_6']['tts']
     new_save = {'accept': 'chap2_7', 'reject': ''}
-    return confirm_reject_handler(req_save, "chap2_6", intent, text_commands=intent, text=text, tts=tts,
-                                  new_save=new_save)
+    card = {
+        "type": "ItemsList",
+        "header": {
+            "text": text,
+        },
+        "items": [
+            {
+                "image_id": req_save['inventory']['armor']['helmet']['broken']['img'],
+                "title": "Потрепанный шлем",
+                "description": "",
+            },
+            {
+                "image_id": req_save['inventory']['armor']['chest']['broken']['img'],
+                "title": "Потрепанный нагрудник",
+                "description": "",
+            },
+
+            {
+                "image_id": req_save['inventory']['armor']['shorts']['broken']['img'],
+                "title": "Потрепанные поножи",
+                "description": "",
+            },
+            {
+                "image_id": req_save['inventory']['armor']['boots']['broken']['img'],
+                "title": "Потрепанные ботинки",
+                "description": "",
+            },
+            {
+                "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
+                "title": "Самодельный топор",
+                "description": "Хорош для всех рубящих ударов",
+            },
+
+            {
+                "image_id": req_save['inventory']['weapon']['sword']['broken']['img'],
+                "title": "Потрескавшийся меч",
+                "description": "",
+            },
+        ]
+    }
+    return confirm_reject_handler_with_card(req_save, "chap2_6", intent, text_commands=intent, text=text, tts=tts,
+                                  new_save=new_save, card=card)
 
 def chap2_7(req_save, command, intent, user_id):
     gear_dict = {  # ПРОВЕРИТЬ
