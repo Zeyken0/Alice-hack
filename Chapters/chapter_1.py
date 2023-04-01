@@ -5,9 +5,13 @@ from Replicas.alice_says import alice_dict
 import random
 
 version = "1.0"
+Health_icon = "1030494/f96c26a03ebbba705608"
+Power_icon = "213044/4d285fda066e9ae61952"
+Mana_icon = "997614/844a30f69150fb050ed6"
+Stamina_icon = "1540737/7e3905e7d3c850e8d514"
 
 def start_1(req_save, command, intent, user_id):
-    if "start_1.START" in intent:
+    if "start_1.START" in intent or "YANDEX.CONFIRM" in intent:
         req_save['save'] = 'start_1'
         text = alice_dict['start_1']['text']
         tts = alice_dict['start_1']['tts']

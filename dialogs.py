@@ -21,7 +21,7 @@ def d_start_0(text, tts, version):
         },
         "session_state": {
             "save": "start",
-            "chapter" "chapter_1"
+            "chapter": "chapter_1",
             "name": "default",
             "health": 6,
             "power": 2,

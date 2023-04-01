@@ -6,12 +6,6 @@ CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?re
 DB = CLUSTER["AlisaBase"]
 COLLECTION = DB["users"]
 
-Health_icon = "1030494/f96c26a03ebbba705608"
-Power_icon = "213044/4d285fda066e9ae61952"
-Mana_icon = "997614/844a30f69150fb050ed6"
-Stamina_icon = "1540737/7e3905e7d3c850e8d514"
-
-
 USER = {
     "id": "",
     "name": "default",

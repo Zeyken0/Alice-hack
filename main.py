@@ -11,7 +11,7 @@ def start(event, context):
     user_id = event["session"]["user"]["user_id"]
     if original_utterance == "":
         if COLLECTION.count_documents({"id": user_id}) == 0:
-            USER["user_id"] = user_id
+            USER["id"] = user_id
             COLLECTION.insert_one(USER)
             text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
             tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
@@ -406,7 +406,7 @@ def start(event, context):
 
         elif req_save['save'] == "RESTART":
             if "YANDEX.COMPLETE" in intent:
-                USER["user_id"] = user_id
+                USER["id"] = user_id
                 COLLECTION.update_one({"id": user_id}, {"$set": USER})
                 text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
                 tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
