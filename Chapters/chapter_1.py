@@ -1079,13 +1079,10 @@ def chap_25_1_2(req_save, command, intent, user_id):
         DB = CLUSTER["AlisaBase"]
         COLLECTION = DB["users"]
         COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
-        text = '''Добро пожаловать во вторую главу "Приключения только начинаются!".
-        Неизвестно, сколько часов вы уже бежите.
-        Хотите остановиться?'''
-        tts = '''Добро пожаловать во вторую главу "Приключения только начинаются!".
-        Неизвестно, сколько часов вы уже бежите.
-        Хотите остановиться?'''
-        req_save['save'] = 'chap2'
+        req_save['save'] = 'chap2_1_x'
+        req_save['chapter'] = 'chapter_2'
+        text = alice_dict['2_chap']['text']
+        tts = alice_dict['2_chap']['tts']
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     else:
         return message_help(req_save, version)

@@ -1,5 +1,5 @@
 from pymongo import MongoClient
-from Quests import quest_1
+from Quests import quest_1, quest_2
 from Chapters import chapter_1, chapter_2
 
 CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
@@ -97,7 +97,7 @@ chapter1 = {
     "chap_12_1": chapter_1.chap_13_1,
     "chap_13": chapter_1.chap_13,
     "chap_13_0": chapter_1.chap_14,
-    "chap_13_4": chapter_1.chap_14,
+    "chap_13_4": chapter_1.chap_13_4,
     "chap_14": chapter_1.chap_15,
     "chap_15": chapter_1.chap_15,
     "chap_17": chapter_1.chap_17,
@@ -140,8 +140,8 @@ chapter2 = {
     "chap2_3_1x": chapter_2.chap2_3_1x,
     "chap2_3_2x": chapter_2.chap2_3_2x,
     "chap2_3_3x": chapter_2.chap2_3_3x,
-    "chap_2_3_1_1x": chapter_2.chap2_3_end,
-    "chap_2_3_1_2x": chapter_2.chap2_3_end,
+    "chap2_3_1_1x": chapter_2.chap2_3_end,
+    "chap2_3_1_x": chapter_2.chap2_3_end,
     "chap2_3_2_2": chapter_2.chap2_3_2_2,
     "chap2_3_2_2_2_0": chapter_2.chap2_3_2_2_2_0,
     "chap2_3_2_2_2_1_0": chapter_2.chap2_3_2_2_2_1_0,
@@ -205,16 +205,14 @@ quest = {
 }
 
 quest2 = {
-    "quest2": quest_2.quest2,
-    "quest2_1": quest_2.quest2_1,
+    "quest2_x": quest_2.quest2_x,
     "quest2_1_1": quest_2.quest2_1_1,
-    "quest2_2": quest_2.quest2_2,
-    "quest2_3": quest_2.quest2_3,
+    "quest2_3_x": quest_2.quest2_3_x,
     "quest2_4_x": quest_2.quest2_4_x,
     "quest2_4_1x": quest_2.quest2_4_1x,
-    "quest2_5_x": quest_2.quest2_5_x,
-    "quest2_5_1x": quest_2.quest2_5_1x,
+    "quest2_fight_n1": quest_2.quest2_fight_n1,
     "quest2_6": quest_2.quest2_6,
     "quest2_7": quest_2.quest2_7,
     "quest2_8": quest_2.quest2_8,
+    "quest2_end": quest_2.quest2_end,
 }

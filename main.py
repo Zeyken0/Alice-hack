@@ -98,15 +98,17 @@ def start(event, context):
             else:
                 return message_sent(text="Сейчас вы не можете вернуться в убежище!", tts="Сейчас вы не можете вернуться в убежище!", version=version, save=req_save)
 
-        # ТОП ИГРОКОВ (ДОДЕЛАТЬ)
+        # ТОП ИГРОКОВ
         elif "TOP" in intent:
             top = COLLECTION.find().sort("score", pymongo.DESCENDING).limit(10)
             text = 'Топ пользователей\n'
-            tts = 'Топ пользователей'
+            tts = 'Топ пользователей '
+            top_5 = []
             for i in top:
                 NAME = i['name']
                 SCORE = i['score']
-                text = text + "Имя: " + NAME + '\n' + "Очки: " + str(SCORE) + '\n'
+                top_5.append({"name": NAME, "score": SCORE})
+                tts += top_5[-1]['name'] + ' ' + str(top_5[-1]['score']) + ' очков. '
             card = {
                 "type": "ItemsList",
                 "header": {
@@ -114,53 +116,40 @@ def start(event, context):
                 },
                 "items": [
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Здоровье",
-                        "description": f"{req_save['health']}",
+                        "image_id": "1030494/8fe25497ac8140cccf83",
+                        "title": top_5[0]['name'],
+                        "description": f"{top_5[0]['score']} очков",
                     },
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Сила",
-                        "description": f"{req_save['power']}",
+                        "image_id": "1030494/8fe25497ac8140cccf83",
+                        "title": top_5[1]['name'],
+                        "description": f"{top_5[1]['score']} очков",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Мана",
-                        "description": f"{req_save['mana']}",
+                        "image_id": "1030494/8fe25497ac8140cccf83",
+                        "title": top_5[2]['name'],
+                        "description": f"{top_5[2]['score']} очков",
+                    },
+
+                    {
+                        "image_id": "1030494/8fe25497ac8140cccf83",
+                        "title": top_5[3]['name'],
+                        "description": f"{top_5[3]['score']} очков",
+                    },
+
+                    {
+                        "image_id": "1030494/8fe25497ac8140cccf83",
+                        "title": top_5[4]['name'],
+                        "description": f"{top_5[4]['score']} очков",
                     },
                 ]
             }
             return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
         # ОТКРЫТЬ ИНВЕНТАРЬ (ДОДЕЛАТЬ)
-        elif "INVENTORY" in intent and req_save["other"]["Menu"]:
-            text = "Ваш Инвентарь"
-            tts = f""
-            card = {
-                "type": "ItemsList",
-                "header": {
-                    "text": text,
-                },
-                "items": [
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Здоровье",
-                        "description": f"{req_save['health']}",
-                    },
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Сила",
-                        "description": f"{req_save['power']}",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Мана",
-                        "description": f"{req_save['mana']}",
-                    },
-                ]
-            }
+        elif "INVENTORY" in intent:
+            items = function(req_save)
             return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
         # НАДЕТЬ БРОНЮ
@@ -409,7 +398,7 @@ def start(event, context):
                 }
                 return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
-        elif req_save['save'] == "RESTART":
+        elif "RESTART" in req_save['save']:
             if "YANDEX.COMPLETE" in intent:
                 USER["id"] = user_id
                 COLLECTION.update_one({"id": user_id}, {"$set": USER})
@@ -455,6 +444,6 @@ def start(event, context):
 
         # МЕНЮ
         else:
-            text = ''' '''
-            tts = ''' '''
+            text = '''Для просмотра команд, скажите "Посмотреть команды"'''
+            tts = '''Для просмотра команд, скажите "Посмотреть команды"'''
             return message_sent(text=text, tts=tts, version=version, save=req_save)

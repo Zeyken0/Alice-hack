@@ -13,7 +13,7 @@ def quest2(req_save, command, intent, user_id):
 
 
 def quest2_x(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_x.CONFIRM" in intent:
         if req_save['other']['Map']:
             text = Quest_says['quest2_2']['text']
             tts = Quest_says['quest2_2']['tts']
@@ -36,12 +36,12 @@ def quest2_1_1(req_save, command, intent, user_id):
 
 
 def quest2_3_x(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_3_x" in intent:
         text = Quest_says['quest2_3']['text']
         tts = Quest_says['quest2_3']['tts']
         req_save['save'] = 'quest2_4_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
-    elif "YANDEX.REJECT" in intent or "" in intent:
+    elif "YANDEX.REJECT" in intent:
         text = 'Вы вернулись в убежище'
         tts = 'Вы вернулись в убежище'
         req_save['save'] = 'Home'
@@ -54,7 +54,7 @@ def quest2_4_x(req_save, command, intent, user_id):
     if "YANDEX.CONFIRM" in intent or "" in intent:
         text = Quest_says['quest2_4_1x']['text']
         tts = Quest_says['quest2_4_1x']['tts']
-        req_save['save'] = 'quest2_5x'
+        req_save['save'] = 'quest2_fight_n1'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "YANDEX.REJECT" in intent or "" in intent:
         text = Quest_says['quest2_4_x']['text']
@@ -66,7 +66,7 @@ def quest2_4_x(req_save, command, intent, user_id):
 
 
 def quest2_4_1x(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_4_1x" in intent:
         text = Quest_says['quest2_4_1x']['text']
         tts = Quest_says['quest2_4_1x']['tts']
         req_save['save'] = 'quest2_fight_n1'
@@ -76,10 +76,10 @@ def quest2_4_1x(req_save, command, intent, user_id):
 
 
 def quest2_fight_n1(req_save, command, intent, user_id):
-    if "" in intent:  # лёгкая
+    if "quest2_fight.EASY" in intent:  # лёгкая
         damage = random.randint(1, 3)
-        text = ""
-        tts = ""
+        text = "Вы нанесли Нечестивому " + str(damage) + ' урона'
+        tts = "Вы нанесли Нечестивому " + str(damage) + ' урона'
         enemy_answer = random.randint(1, 100)
         if enemy_answer < 35:  # temniy shit
             text += '''Нечестивый поднимает руку и создаёт из тёмной энергии щит, который защищает его от атаки.'''
@@ -101,11 +101,11 @@ def quest2_fight_n1(req_save, command, intent, user_id):
             text += '''Нечестивый касается вас своим жезлом и произносит заклинание "Проклятие слабости", вызывая у вас чувство слабости.'''
             tts += '''Нечестивый касается вас своим жезлом и произносит заклинание "Проклятие слабости", вызывая у вас чувство слабости.'''  # proklatie slabosti
         return message_sent(text=text, tts=tts, version=version, save=req_save)
-    elif "" in intent:  # тяжелая
+    elif "quest2_fight" in intent:  # тяжелая
         if req_save['stamina'] > 40:
             damage = random.randint(2, 5)
-            text = ""
-            tts = ""
+            text = "Вы нанесли Нечестивому " + str(damage) + ' урона'
+            tts = "Вы нанесли Нечестивому " + str(damage) + ' урона'
             enemy_answer = random.randint(1, 100)
             if enemy_answer < 35:  # temniy shit
                 text += '''Нечестивый поднимает руку и создаёт из тёмной энергии щит, который защищает его от атаки.'''
@@ -130,7 +130,7 @@ def quest2_fight_n1(req_save, command, intent, user_id):
             text = '''У вас недостаточно выносливости. Чтобы ее пополнить скажите "Отдохнуть"'''
             tts = '''У вас недостаточно выносливости. Чтобы ее пополнить скажите "Отдохнуть"'''
         return message_sent(text=text, tts=tts, version=version, save=req_save)
-    elif "" in intent:
+    elif "quest2_fight.RELAX" in intent:
         text = '''Вы восстановили 40 очков.
 Но противник зря времени не терял и нанес вам удар жезлом. -2 единицы здоровья.'''
         tts = '''Вы восстановили 40 очков.
@@ -147,7 +147,7 @@ def quest2_fight_n1(req_save, command, intent, user_id):
 
 # ВОТ ЗДЕСЬ ДОДЕЛАТЬ
 def quest2_end(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_end" in intent:
         text = 'Вы вернулись в убежище'
         tts = 'Вы вернулись в убежище'
         req_save['save'] = 'Home'
@@ -157,7 +157,7 @@ def quest2_end(req_save, command, intent, user_id):
 
 
 def quest2_6(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_6" in intent:
         text = Quest_says['quest2_6']['text']
         tts = Quest_says['quest2_6']['tts']
         req_save['save'] = 'quest2_7'
@@ -167,7 +167,7 @@ def quest2_6(req_save, command, intent, user_id):
 
 
 def quest2_7(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_7" in intent:
         text = Quest_says['quest2_7']['text']
         tts = Quest_says['quest2_7']['tts']
         req_save['save'] = 'quest2_8'
@@ -177,7 +177,7 @@ def quest2_7(req_save, command, intent, user_id):
 
 
 def quest2_8(req_save, command, intent, user_id):
-    if "YANDEX.CONFIRM" in intent or "" in intent:
+    if "YANDEX.CONFIRM" in intent or "quest2_8" in intent:
         req_save['other']['Book']['active'] = True
         req_save['save'] = 'Home'
         text = Quest_says['quest2_8']['text']

@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
 from dialogs import message_sent, message_sent_with_card
-from help_dialogs import message_help, confirm_reject_handler, , confirm_reject_handler_with_card
+from help_dialogs import message_help, confirm_reject_handler, confirm_reject_handler_with_card
 from Replicas.alice_says import alice_dict
 import random
 
@@ -91,12 +91,12 @@ def chap2_3_1x(req_save, command, intent, user_id):
     if "chap2_3_1x.GO" in intent:
         text = alice_dict['2_chap_3_1_1x']['text']
         tts = alice_dict['2_chap_3_1_1x']['tts']
-        req_save['save'] = 'chap_2_3_1_1x'
+        req_save['save'] = 'chap2_3_1_1x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_3_1x.LOOK_AROUND" in intent:
         text = alice_dict['2_chap_3_1_2x']['text']
         tts = alice_dict['2_chap_3_1_2x']['tts']
-        req_save['save'] = 'chap2_3_1_2x'
+        req_save['save'] = 'chap2_3_1_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
         return message_help(req_save, version)
@@ -370,7 +370,7 @@ def chap2_3_end(req_save, command, intent, user_id):
     if "chap2_3_end" in intent:
         text = alice_dict['2_chap']['text']
         tts = alice_dict['2_chap']['tts']
-        req_save['save'] = 'chap2_1x'
+        req_save['save'] = 'chap2_1_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
         return message_help(req_save, version)
