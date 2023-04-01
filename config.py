@@ -205,5 +205,16 @@ quest = {
 }
 
 quest2 = {
-
+    "quest2": quest_2.quest2,
+    "quest2_1": quest_2.quest2_1,
+    "quest2_1_1": quest_2.quest2_1_1,
+    "quest2_2": quest_2.quest2_2,
+    "quest2_3": quest_2.quest2_3,
+    "quest2_4_x": quest_2.quest2_4_x,
+    "quest2_4_1x": quest_2.quest2_4_1x,
+    "quest2_5_x": quest_2.quest2_5_x,
+    "quest2_5_1x": quest_2.quest2_5_1x,
+    "quest2_6": quest_2.quest2_6,
+    "quest2_7": quest_2.quest2_7,
+    "quest2_8": quest_2.quest2_8,
 }
