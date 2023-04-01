@@ -4,6 +4,8 @@ from config import *
 from Replicas.alice_says import alice_dict
 import random
 
+version = "1.0"
+
 def start_1(req_save, command, intent, user_id):
     if "start_1.START" in intent:
         req_save['save'] = 'start_1'

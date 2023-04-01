@@ -4,6 +4,8 @@ from config import *
 from Replicas.alice_says import alice_dict
 import random
 
+version = "1.0"
+
 def chap2(req_save, command, intent, user_id):
     req_save['save'] = 'chap2_1_x'
     text = alice_dict['2_chap']['text']

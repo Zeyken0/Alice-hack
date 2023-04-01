@@ -1,7 +1,7 @@
 from Replicas.Quest_says import Quest_says
 from help_dialogs import message_sent, quest_confirm_reject_handler, quest_message_help
 
-from config import version
+version = "1.0"
 
 def quest(req_save, command, intent, user_id):
     req_save['save'] = 'quest_2'

@@ -2,6 +2,8 @@ from config import *
 from dialogs import message_sent, d_start_0, message_sent_with_card
 import pymongo
 
+version = "1.0"
+
 def start(event, context):
     command = event['request']['command']
     original_utterance = event['request']['original_utterance']
