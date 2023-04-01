@@ -1,38 +1,7 @@
-from config import *
-from Quests.Quest_says import Quest_says
-from Quests.Quest_tips import Quest_tips
-from help_dialogs import message_sent, confirm_reject_handler
-import random
+from Replicas.Quest_says import Quest_says
+from help_dialogs import message_sent, quest_confirm_reject_handler, quest_message_help
 
-version = "1.0"
-
-#СДЕЛАТЬ НОРМАЛЬНО
-
-def message_help(req_save, version):
-    text = Quest_tips[req_save["save"]]['text']
-    tts = Quest_tips[req_save["save"]]['tts']
-    response = {
-        "response": {
-            "text": text,
-            "tts": tts,
-            "end_session": False,
-            "buttons": Quest_tips[req_save["save"]]['buttons']
-        },
-        "session_state": {
-            "save": req_save["save"],
-            "chapter": req_save["chapter"],
-            "name": req_save["name"],
-            "health": req_save["health"],
-            "power": req_save["power"],
-            "mana": req_save["mana"],
-            "stamina": req_save["stamina"],
-            "score": req_save["score"],
-            "inventory": req_save["inventory"],
-            "other": req_save["other"]
-        },
-        "version": version
-    }
-    return response
+from config import version
 
 def quest(req_save, command, intent, user_id):
     req_save['save'] = 'quest_2'
@@ -46,7 +15,7 @@ def quest_2(req_save, command, intent, user_id):
     text = Quest_says['quest_2']['text']
     tts = Quest_says['quest_2']['tts']
     new_save = {'accept': 'quest_3', 'reject': ''}
-    return confirm_reject_handler(req_save, "quest_2", intent, text_commands=intent, text=text, tts=tts, new_save=new_save)
+    return quest_confirm_reject_handler(req_save, "quest_2", intent, text_commands=intent, text=text, tts=tts, new_save=new_save)
 
 
 def quest_3(req_save, command, intent, user_id):
@@ -56,7 +25,7 @@ def quest_3(req_save, command, intent, user_id):
         req_save['save'] = 'quest_4_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 
 def quest_4_x(req_save, command, intent, user_id):
@@ -71,7 +40,7 @@ def quest_4_x(req_save, command, intent, user_id):
         req_save['save'] = 'quest_5_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 
 def quest_5_x(req_save, command, intent, user_id):
@@ -86,7 +55,7 @@ def quest_5_x(req_save, command, intent, user_id):
         req_save['save'] = 'quest_6_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 
 def quest_6_x(req_save, command, intent, user_id):
@@ -95,7 +64,7 @@ def quest_6_x(req_save, command, intent, user_id):
     text_reject = Quest_says['quest_6_1x']['text']
     tts_reject = Quest_says['quest_6_1x']['tts']
     new_save = {'accept': 'quest_7_x', 'reject': 'quest_end'}
-    return confirm_reject_handler(req_save, "quest_6_x.OUT", intent, text_commands=intent, text=text, tts=tts,
+    return quest_confirm_reject_handler(req_save, "quest_6_x.OUT", intent, text_commands=intent, text=text, tts=tts,
                                   reject_enable=True, reject_commands=intent, text_reject=text_reject,
                                   tts_reject=tts_reject, new_save=new_save, reject_command="quest_6_x.NOT_OUT")
 
@@ -112,7 +81,7 @@ def quest_7_x(req_save, command, intent, user_id):
         req_save['save'] = 'quest_8_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 
 def quest_8_x(req_save, command, intent, user_id):
@@ -135,7 +104,7 @@ def quest_8_x(req_save, command, intent, user_id):
         req_save['save'] = 'quest_9'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 
 def quest_9(req_save, command, intent, user_id):
@@ -145,7 +114,7 @@ def quest_9(req_save, command, intent, user_id):
         req_save['save'] = 'Home'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)
 
 def quest_end(req_save, command, intent, user_id):
     if "chap2_3_end" in intent:
@@ -156,4 +125,4 @@ def quest_end(req_save, command, intent, user_id):
         req_save['other']['Quests']['quest'] = True
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        return quest_message_help(req_save, version)

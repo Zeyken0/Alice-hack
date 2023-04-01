@@ -1,6 +1,3 @@
-from config import *
-
-
 def d_start_0(text, tts, version):
     response = {
         "response": {
@@ -34,24 +31,31 @@ def d_start_0(text, tts, version):
             "inventory": {
                 "armor": {
                     'helmet': {
-                        'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False, 'img': ''},
+                        'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False,
+                                   'img': '1656841/2a225a1720673653ec8d'},
                     },
                     'chest': {
-                        'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False, 'img': ''},
+                        'broken': {'name': 'Потрёпанный нагрудник', 'activity': False, 'is_gear': False,
+                                   'img': '1540737/946ec67f38c0544f558f'},
                     },
                     'shorts': {
-                        'broken': {'name': 'Потрепанныe поножи', 'activity': False, 'is_gear': False, 'img': ''},
+                        'broken': {'name': 'Потрепанныe поножи', 'activity': False, 'is_gear': False,
+                                   'img': '1656841/21dfdcc14e529a221aa9'},
                     },
                     'boots': {
-                        'broken': {'name': 'Потрепанныe ботинки', 'activity': False, 'is_gear': False, 'img': ''},
+                        'broken': {'name': 'Потрепанныe ботинки', 'activity': False, 'is_gear': False,
+                                   'img': '1521359/5178b1c867cd8f6aaae8'},
                     }},
                 "weapon": {
                     "axe": {
-                        'broken': {'name': 'Самодельный топор', 'activity': False, 'is_gear': False, 'img': ''}
+                        'broken': {'name': 'Самодельный топор', 'activity': False, 'is_gear': False,
+                                   'img': '1030494/795afd1b11146588f1f0'}
                     },
                     "sword": {
-                        'broken': {'name': 'Потрескавшийся меч', 'activity': False, 'is_gear': False, 'img': ''},
-                        'rust': {'name': 'Ржавый меч', 'activity': False, 'is_gear': False, 'img': ''}
+                        'broken': {'name': 'Потрескавшийся меч', 'activity': False, 'is_gear': False,
+                                   'img': '1652229/8d9dfcc7025212e2d008'},
+                        'rust': {'name': 'Ржавый меч', 'activity': False, 'is_gear': False,
+                                 'img': '1652229/92a5ce83c25b42fc1093'}
                     },
                 },
                 "spells": {

@@ -1,170 +1,6 @@
-import chapter_1
-import chapter_2
-from Quests import quests
 from config import *
 from dialogs import message_sent, d_start_0, message_sent_with_card
 import pymongo
-
-version = "1.0"
-chapter1 = {
-    "start": chapter_1.start_1,
-    "start_1": chapter_1.start_2,
-    "start_2": chapter_1.start_3,
-    "start_3": chapter_1.chap,
-    "start_3_1": chapter_1.chap,
-    "chap": chapter_1.chap_1,
-    "chap_1": chapter_1.chap_2,
-    "chap_1_1": chapter_1.chap_2,
-    "chap_2": chapter_1.chap_3,
-    "chap_3": chapter_1.chap_4,
-    "chap_4_1": chapter_1.chap_4_1_1,
-    "chap_4_1_1": chapter_1.chap_4_1_x,
-    "chap_4_1_2": chapter_1.chap_5,
-    "chap_4_1_3": chapter_1.chap_4_1_3_x,
-    "chap_4_1_3_1": chapter_1.chap_4_1_3_x_end,
-    "chap_4_1_3_2": chapter_1.chap_4_1_3_x_end,
-    "chap_4_1_3_3": chapter_1.chap_5_1,
-    "chap_4_1_4": chapter_1.chap_5,
-    "chap_4_1_7": chapter_1.chap_5,
-    "chap_4_1_0": chapter_1.chap_5,
-    "chap_4_2": chapter_1.chap_4_2_1,
-    "chap_4_1_3_4": chapter_1.chap_5,
-    "chap_5": chapter_1.chap_5_1,
-    "chap_5_1": chapter_1.chap_6,
-    "chap_6": chapter_1.chap_6_x,
-    "chap_6_1": chapter_1.chap_6_0_x,
-    "chap_6_2": chapter_1.chap_6_0_x,
-    "chap_6_0": chapter_1.chap_7,
-    "chap_6_0_1": chapter_1.chap_7,
-    "chap_7": chapter_1.chap_7_x,
-    "chap_7_1": chapter_1.chap_8,
-    "chap_7_2": chapter_1.chap_7_end,
-    "chap_7_3": chapter_1.chap_7_end,
-    "chap_7_0": chapter_1.chap_7_end,
-    "chap_8": chapter_1.chap_9,
-    "chap_9": chapter_1.chap_10,
-    "chap_10": chapter_1.chap_10_x,
-    "chap_10_1": chapter_1.chap_11_x,
-    "chap_10_2": chapter_1.chap_11_x,
-    "chap_10_0": chapter_1.chap_11_x,
-    "chap_11": chapter_1.chap_12_x,
-    "chap_11_1": chapter_1.chap_11_1,
-    "chap_11_2": chapter_1.chap_11_2_1,
-    "chap_11_2_1": chapter_1.chap_14,
-    "chap_12": chapter_1.chap_13,
-    "chap_12_1": chapter_1.chap_13_1,
-    "chap_13": chapter_1.chap_13,
-    "chap_13_0": chapter_1.chap_14,
-    "chap_13_4": chapter_1.chap_14,
-    "chap_14": chapter_1.chap_15,
-    "chap_15": chapter_1.chap_15,
-    "chap_17": chapter_1.chap_17,
-    "chap_13_2": chapter_1.chap_13_2,
-    "chap_18": chapter_1.chap_18,
-    "chap_18_0": chapter_1.chap_18_0,
-    "chap_13_3": chapter_1.chap_13_3,
-    "chap_16": chapter_1.chap_16,
-    "chap_11_0": chapter_1.chap_17,
-    "chap_18_1": chapter_1.chap_18_1,
-    "chap_18_2": chapter_1.chap_18_2,
-    "chap_19": chapter_1.chap_19,
-    "chap_19_1": chapter_1.chap_19_1,
-    "chap_19_2": chapter_1.chap_19_2,
-    "chap_19_3": chapter_1.chap_19_3,
-    "chap_19_1_1": chapter_1.chap_19_1_1,
-    "chap_21": chapter_1.chap_21_x,
-    "chap_20": chapter_1.chap_21,
-    "chap_21_1": chapter_1.chap_21_1,
-    "chap_21_2": chapter_1.chap_21_2,
-    "chap_22": chapter_1.chap_22,
-    "chap_22_1": chapter_1.chap_22_1,
-    "chap_22_2": chapter_1.chap_22_2,
-    "chap_24": chapter_1.chap_24,
-    "chap_23": chapter_1.chap_23,
-    "chap_23_2": chapter_1.chap_23_2,
-    "chap_24_1": chapter_1.chap_24_1,
-    "chap_24_2": chapter_1.chap_24_2,
-    "chap_25": chapter_1.chap_25,
-    "chap_25_1": chapter_1.chap_25_1,
-    "chap_25_2": chapter_1.chap_25_2,
-    "chap_25_1_2": chapter_1.chap_25_1_2,
-    "chap2": chapter_2.chap2,
-}
-
-chapter2 = {
-    "chap2_1_x": chapter_2.chap2_1_x,
-    "chap2_2": chapter_2.chap2_2,
-    "chap2_3_x": chapter_2.chap2_3_x,
-    "chap2_3_1x": chapter_2.chap2_3_1x,
-    "chap2_3_2x": chapter_2.chap2_3_2x,
-    "chap2_3_3x": chapter_2.chap2_3_3x,
-    "chap_2_3_1_1x": chapter_2.chap2_3_end,
-    "chap_2_3_1_2x": chapter_2.chap2_3_end,
-    "chap2_3_2_2": chapter_2.chap2_3_2_2,
-    "chap2_3_2_2_2_0": chapter_2.chap2_3_2_2_2_0,
-    "chap2_3_2_2_2_1_0": chapter_2.chap2_3_2_2_2_1_0,
-    "chap2_3_2_2_2_1x": chapter_2.chap2_3_2_2_2_1x,
-    "chap2_3_2_2_2_1_x": chapter_2.chap2_3_2_2_2_1_x,
-    "chap2_3_2_2_2_1_1x": chapter_2.chap2_3_end,
-    "chap2_3_2_2_2_1_2": chapter_2.chap2_3_2_2_2_1_2,
-    "chap2_3_3_1x": chapter_2.chap2_3_end,
-    "chap2_3_3_1": chapter_2.chap2_3_3_1,
-    "chap2_3_3_2": chapter_2.chap2_3_3_2,
-    "chap2_3_3_2_x": chapter_2.chap2_3_3_2_x,
-    "chap2_3_3_2_1x": chapter_2.chap2_3_end,
-    "chap2_3_3_2_1": chapter_2.chap2_3_3_2_1,
-    "chap2_3_3_2_2": chapter_2.chap2_3_3_2_2,
-    "chap2_3_3_2_2_x": chapter_2.chap2_3_3_2_2_x,
-    "chap2_3_3_2_2_1x": chapter_2.chap2_3_end,
-    "chap2_3_2_1_x": chapter_2.chap2_3_2_1_x,
-    "chap2_3_2_1_2": chapter_2.chap2_3_2_1_2,
-    "chap2_3_2_1_2_x": chapter_2.chap2_3_2_1_2_x,
-    "chap2_3_2_1_2_1x": chapter_2.chap2_3_end,
-    "chap2_3_2_1_2_0x": chapter_2.chap2_3_2_1_2_0x,
-    "chap2_3_2_1_2_2": chapter_2.chap2_3_2_1_2_2,
-    "chap2_3_2_1_2_2_x": chapter_2.chap2_3_2_1_2_2_x,
-    "chap2_3_2_1_2_2_1x": chapter_2.chap2_3_end,
-    "chap2_3_0": chapter_2.chap2_3_0,
-    "chap2_4": chapter_2.chap2_4,
-    "chap2_5": chapter_2.chap2_5,
-    "chap2_6": chapter_2.chap2_6,
-    "chap2_7": chapter_2.chap2_7,
-    "chap2_7_1": chapter_2.chap2_7_1,
-    "chap2_7_2": chapter_2.chap2_7_2_fight,
-    "chap2_9": chapter_2.chap2_9,
-    "chap2_10": chapter_2.chap2_10,
-    "chap2_11": chapter_2.chap2_11,
-    "chap2_12": chapter_2.chap2_12,
-    "chap2_13_x": chapter_2.chap2_13_x,
-    "chap2_13_2_x": chapter_2.chap2_13_2_x,
-    "chap2_14": chapter_2.chap2_14,
-    "chap2_15_x": chapter_2.chap2_15_x,
-    "chap2_15_x_x": chapter_2.chap2_15_x_x,
-    "chap2_16_x": chapter_2.chap2_16_x,
-    "chap2_16_3x_x": chapter_2.chap2_16_3x_x,
-    "chap2_17": chapter_2.chap2_17,
-    "chap2_18_x": chapter_2.chap2_18_x,
-    "chap2_19": chapter_2.chap2_19,
-    "chap2_20": chapter_2.chap2_20,
-    "chap2_21": chapter_2.chap2_21,
-    "chap2_22": chapter_2.chap2_22,
-}
-
-quest = {
-    "quest_2": quests.quest_2,
-    "quest_3": quests.quest_3,
-    "quest_4_x": quests.quest_4_x,
-    "quest_5_x": quests.quest_5_x,
-    "quest_6_x": quests.quest_6_x,
-    "quest_7_x": quests.quest_7_x,
-    "quest_end": quests.quest_end,
-    "quest_8_x": quests.quest_8_x,
-    "quest_9": quests.quest_9
-}
-
-quest2 = {
-
-}
 
 def start(event, context):
     command = event['request']['command']
@@ -255,17 +91,42 @@ def start(event, context):
             else:
                 return message_sent(text="Сейчас вы не можете вернуться в убежище!", tts="Сейчас вы не можете вернуться в убежище!", version=version, save=req_save)
 
-        # ТОП ИГРОКОВ
+        # ТОП ИГРОКОВ (ДОДЕЛАТЬ)
         elif "TOP" in intent:
             top = COLLECTION.find().sort("score", pymongo.DESCENDING).limit(10)
             text = 'Топ пользователей\n'
+            tts = 'Топ пользователей'
             for i in top:
                 NAME = i['name']
                 SCORE = i['score']
                 text = text + "Имя: " + NAME + '\n' + "Очки: " + str(SCORE) + '\n'
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text,
+                },
+                "items": [
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Здоровье",
+                        "description": f"{req_save['health']}",
+                    },
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Сила",
+                        "description": f"{req_save['power']}",
+                    },
 
+                    {
+                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "title": "Мана",
+                        "description": f"{req_save['mana']}",
+                    },
+                ]
+            }
+            return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
-        # ОТКРЫТЬ ИНВЕНТАРЬ
+        # ОТКРЫТЬ ИНВЕНТАРЬ (ДОДЕЛАТЬ)
         elif "INVENTORY" in intent and req_save["other"]["Menu"]:
             text = "Ваш Инвентарь"
             tts = f""
@@ -384,18 +245,18 @@ def start(event, context):
                 },
                 "items": [
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": Health_icon,
                         "title": "Здоровье",
                         "description": f"{req_save['health']}",
                     },
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": Power_icon,
                         "title": "Сила",
                         "description": f"{req_save['power']}",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": Mana_icon,
                         "title": "Мана",
                         "description": f"{req_save['mana']}",
                     },
