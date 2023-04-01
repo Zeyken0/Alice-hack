@@ -44,7 +44,7 @@ USER = {
         }
     },
     "other": {"trader": False, "knife": False, "runes": {"fire": False, "water": False, "earth": False}, "Menu": False,
-              "Book": {"active": False, "opened": False}, "Map": False, "Quests": {"quest": False, "quest2": False}}
+              "Book": {"active": False, "opened": False}, "Map": False, "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10}}
 }
 
 
