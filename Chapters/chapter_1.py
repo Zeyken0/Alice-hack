@@ -1,13 +1,18 @@
+from pymongo import MongoClient
+
 from dialogs import message_sent, message_sent_with_card
 from help_dialogs import message_help, confirm_reject_handler, confirm_reject_handler_with_card
-from config import *
 from Replicas.alice_says import alice_dict
 import random
 
 version = "1.0"
+Health_icon = "1030494/f96c26a03ebbba705608"
+Power_icon = "213044/4d285fda066e9ae61952"
+Mana_icon = "997614/844a30f69150fb050ed6"
+Stamina_icon = "1540737/7e3905e7d3c850e8d514"
 
 def start_1(req_save, command, intent, user_id):
-    if "start_1.START" in intent:
+    if "start_1.START" in intent or "YANDEX.CONFIRM" in intent:
         req_save['save'] = 'start_1'
         text = alice_dict['start_1']['text']
         tts = alice_dict['start_1']['tts']
@@ -93,7 +98,7 @@ def chap(req_save, command, intent, user_id):
                 "title": "Сила",
                 "description": f"{req_save['power']}",
             },
-            
+
             {
                 "image_id": Mana_icon,
                 "title": "Мана",
@@ -457,7 +462,10 @@ def chap_7_end(req_save, command, intent, user_id):
 
 
 def chap_8(req_save, command, intent, user_id):
-    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "chapter": req_save['chapter'], "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
     COMMANDS_REJECT = ['']
     text= '''После того, как заключенные начали бить вас, надзиратели немедленно вмешались и разогнали драку. Они отвели вас в лазарет, где вам была оказана необходимая медицинская помощь.\n
 Вы чувствовали себя очень плохо и были обескуражены произошедшим. Вы понимали, что вмешательство в драку было ошибкой, и теперь вам придется отвечать за  последствия своих действий.\n
@@ -856,6 +864,9 @@ def chap_21_x(req_save, command, intent, user_id):
 
 
 def chap_21_1(req_save, command, intent, user_id):
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_9'}})
     text = alice_dict['chap_9']['text']
     tts = alice_dict['chap_9']['tts']
@@ -864,6 +875,9 @@ def chap_21_1(req_save, command, intent, user_id):
                                   new_save=new_save)
 
 def chap_21_2(req_save, command, intent, user_id):
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22', "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
     text= '''Вы не выспались и бодрствовали всю ночь из-за кошмаров. Однако, вы понимаете, что это ваш последний день в тюрьме, и принимаете решение сбежать сегодня.\n
 Начать побег сейчас или во время обеда?'''
@@ -903,7 +917,7 @@ def chap_22_1(req_save, command, intent, user_id):
                 "description": "Хорош для всех рубящих ударов",
             },
             {
-                "image_id": "1030494/628705743a5ab80c90ea",
+                "image_id": "1521359/330247f14e69669c2de2",
                 "title": "Самодельная кирка",
                 "description": "Хорошо подходит для копания шахт",
             },
@@ -964,7 +978,7 @@ def chap_23_1(req_save, command, intent, user_id):  # == chap_22_1
                 "description": "Хорош для всех рубящих ударов",
             },
             {
-                "image_id": "1030494/628705743a5ab80c90ea",
+                "image_id": "1521359/330247f14e69669c2de2",
                 "title": "Самодельная кирка",
                 "description": "Хорошо подходит для копания шахт",
             },
@@ -979,6 +993,9 @@ def chap_23_1(req_save, command, intent, user_id):  # == chap_22_1
 
 
 def chap_23_2(req_save, command, intent, user_id):
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
     text = alice_dict['chap_22']['text']
     tts = alice_dict['chap_22']['tts']
@@ -1045,6 +1062,9 @@ def chap_25_1(req_save, command, intent, user_id):
 
 
 def chap_25_1_1(req_save, command, intent, user_id):
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap_22'}})
     text = alice_dict['chap_22']['text']
     tts = alice_dict['chap_22']['tts']
@@ -1055,6 +1075,9 @@ def chap_25_1_1(req_save, command, intent, user_id):
 
 def chap_25_1_2(req_save, command, intent, user_id):
     if "chap_25_1_2" in intent:
+        CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+        DB = CLUSTER["AlisaBase"]
+        COLLECTION = DB["users"]
         COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
         text = '''Добро пожаловать во вторую главу "Приключения только начинаются!".
         Неизвестно, сколько часов вы уже бежите.

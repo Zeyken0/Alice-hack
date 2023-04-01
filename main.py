@@ -2,6 +2,11 @@ from config import *
 from dialogs import message_sent, d_start_0, message_sent_with_card
 import pymongo
 
+Health_icon = "1030494/f96c26a03ebbba705608"
+Power_icon = "213044/4d285fda066e9ae61952"
+Mana_icon = "997614/844a30f69150fb050ed6"
+Stamina_icon = "1540737/7e3905e7d3c850e8d514"
+
 version = "1.0"
 
 def start(event, context):
@@ -11,7 +16,7 @@ def start(event, context):
     user_id = event["session"]["user"]["user_id"]
     if original_utterance == "":
         if COLLECTION.count_documents({"id": user_id}) == 0:
-            USER["user_id"] = user_id
+            USER["id"] = user_id
             COLLECTION.insert_one(USER)
             text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
             tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
@@ -406,7 +411,7 @@ def start(event, context):
 
         elif req_save['save'] == "RESTART":
             if "YANDEX.COMPLETE" in intent:
-                USER["user_id"] = user_id
+                USER["id"] = user_id
                 COLLECTION.update_one({"id": user_id}, {"$set": USER})
                 text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
                 tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''

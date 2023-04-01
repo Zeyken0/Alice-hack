@@ -1,13 +1,19 @@
-from dialogs import message_sent, d_start_0, message_sent_with_card
-from help_dialogs import message_help, confirm_reject_handler, confirm_reject_handler_with_card
-from config import *
+from pymongo import MongoClient
+
+from dialogs import message_sent
+from help_dialogs import message_help, confirm_reject_handler
 from Replicas.alice_says import alice_dict
 import random
 
 version = "1.0"
+Health_icon = "1030494/f96c26a03ebbba705608"
+Power_icon = "213044/4d285fda066e9ae61952"
+Mana_icon = "997614/844a30f69150fb050ed6"
+Stamina_icon = "1540737/7e3905e7d3c850e8d514"
 
 def chap2(req_save, command, intent, user_id):
     req_save['save'] = 'chap2_1_x'
+    req_save['chapter'] = 'chapter_2'
     text = alice_dict['2_chap']['text']
     tts = alice_dict['2_chap']['tts']
     return message_sent(text=text, tts=tts, version=version, save=req_save)
@@ -553,6 +559,9 @@ def chap2_11(req_save, command, intent, user_id):
     text = alice_dict['2_chap_11']['text']
     tts = alice_dict['2_chap_11']['tts']
     new_save = {'accept': 'chap2_12', 'reject': ''}
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap2_11', "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
     return confirm_reject_handler(req_save, "chap2_11", intent, text_commands=intent, text=text, tts=tts,
                                   new_save=new_save)

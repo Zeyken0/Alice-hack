@@ -21,7 +21,7 @@ def d_start_0(text, tts, version):
         },
         "session_state": {
             "save": "start",
-            "chapter" "chapter_1"
+            "chapter": "chapter_1",
             "name": "default",
             "health": 6,
             "power": 2,
@@ -65,7 +65,7 @@ def d_start_0(text, tts, version):
             "other": {"trader": False, "knife": False, "runes": {"fire": False, "water": False, "earth": False},
                       "Menu": False,
                       "Book": {"active": False, "opened": False}, "Map": False,
-                      "Quests": {"quest": False, "quest2": False}}
+                      "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10}}
         },
         "version": version
     }
