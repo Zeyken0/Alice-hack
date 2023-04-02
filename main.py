@@ -18,8 +18,8 @@ def start(event, context):
         if COLLECTION.count_documents({"id": user_id}) == 0:
             USER["id"] = user_id
             COLLECTION.insert_one(USER)
-            text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
-            tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
+            text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы узнать больше, скажи "Что ты умеешь?", если ты готов скажи "Начать"'''
+            tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы узнать больше, скажи "Что ты умеешь?", если ты готов скажи "Начать"'''
             return d_start_0(text, tts, version)
         elif COLLECTION.find_one({"id": user_id})["save"] == "":
             text = '''"Добро пожаловать в Сагу Битв и Приключений. Ты готов начать?"'''
@@ -42,6 +42,22 @@ def start(event, context):
             text = '''Рады тебя снова видеть в Саге Битв и Приключений. Загрузить последнее сохранение или начать игру сначала?'''
             tts = '''Рады тебя снова видеть в Саге Битв и Приключений. Загрузить последнее сохранение или начать игру сначала?'''
             return message_sent(text=text, tts=tts, version=version, save=save)
+    elif original_utterance == "ping":
+        text = '1'
+        tts = '1'
+        save = {
+            "save": "",
+            "name": "",
+            "chapter": "",
+            "health": "",
+            "power": "",
+            "mana": "",
+            "stamina": "",
+            "score": "",
+            "inventory": "",
+            "other": "",
+        }
+        return message_sent(text=text, tts=tts, version=version, save=save)
     elif "EXIT" in intent:
         req_save = {
             "save": event["state"]["session"]["save"],
@@ -77,9 +93,18 @@ def start(event, context):
             tts = "Вы уверены, что хотите начать игру сначала? Весь прогресс будет потерян!"
             return message_sent(text=text, tts=tts, version=version, save=req_save)
 
-
-        # ЖЕЛАТЕЛЬНО СОЗДАТЬ НОВЫЙ ФАЙЛ И ПОМЕСТИТЬ ЭТО ТУДА. ТУТ ПРОВЕРКИ ФУНКЦИИ В НОВЫЙ ФАЙЛ
-
+        if "RESTART" in req_save['save']:
+            if "YANDEX.CONFIRM" in intent:
+                USER["id"] = user_id
+                COLLECTION.update_one({"id": user_id}, {"$set": USER})
+                text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы узнать больше, скажи "Что ты умеешь?", если ты готов скажи "Начать"'''
+                tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы узнать больше, скажи "Что ты умеешь?", если ты готов скажи "Начать"'''
+                return d_start_0(text, tts, version)
+            elif "YANDEX.REJECT" in intent:
+                req_save['save'] = req_save['save'].replace("RESTART", "")
+                text = '''Загрузка... Для продолжения скажите "Начать"'''
+                tts = '''Загрузка... sil <[500]> Для продолжения скажите "Начать'''
+                return message_sent(text=text, tts=tts, version=version, save=req_save)
 
         # ВЕРНУТЬСЯ В УБЕЖИЩЕ
         elif "HOME" in intent and req_save["other"]["Menu"]:
@@ -98,11 +123,18 @@ def start(event, context):
             else:
                 return message_sent(text="Сейчас вы не можете вернуться в убежище!", tts="Сейчас вы не можете вернуться в убежище!", version=version, save=req_save)
 
+        elif "start_1.HELP" in intent:
+            text = 'Навык - пошаговый квест, в рамках которого вы будете погружаться в захватывающий мир приключений и сражений. Вы играете главного героя, обычного фермера, который однажды решает отправиться на рынок, чтобы продать свои товары. Там он замечает грабителей и решает остановить их. Однако на следующий день его обвиняют в краже, и герой попадает в тюрьму, где ему приходится выживать любыми способами. В конце концов, герой выбирается из тюрьмы, и начинаются его приключения за городом. \nВ конце почти каждого сообщения пишутся варианты ответов. Для продолжения ответь на них! Не бойся ошибаться, мы тебе поможем!\nРекомендуем этот навык для людей старше 12 лет.'
+            tts = 'Навык - пошаговый квест, в рамках которого вы будете погружаться в захватывающий мир приключений и сражений. Вы играете главного героя, обычного фермера, который однажды решает отправиться на рынок, чтобы продать свои товары. Там он замечает грабителей и решает остановить их. Однако на следующий день его обвиняют в краже, и герой попадает в тюрьму, где ему приходится выживать любыми способами. В конце концов, герой выбирается из тюрьмы, и начинаются его приключения за городом. sil <[100]> В конце почти каждого сообщения пишутся варианты ответов. Для продолжения ответь на них! Не бойся ошибаться, мы тебе поможем! Рекомендуем этот навык для людей старше 12 лет.'
+            return message_sent(text=text, tts=tts, save=req_save, version=version)
+
         # ТОП ИГРОКОВ
         elif "TOP" in intent:
+            COLLECTION.update_one({"id": user_id}, {
+                "$set": {"score": req_save['score']}})
             top = COLLECTION.find().sort("score", pymongo.DESCENDING).limit(10)
-            text = 'Топ пользователей\n'
-            tts = 'Топ пользователей '
+            text = f'Топ пользователей. У вас {req_save["score"]} очков'
+            tts = f'Топ пользователей. У вас {req_save["score"]} очков '
             top_5 = []
             for i in top:
                 NAME = i['name']
@@ -147,9 +179,46 @@ def start(event, context):
             }
             return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
-        # ОТКРЫТЬ ИНВЕНТАРЬ (ДОДЕЛАТЬ)
-        elif "INVENTORY" in intent:
-            items = function(req_save)
+        # ОТКРЫТЬ ИНВЕНТАРЬ
+        elif "INVENTORY" in intent and req_save["other"]["Menu"]:
+            text = "Ваш Инвентарь"
+            tts = '''Ваш Инвентарь: Потрёпанный шлем(НАДЕТО). Потрёпанный нагрудник(НАДЕТО). Потрепанныe поножи(НАДЕТО). Потрепанныe ботинки(НАДЕТО). Ржавый меч(ЭКИПИРОВАННО)'''
+            card = {
+                "type": "ItemsList",
+                "header": {
+                    "text": text,
+                },
+                "items": [
+                    {
+                        "image_id": "1656841/2a225a1720673653ec8d",
+                        "title": "Потрёпанный шлем",
+                        "description": "НАДЕТО",
+                    },
+                    {
+                        "image_id": "1540737/946ec67f38c0544f558f",
+                        "title": "Потрёпанный нагрудник",
+                        "description": "НАДЕТО",
+                    },
+
+                    {
+                        "image_id": "1656841/21dfdcc14e529a221aa9",
+                        "title": "Потрепанныe поножи",
+                        "description": "НАДЕТО",
+                    },
+
+                    {
+                        "image_id": "1521359/5178b1c867cd8f6aaae8",
+                        "title": "Потрепанныe ботинки",
+                        "description": "НАДЕТО",
+                    },
+
+                    {
+                        "image_id": "1652229/92a5ce83c25b42fc1093",
+                        "title": "Ржавый меч",
+                        "description": "ЭКИПИРОВАННО",
+                    },
+                ]
+            }
             return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
 
         # НАДЕТЬ БРОНЮ
@@ -162,25 +231,30 @@ def start(event, context):
             }
 
             thing_key = thing_map.get(command.replace("надеть", ""))
+
             if not thing_key:
                 text = "Вы не можете надеть этот предмет!"
                 tts = "Вы не можете надеть этот предмет!"
                 return message_sent(text=text, tts=tts, version=version, save=req_save)
 
             inventory_item = req_save["inventory"]["armor"][thing_key[0]][thing_key[1]]
-            if not inventory_item["activity"]:
-                text = "У вас нет этого предмета в инвентаре!"
-                tts = "У вас нет этого предмета в инвентаре!"
-                return message_sent(text=text, tts=tts, version=version, save=req_save)
-            if inventory_item["is_gear"]:
-                text = "Вы уже одели " + inventory_item["name"]
-                tts = "Вы уже одели " + inventory_item["name"]
-                return message_sent(text=text, tts=tts, version=version, save=req_save)
-
-            inventory_item["is_gear"] = True
-            text = "Вы одели " + inventory_item["name"]
-            tts = "Вы одели " + inventory_item["name"]
+            text = "Вы уже одели " + inventory_item["name"]
+            tts = "Вы уже одели " + inventory_item["name"]
             return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+            #if not inventory_item["activity"]:
+            #    text = "У вас нет этого предмета в инвентаре!"
+            #    tts = "У вас нет этого предмета в инвентаре!"
+            #    return message_sent(text=text, tts=tts, version=version, save=req_save)
+            #if inventory_item["is_gear"]:
+            #    text = "Вы уже одели " + inventory_item["name"]
+            #    tts = "Вы уже одели " + inventory_item["name"]
+            #    return message_sent(text=text, tts=tts, version=version, save=req_save)
+#
+            #inventory_item["is_gear"] = True
+            #text = "Вы одели " + inventory_item["name"]
+            #tts = "Вы одели " + inventory_item["name"]
+            #return message_sent(text=text, tts=tts, version=version, save=req_save)
 
 
         # ВЗЯТЬ ОРУЖИЕ
@@ -192,10 +266,10 @@ def start(event, context):
             }
 
             thing_key = thing_map.get(command.replace("взять", ""))
-            if not thing_key:
-                text = "Вы не можете взять этот предмет!"
-                tts = "Вы не можете взять этот предмет!"
-                return message_sent(text=text, tts=tts, version=version, save=req_save)
+            #if not thing_key:
+            #    text = "Вы не можете взять этот предмет!"
+            #    tts = "Вы не можете взять этот предмет!"
+            #    return message_sent(text=text, tts=tts, version=version, save=req_save)
 
             inventory_item = req_save["inventory"]["weapon"][thing_key[0]][thing_key[1]]
             if not inventory_item["activity"]:
@@ -207,16 +281,16 @@ def start(event, context):
                 tts = "Вы уже одели " + inventory_item["name"]
                 return message_sent(text=text, tts=tts, version=version, save=req_save)
 
-            inventory_item["is_gear"] = True
-            text = "Вы взяли " + inventory_item["name"]
-            tts = "Вы взяли " + inventory_item["name"]
-            return message_sent(text=text, tts=tts, version=version, save=req_save)
+            #inventory_item["is_gear"] = True
+            #text = "Вы взяли " + inventory_item["name"]
+            #tts = "Вы взяли " + inventory_item["name"]
+            #return message_sent(text=text, tts=tts, version=version, save=req_save)
 
         elif "NEWQUESTS" in intent and req_save["other"]["Menu"]:
             # Сейчас для тебя новых заданий нет, но ты можешь отправиться в колизей бесконечных битв
             if req_save["save"] == "Home":
-                text = '''Пока для вас нет новых заданий.'''
-                tts = '''Пока для вас нет новых заданий.'''
+                text = '''Пока для вас нет новых заданий. Но ты можешь испытать свои силы в Клубе Сражений, сказав "Клуб Сражений"'''
+                tts = '''Пока для вас нет новых заданий. Но ты можешь испытать свои силы в Клубе Сражений, сказав "Клуб Сражений"'''
                 return message_sent(text=text, tts=tts, version=version, save=req_save)
             else:
                 text = '''Чтобы посмотреть новые задания, вернитесь в убежище!'''
@@ -270,7 +344,7 @@ def start(event, context):
         # КОМАНДЫ
         elif "COMMANDS" in intent and req_save["other"]["Menu"]:
             text = "Команды"
-            tts = 'Команды: Вернуться в убежище. Инвентарь. Надеть "Название доспеха". Взять "Название предмета". Сохранить игру. Осмотреть себя. Открыть книгу квестов. Название квеста. Новые квесты. Топ Игроков. Начать заново '
+            tts = 'Команды: Сохранить игру. Открыть книгу квестов. Название квеста запускает этот квест. Новые квесты. Топ Игроков.'
             card = {
                 "type": "ItemsList",
                 "header": {
@@ -278,68 +352,33 @@ def start(event, context):
                 },
                 "items": [
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Вернуться в убежище",
-                        "description": "Возвращение в убежище",
-                    },
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Инвентарь",
-                        "description": "Открытие инвентаря",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": 'Надеть "Название доспеха"',
-                        "description": "Надеть доспех",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": 'Взять "Название предмета"',
-                        "description": "Взять предмет",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": "937455/c823bb7292f5eb3c5a1c",
                         "title": "Сохранить игру",
                         "description": "Сохранение игры",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Осмотреть себя",
-                        "description": "Посмотреть свои характеристики",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": "1540737/6502f97f78a5caba4501",
                         "title": "Открыть книгу квестов",
                         "description": "Все ваши доступные квесты",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": "1652229/79d1a66270b81c3ccfec",
                         "title": "Название квеста",
                         "description": "Запустить определенный квест",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": "1521359/51202f121bbb70bffe42",
                         "title": "Новые квесты",
                         "description": "Все новые квесты",
                     },
 
                     {
-                        "image_id": "1030494/628705743a5ab80c90ea",
+                        "image_id": "1533899/9c469be57347db74750d",
                         "title": "Топ Игроков",
                         "description": "Шкала лидеров",
-                    },
-
-                    {
-                        "image_id": "1030494/628705743a5ab80c90ea",
-                        "title": "Начать заново",
-                        "description": "Начать игру сначала",
                     },
                 ]
             }
@@ -347,7 +386,7 @@ def start(event, context):
 
         # ОТКРЫТЬ КНИГУ КВЕСТОВ
         elif "QUESTS" in intent and req_save["other"]["Menu"]:
-            if req_save['other']['Quests']['quest']:
+            if req_save['other']['Quests']['quest'] and not req_save['other']['Quests']['quest2']:
                 text = 'Текущие квесты:'
                 tts = 'Текущие квесты: Открыть магический потенциал. sil <[300]> Для подробного описания квеста, произнесите его название!'
                 card = {
@@ -357,7 +396,7 @@ def start(event, context):
                     },
                     "items": [
                         {
-                            "image_id": "1030494/628705743a5ab80c90ea",
+                            "image_id": "213044/87de8dcc08f0eee9426b",
                             "title": "Открыть магический потенциал",
                             "description": "Магия - это очень круто",
                         },
@@ -381,13 +420,13 @@ def start(event, context):
                     },
                     "items": [
                         {
-                            "image_id": "1030494/628705743a5ab80c90ea",
+                            "image_id": "1540737/752a35762b13e455b445",
                             "title": "Отправиться на поиски приключений",
                             "description": "Захватывающие приключения ждут вас!",
                         },
 
                         {
-                            "image_id": "1030494/628705743a5ab80c90ea",
+                            "image_id": "213044/87de8dcc08f0eee9426b",
                             "title": "Открыть магический потенциал",
                             "description": "Магия - это очень круто",
                         },
@@ -397,26 +436,22 @@ def start(event, context):
                     }
                 }
                 return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
-
-        elif "RESTART" in req_save['save']:
-            if "YANDEX.COMPLETE" in intent:
-                USER["id"] = user_id
-                COLLECTION.update_one({"id": user_id}, {"$set": USER})
-                text = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
-                tts = '''Добро пожаловать в Сагу Битв и Приключений. Чтобы пройти обучение скажи "Пройти обучение", если ты готов скажи "Начать"'''
-                return d_start_0(text, tts, version)
-            elif "YANDEX.REJECT" in intent:
-                req_save['save'] = req_save['save'].replace("RESTART", "")
-                text = '''Загрузка... Для продолжения скажите "Начать"'''
-                tts = '''Загрузка... sil <[500]> Для продолжения скажите "Начать'''
-                return message_sent(text=text, tts=tts, version=version, save=req_save)
-
         # КВЕСТЫ
-        elif req_save['save'] == "Home":
+        if req_save['save'] == "Home":
             if "отправиться на поиски приключений" in command:
+                if req_save['other']['Quests']['quest']:
+                    text = '''Вы уже прошли это задание!'''
+                    tts = '''Вы уже прошли это задание!'''
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
                 return quest['quest'](req_save, command, intent, user_id)
             elif "открыть магический потенциал" in command:
+                if req_save['other']['Quests']['quest2']:
+                    text = '''Вы уже прошли это задание!'''
+                    tts = '''Вы уже прошли это задание!'''
+                    return message_sent(text=text, tts=tts, version=version, save=req_save)
                 return quest2['quest2'](req_save, command, intent, user_id)
+            elif "клуб сражений" in command:
+                return infinity['inf'](req_save, command, intent, user_id)
 
         elif req_save["chapter"] == "chapter_1":
             if req_save["save"] in chapter1:
@@ -442,8 +477,16 @@ def start(event, context):
             else:
                 return message_sent(text="Ошибка!", tts="Ошибка!", version=version, save=req_save)
 
-        # МЕНЮ
-        else:
-            text = '''Для просмотра команд, скажите "Посмотреть команды"'''
-            tts = '''Для просмотра команд, скажите "Посмотреть команды"'''
-            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        elif req_save["chapter"] == "inf":
+            if req_save["save"] in infinity:
+                return infinity[req_save["save"]](req_save, command, intent, user_id)
+            else:
+                return message_sent(text="Ошибка!", tts="Ошибка!", version=version, save=req_save)
+
+
+        text = '''Для просмотра команд, скажите "Посмотреть команды"'''
+        tts = '''Для просмотра команд, скажите "Посмотреть команды"'''
+        req_save['save'] = 'Home'
+        req_save['mana'] = 100
+        req_save['stamina'] = 100
+        return message_sent(text=text, tts=tts, version=version, save=req_save)

@@ -29,6 +29,7 @@ def d_start_0(text, tts, version):
             "stamina": 100,
             "score": 0,
             "inventory": {
+                "count": 0,
                 "armor": {
                     'helmet': {
                         'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False,
@@ -65,7 +66,8 @@ def d_start_0(text, tts, version):
             "other": {"trader": False, "knife": False, "runes": {"fire": False, "water": False, "earth": False},
                       "Menu": False,
                       "Book": {"active": False, "opened": False}, "Map": False,
-                      "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10}}
+                      "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10},
+                      "infinity": {"first": True}}
         },
         "version": version
     }

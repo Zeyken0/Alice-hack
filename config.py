@@ -1,5 +1,6 @@
 from pymongo import MongoClient
 from Quests import quest_1, quest_2
+from Fights import infinity
 from Chapters import chapter_1, chapter_2
 
 CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
@@ -17,6 +18,7 @@ USER = {
     "stamina": 100,
     "score": 0,
     "inventory": {
+        "count": 0,
         "armor": {
             'helmet': {
                 'broken': {'name': 'Потрёпанный шлем', 'activity': False, 'is_gear': False, 'img': '1656841/2a225a1720673653ec8d'},
@@ -44,7 +46,7 @@ USER = {
         }
     },
     "other": {"trader": False, "knife": False, "runes": {"fire": False, "water": False, "earth": False}, "Menu": False,
-              "Book": {"active": False, "opened": False}, "Map": False, "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10}}
+              "Book": {"active": False, "opened": False}, "Map": False, "Quests": {"quest": False, "quest2": False}, "enemy": {"name": "", "health": 10}, "infinity": {"first": True}}
 }
 
 
@@ -98,7 +100,7 @@ chapter1 = {
     "chap_13": chapter_1.chap_13,
     "chap_13_0": chapter_1.chap_14,
     "chap_13_4": chapter_1.chap_13_4,
-    "chap_14": chapter_1.chap_15,
+    "chap_14": chapter_1.chap_14,
     "chap_15": chapter_1.chap_15,
     "chap_17": chapter_1.chap_17,
     "chap_13_2": chapter_1.chap_13_2,
@@ -134,6 +136,7 @@ chapter1 = {
 }
 
 chapter2 = {
+    "chap2": chapter_2.chap2,
     "chap2_1_x": chapter_2.chap2_1_x,
     "chap2_2": chapter_2.chap2_2,
     "chap2_3_x": chapter_2.chap2_3_x,
@@ -173,11 +176,14 @@ chapter2 = {
     "chap2_7": chapter_2.chap2_7,
     "chap2_7_1": chapter_2.chap2_7_1,
     "chap2_7_2": chapter_2.chap2_7_2_fight,
+    "chap2_7_2_fight": chapter_2.chap2_7_2_fight,
+    "chap2_7_x": chapter_2.chap2_7_x,
     "chap2_9": chapter_2.chap2_9,
     "chap2_10": chapter_2.chap2_10,
     "chap2_11": chapter_2.chap2_11,
     "chap2_12": chapter_2.chap2_12,
     "chap2_13_x": chapter_2.chap2_13_x,
+    "chap2_13_2_1": chapter_2.chap2_13_2_x,
     "chap2_13_2_x": chapter_2.chap2_13_2_x,
     "chap2_14": chapter_2.chap2_14,
     "chap2_15_x": chapter_2.chap2_15_x,
@@ -190,9 +196,11 @@ chapter2 = {
     "chap2_20": chapter_2.chap2_20,
     "chap2_21": chapter_2.chap2_21,
     "chap2_22": chapter_2.chap2_22,
+    "chap2_23": chapter_2.chap2_23,
 }
 
 quest = {
+    "quest": quest_1.quest,
     "quest_2": quest_1.quest_2,
     "quest_3": quest_1.quest_3,
     "quest_4_x": quest_1.quest_4_x,
@@ -205,6 +213,7 @@ quest = {
 }
 
 quest2 = {
+    "quest2": quest_2.quest2,
     "quest2_x": quest_2.quest2_x,
     "quest2_1_1": quest_2.quest2_1_1,
     "quest2_3_x": quest_2.quest2_3_x,
@@ -215,4 +224,12 @@ quest2 = {
     "quest2_7": quest_2.quest2_7,
     "quest2_8": quest_2.quest2_8,
     "quest2_end": quest_2.quest2_end,
+}
+
+infinity = {
+    "inf": infinity.inf,
+    "inf_2": infinity.inf_2,
+    "inf_3": infinity.inf_3,
+    "inf_fight": infinity.inf_fight,
+    "inf_fight_end": infinity.inf_fight_end
 }

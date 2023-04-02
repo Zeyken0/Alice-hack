@@ -1,3 +1,5 @@
+from pymongo import MongoClient
+
 from Replicas.Quest_says import Quest_says
 from help_dialogs import message_sent, quest_confirm_reject_handler, quest_message_help
 
@@ -76,6 +78,7 @@ def quest_7_x(req_save, command, intent, user_id):
         req_save['save'] = 'quest_end'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "quest_7_x.LIFE" in intent:
+        req_save['score'] += 10
         text = Quest_says['quest_7_x']['text']
         tts = Quest_says['quest_7_x']['tts']
         req_save['save'] = 'quest_8_x'
@@ -112,17 +115,24 @@ def quest_9(req_save, command, intent, user_id):
         text = Quest_says['quest_9']['text']
         tts = Quest_says['quest_9']['tts']
         req_save['save'] = 'Home'
+        req_save['other']['Quests']['quest'] = True
+        CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+        DB = CLUSTER["AlisaBase"]
+        COLLECTION = DB["users"]
+        COLLECTION.update_one({"id": user_id}, {
+            "$set": {"name": req_save['name'], "save": req_save['save'], "chapter": req_save['chapter'],
+                     "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
         return quest_message_help(req_save, version)
 
 def quest_end(req_save, command, intent, user_id):
     if "chap2_3_end" in intent:
-        text = Quest_says['Home']['text']
-        tts = Quest_says['Home']['tts']
+        text = 'Вы вернулись в убежище'
+        tts = 'Вы вернулись в убежище'
         req_save['save'] = 'Home'
-        req_save['chapter'] = 'Home'
-        req_save['other']['Quests']['quest'] = True
+        req_save['chapter'] = ''
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
+        req_save['save'] = 'quest_end'
         return quest_message_help(req_save, version)

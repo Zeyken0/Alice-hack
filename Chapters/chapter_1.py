@@ -17,11 +17,6 @@ def start_1(req_save, command, intent, user_id):
         text = alice_dict['start_1']['text']
         tts = alice_dict['start_1']['tts']
         return message_sent(text=text, tts=tts, save=req_save, version=version)
-    elif "start_1.HELP" in intent:
-        text = 'Навык - пошаговый квест, в рамках которого вы будете погружаться в захватывающий мир приключений и сражений. Вы играете главного героя, обычного фермера, который однажды решает отправиться на рынок, чтобы продать свои товары. Там он замечает грабителей и решает остановить их. Однако на следующий день его обвиняют в краже, и герой попадает в тюрьму, где ему приходится выживать любыми способами. В конце концов, герой выбирается из тюрьмы, и начинаются его приключения за городом. \nРекомендуем этот навык для людей старше 12 лет.'
-        tts = 'Навык - пошаговый квест, в рамках которого вы будете погружаться в захватывающий мир приключений и сражений. Вы играете главного героя, обычного фермера, который однажды решает отправиться на рынок, чтобы продать свои товары. Там он замечает грабителей и решает остановить их. Однако на следующий день его обвиняют в краже, и герой попадает в тюрьму, где ему приходится выживать любыми способами. В конце концов, герой выбирается из тюрьмы, и начинаются его приключения за городом. Рекомендуем этот навык для людей старше 12 лет.'
-        req_save['save'] = 'start'
-        return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif "YANDEX.REJECT" in intent:
         text = 'А всё так хорошо начиналось'
         tts = 'А всё так хорошо начиналось'
@@ -430,7 +425,7 @@ def chap_7(req_save, command, intent, user_id):
 
 
 def chap_7_x(req_save, command, intent, user_id):
-    if "chap_7_x.HELP" in intent:
+    if "chap_7_x.HELP" in intent or "YANDEX.CONFIRM" in intent:
         if req_save["health"] > 3:
             req_save["save"] = "chap_7_1"
             text = alice_dict['chap_7_1']['text']
@@ -451,7 +446,7 @@ def chap_7_x(req_save, command, intent, user_id):
 
 
 def chap_7_end(req_save, command, intent, user_id):
-    if "chap_7_end" in intent:
+    if "chap_7_end" in intent or "YANDEX.CONFIRM" in intent:
         req_save["save"] = 'start_1'
         text = alice_dict['start_1']['text']
         tts = alice_dict['start_1']['tts']
@@ -1053,7 +1048,8 @@ def chap_25_1(req_save, command, intent, user_id):
         tts = alice_dict['chap_25_1']['tts']
         return message_sent(text=text, tts=tts, save=req_save, version=version)
     elif "chap_25_1.WAIT" in intent:
-        req_save['save'] = 'chap_25_1_2'
+        req_save['save'] = 'chap2'
+        req_save['chapter'] = 'chapter_2'
         text = alice_dict['chap_25_1_2']['text']
         tts = alice_dict['chap_25_1_2']['tts']
         return message_sent(text=text, tts=tts, save=req_save, version=version)

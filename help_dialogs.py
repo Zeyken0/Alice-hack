@@ -117,7 +117,7 @@ def quest_confirm_reject_handler(req_save, command, intent, text_commands, text,
             }
             return message_sent(text=text, tts=tts, save=save, version=version)
         else:
-            return message_help(req_save, version)
+            return quest_message_help(req_save, version)
     else:
         if ("YANDEX.CONFIRM" in intent) or (command in text_commands):
             save = {
@@ -148,7 +148,7 @@ def quest_confirm_reject_handler(req_save, command, intent, text_commands, text,
             }
             return message_sent(text=text, tts=tts, save=save, version=version)
         else:
-            return message_help(req_save, version)
+            return quest_message_help(req_save, version)
 
 def confirm_reject_handler(req_save, command, intent, text_commands, text, tts, version="1.0",
                            reject_enable=False,

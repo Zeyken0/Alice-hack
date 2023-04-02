@@ -14,6 +14,10 @@ Stamina_icon = "1540737/7e3905e7d3c850e8d514"
 def chap2(req_save, command, intent, user_id):
     req_save['save'] = 'chap2_1_x'
     req_save['chapter'] = 'chapter_2'
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
+    COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": req_save['save'], "chapter": req_save['chapter'], "health": req_save["health"],"power": req_save["power"], "other": req_save["other"]}})
     text = alice_dict['2_chap']['text']
     tts = alice_dict['2_chap']['tts']
     return message_sent(text=text, tts=tts, version=version, save=req_save)
@@ -30,10 +34,11 @@ def chap2_1_x(req_save, command, intent, user_id):
                                   tts_reject=tts_reject, new_save=new_save, reject_command="chap2_1_x.NOT_STOP")
 
 
-def chap2_2(req_save, command, intent, user_id): # СПИСОК
+def chap2_2(req_save, command, intent, user_id):
     if "chap2_2" in intent:
         text = alice_dict['2_chap_2']['text']
         tts = alice_dict['2_chap_2']['tts']
+        req_save['health'] = 7
         req_save['save'] = 'chap2_3_x'
         card = {
             "type": "ItemsList",
@@ -109,8 +114,8 @@ def chap2_3_3x(req_save, command, intent, user_id):
         req_save['save'] = 'chap2_3_3_1x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_3_3x.SLOWLY" in intent:
-        text = alice_dict['2_chap_3_3x']['text']
-        tts = alice_dict['2_chap_3_3x']['tts']
+        text = alice_dict['2_chap_3_3_x']['text']
+        tts = alice_dict['2_chap_3_3_x']['tts']
         req_save['save'] = 'chap2_3_3_1'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
@@ -310,8 +315,8 @@ def chap2_3_2_2(req_save, command, intent, user_id):
 
 def chap2_3_2_2_2_0(req_save, command, intent, user_id):
     if "chap2_3_2_2_2_0.SLEEP" in intent:
-        text = alice_dict['2_chap_3_2_2_2_1_1']['text']
-        tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
+        text = alice_dict['2_chap_3_2_2_2_1_0']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_0']['tts']
         req_save['save'] = 'chap2_3_2_2_2_1_0'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_3_2_2_2_0.FIND" in intent:
@@ -325,23 +330,10 @@ def chap2_3_2_2_2_0(req_save, command, intent, user_id):
 
 def chap2_3_2_2_2_1x(req_save, command, intent, user_id):
     if "chap2_3_2_2_2_1x.SLEEP" in intent: #################################### СПИСОК
-        text = alice_dict['2_chap_3_2_2_2_1_1']['text']
-        tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
+        text = alice_dict['2_chap_3_2_2_2_1_0']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_0']['tts']
         req_save['save'] = 'chap2_3_2_2_2_1_0'
-        card = {
-            "type": "ItemsList",
-            "header": {
-                "text": text,
-            },
-            "items": [
-                {
-                    "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
-                    "title": "Самодельный топор",
-                    "description": "Хорош для всех рубящих ударов",
-                },
-            ]
-        }
-        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_3_2_2_2_1x.EAT" in intent:
         text = alice_dict['2_chap_3_2_2_2_1']['text']
         tts = alice_dict['2_chap_3_2_2_2_1']['tts']
@@ -377,11 +369,24 @@ def chap2_3_end(req_save, command, intent, user_id):
 
 
 def chap2_3_2_2_2_1_0(req_save, command, intent, user_id):
-    if "chap2_3_end" in intent:
-        text = alice_dict['2_chap_3_2_2_2_1_0']['text']
-        tts = alice_dict['2_chap_3_2_2_2_1_0']['tts']
+    if "chap2_3_2_2_2_1_0" in intent:
+        text = alice_dict['2_chap_3_2_2_2_1_1']['text']
+        tts = alice_dict['2_chap_3_2_2_2_1_1']['tts']
         req_save['save'] = 'chap2_3_2_2_2_1_2'
-        return message_sent(text=text, tts=tts, version=version, save=req_save)
+        card = {
+            "type": "ItemsList",
+            "header": {
+                "text": text,
+            },
+            "items": [
+                {
+                    "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
+                    "title": "Самодельный топор",
+                    "description": "Хорош для всех рубящих ударов",
+                },
+            ]
+        }
+        return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
     else:
         return message_help(req_save, version)
 
@@ -459,12 +464,6 @@ def chap2_6(req_save, command, intent, user_id):################################
                 "description": "",
             },
             {
-                "image_id": req_save['inventory']['weapon']['axe']['broken']['img'],
-                "title": "Самодельный топор",
-                "description": "Хорош для всех рубящих ударов",
-            },
-
-            {
                 "image_id": req_save['inventory']['weapon']['sword']['broken']['img'],
                 "title": "Потрескавшийся меч",
                 "description": "",
@@ -475,38 +474,107 @@ def chap2_6(req_save, command, intent, user_id):################################
                                   new_save=new_save, card=card)
 
 def chap2_7(req_save, command, intent, user_id):
-    gear_dict = {  # ПРОВЕРИТЬ
-        'Потрепанный шлем': ('helmet',),
-        'Потрепанный нагрудник': ('chest',),
-        'Потрепанныe ботинки': ('boots',),
-        'Потрепанныe поножи': ('shorts',),
-        'Потрескавшийся меч': ('sword',),
-    }
-    all_items_boolean = False
-    for gear, keys in gear_dict.items():
-        if gear in command:
-            if keys[0] == 'sword':
-                req_save["inventory"]['weapon'][keys[0]]["broken"]["is_gear"] = True
-                break
-            else:
-                req_save["inventory"]['armor'][keys[0]]["broken"]["is_gear"] = True
-                break
-        if req_save["inventory"]['armor'][keys[0]]["broken"]["is_gear"]:
-            all_items_boolean = True
-        else:
-            all_items_boolean = False
-    if all_items_boolean:
-        COMMANDS = ['']
-        text = alice_dict['2_chap_7']['text']
-        tts = alice_dict['2_chap_7']['tts']
-        new_save = {'accept': 'chap2_7_x', 'reject': ''}
-        return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS, text=text, tts=tts,
-                                      new_save=new_save)
+    thing = command.replace('надеть', '').replace(' ', '')
+    if command == 'надеть потрепанный шлем' or command == 'надеть потрёпанный шлем':
+        if req_save['inventory']['armor']['helmet']['broken']['is_gear']:
+            text = 'Вы уже надели этот предмет'
+            tts = 'Вы уже надели этот предмет'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        req_save['inventory']['count'] += 1
+        req_save['inventory']['armor']['helmet']['broken']['is_gear'] = True
+        text = 'Вы надели ' + req_save['inventory']['armor']['helmet']['broken']['name']
+        tts = 'Вы надели ' + req_save['inventory']['armor']['helmet']['broken']['name']
+        if req_save['inventory']['count'] == 5:
+            text = alice_dict['2_chap_7']['text']
+            tts = alice_dict['2_chap_7']['tts']
+            req_save['save'] = 'chap2_7_x'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+    elif command == 'надеть потрепанный нагрудник' or command == 'надеть потрёпанный нагрудник':
+        if req_save['inventory']['armor']['chest']['broken']['is_gear']:
+            text = 'Вы уже надели этот предмет'
+            tts = 'Вы уже надели этот предмет'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        req_save['inventory']['count'] += 1
+        req_save['inventory']['armor']['chest']['broken']['is_gear'] = True
+        text = 'Вы надели ' + req_save['inventory']['armor']['chest']['broken']['name']
+        tts = 'Вы надели ' + req_save['inventory']['armor']['chest']['broken']['name']
+        if req_save['inventory']['count'] == 5:
+            text = alice_dict['2_chap_7']['text']
+            tts = alice_dict['2_chap_7']['tts']
+            req_save['save'] = 'chap2_7_x'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+    elif command == 'надеть потрепанные поножи' or command == 'надеть потрёпанные поножи':
+        if req_save['inventory']['armor']['shorts']['broken']['is_gear']:
+            text = 'Вы уже надели этот предмет'
+            tts = 'Вы уже надели этот предмет'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        req_save['inventory']['count'] += 1
+        req_save['inventory']['armor']['shorts']['broken']['is_gear'] = True
+        text = 'Вы надели ' + req_save['inventory']['armor']['shorts']['broken']['name']
+        tts = 'Вы надели ' + req_save['inventory']['armor']['shorts']['broken']['name']
+        if req_save['inventory']['count'] == 5:
+            text = alice_dict['2_chap_7']['text']
+            tts = alice_dict['2_chap_7']['tts']
+            req_save['save'] = 'chap2_7_x'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+    elif command == 'надеть потрепанные ботинки' or command == 'надеть потрёпанные ботинки':
+        if req_save['inventory']['armor']['boots']['broken']['is_gear']:
+            text = 'Вы уже надели этот предмет'
+            tts = 'Вы уже надели этот предмет'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        req_save['inventory']['count'] += 1
+        req_save['inventory']['armor']['boots']['broken']['is_gear'] = True
+        text = 'Вы надели ' + req_save['inventory']['armor']['boots']['broken']['name']
+        tts = 'Вы надели ' + req_save['inventory']['armor']['boots']['broken']['name']
+        if req_save['inventory']['count'] == 5:
+            text = alice_dict['2_chap_7']['text']
+            tts = alice_dict['2_chap_7']['tts']
+            req_save['save'] = 'chap2_7_x'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+    elif command == 'взять потрескавшийся меч':
+        if req_save['inventory']['weapon']['sword']['broken']['is_gear']:
+            text = 'Вы уже взяли этот предмет'
+            tts = 'Вы уже взяли этот предмет'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        req_save['inventory']['count'] += 1
+        req_save['inventory']['weapon']['sword']['broken']['is_gear'] = True
+        text = 'Вы надели ' + req_save['inventory']['weapon']['sword']['broken']['name']
+        tts = 'Вы надели ' + req_save['inventory']['weapon']['sword']['broken']['name']
+        if req_save['inventory']['count'] == 5:
+            text = alice_dict['2_chap_7']['text']
+            tts = alice_dict['2_chap_7']['tts']
+            req_save['save'] = 'chap2_7_x'
+            return message_sent(text=text, tts=tts, version=version, save=req_save)
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        text = 'У вас нет этого предмета в инвентаре'
+        tts = 'У вас нет этого предмета в инвентаре'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+
+
 
 
 def chap2_7_x(req_save, command, intent, user_id):
-    text = alice_dict['2_chap_7_2']['text']
-    tts = alice_dict['2_chap_7_2']['tts']
+    req_save['health'] = 10
+    text = f'''Вы прибываете в логово Гаврила, где вас встречает один из разбойников, который сразу же нападает на вас!
+Ваши характеристики:
+Здоровье: {req_save['health']}
+Сила: {req_save['power']}
+Выносливость: 100
+Характеристики разбойника:
+Здоровье: 15
+Сила: 5
+У вас есть два варианта атаки: "Мощная" - она наносит больший урон, но требует много выносливости, и "Слабая" - она наносит меньший урон, но требует меньше выносливости. Чтобы восстановить свою выносливость, скажите "Отдохнуть".'''
+    tts = text
     text_reject = alice_dict['2_chap_7_1']['text']
     tts_reject = alice_dict['2_chap_7_1']['tts']
     new_save = {'accept': 'chap2_7_2_fight', 'reject': 'chap2_7_1'}
@@ -516,8 +584,17 @@ def chap2_7_x(req_save, command, intent, user_id):
 
 
 def chap2_7_1(req_save, command, intent, user_id):
-    text = alice_dict['2_chap_7_2']['text']
-    tts = alice_dict['2_chap_7_2']['tts']
+    req_save['health'] = 10
+    text = f'''Вы прибываете в логово Гаврила, где вас встречает один из разбойников, который сразу же нападает на вас!
+    Ваши характеристики:
+    Здоровье: {req_save['health']}
+    Сила: {req_save['power']}
+    Выносливость: 100
+    Характеристики разбойника:
+    Здоровье: 15
+    Сила: 5
+    У вас есть два варианта атаки: "Мощная" - она наносит больший урон, но требует много выносливости, и "Слабая" - она наносит меньший урон, но требует меньше выносливости. Чтобы восстановить свою выносливость, скажите "Отдохнуть".'''
+    tts = text
     new_save = {'accept': 'chap2_7_2_fight', 'reject': ''}
     return confirm_reject_handler(req_save, "chap2_7_1", intent, text_commands=intent, text=text, tts=tts,
                                   new_save=new_save)
@@ -531,20 +608,21 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
             req_save['save'] = 'chap2_7_2_fight'
             return message_sent(text=text, tts=tts, version=version, save=req_save)
         else:
+            req_save['stamina'] -= 40
             if random.random() < 0.5:
                 text = 'Вы замахиваетесь мечем, но разбойник успевает увернуться. В ответ '
                 tts = 'Вы замахиваетесь мечем, но разбойник успевает увернуться. В ответ '
                 if random.random() < 0.5:
                     text += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.\n'
                     tts += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.'
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 else:
                     text += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.\n'
                     tts += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.'
                     req_save['health'] -= 4
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 if req_save['health'] <= 5:
                     text = alice_dict['2_chap_8']['text']
                     tts = alice_dict['2_chap_8']['tts']
@@ -559,14 +637,14 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
                 if random.random() < 0.5:
                     text += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.\n'
                     tts += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.'
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 else:
                     text += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.\n'
                     tts += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.'
                     req_save['health'] -= 4
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 if req_save['health'] <= 5:
                     text = alice_dict['2_chap_8']['text']
                     tts = alice_dict['2_chap_8']['tts']
@@ -582,20 +660,21 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
             req_save['save'] = 'chap2_7_2_fight'
             return message_sent(text=text, tts=tts, version=version, save=req_save)
         else:
+            req_save['stamina'] -= 15
             if random.random() < 0.5:
                 text = 'Вы быстро поднимаете меч над головой, затем резко опускаете вниз, стараясь нанести удар по противнику, но тот уворачивается. В ответ '
                 tts = 'Вы быстро поднимаете меч над головой, затем резко опускаете вниз, стараясь нанести удар по противнику, но тот уворачивается. В ответ '
                 if random.random() < 0.5:
                     text += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.\n'
                     tts += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.'
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 else:
                     text += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.\n'
                     tts += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.'
                     req_save['health'] -= 4
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 if req_save['health'] <= 5:
                     text = alice_dict['2_chap_8']['text']
                     tts = alice_dict['2_chap_8']['tts']
@@ -610,14 +689,14 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
                 if random.random() < 0.5:
                     text += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.\n'
                     tts += 'Разбойник замахивается мечом и направляет его в вашу сторону. Однако, вы умело увернулись, и меч разбойника не пробивает вашу броню, оставляя вас невредимым.'
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 else:
                     text += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.\n'
                     tts += 'Разбойник быстро подбегает к вам, размахивая своим мечом. Он приближается так близко, что вы чувствуете его дыхание на своем лице, и внезапно он резко направляет свой меч прямо к вашей груди. Вы пытаетесь увернуться, но он умело перехватывает ваше движение и пробивает вашу броню.'
                     req_save['health'] -= 4
-                    text += 'Ваше здоровье: ' + req_save['health'] + '\n' + 'Выносливость: ' + req_save['stamina']
-                    tts += 'Ваше здоровье: ' + req_save['health'] + 'Выносливость: ' + req_save['stamina']
+                    text += 'Ваше здоровье: ' + str(req_save['health']) + '\n' + 'Выносливость: ' + str(req_save['stamina'])
+                    tts += 'Ваше здоровье: ' + str(req_save['health']) + 'Выносливость: ' + str(req_save['stamina'])
                 if req_save['health'] <= 5:
                     text = alice_dict['2_chap_8']['text']
                     tts = alice_dict['2_chap_8']['tts']
@@ -642,7 +721,7 @@ def chap2_7_2_fight(req_save, command, intent, user_id):
             req_save['save'] = 'chap2_7_2_fight'
             return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help('2_chap_7_2', version)
+        return message_help(req_save, version)
 
 
 def chap2_9(req_save, command, intent, user_id):
@@ -662,15 +741,39 @@ def chap2_10(req_save, command, intent, user_id):
 
 
 def chap2_11(req_save, command, intent, user_id):
-    text = alice_dict['2_chap_11']['text']
-    tts = alice_dict['2_chap_11']['tts']
+    text = "После всех приключений, вы легли на пол и заснули.А проснулись вы только около полудня. Похоже вы проголодались."
+    tts = 'После всех приключений, вы легли на пол и заснули.А проснулись вы только около полудня, <speaker audio="dialogs-upload/b2735f27-2dcf-4c5a-ad8c-a08d78959ad0/69818769-0997-4b1a-ab03-98918836d9fc.opus"> похоже вы проголодались.'
     new_save = {'accept': 'chap2_12', 'reject': ''}
     CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
     DB = CLUSTER["AlisaBase"]
     COLLECTION = DB["users"]
+    card = {
+        "type": "ItemsList",
+        "header": {
+            "text": text,
+        },
+        "items": [
+            {
+                "image_id": Health_icon,
+                "title": "Здоровье",
+                "description": f"{req_save['health']}",
+            },
+            {
+                "image_id": Power_icon,
+                "title": "Сила",
+                "description": f"{req_save['power']}",
+            },
+
+            {
+                "image_id": Mana_icon,
+                "title": "Мана",
+                "description": f"{req_save['mana']}",
+            },
+        ],
+    }
     COLLECTION.update_one({"id": user_id}, {"$set": {"name": req_save['name'], "save": 'chap2_11', "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
-    return confirm_reject_handler(req_save, "chap2_11", intent, text_commands=intent, text=text, tts=tts,
-                                  new_save=new_save)
+    return confirm_reject_handler_with_card(req_save, "chap2_11", intent, text_commands=intent, text=text, tts=tts,
+                                  new_save=new_save, card=card)
 
 
 def chap2_12(req_save, command, intent, user_id):
@@ -692,6 +795,10 @@ def chap2_13_x(req_save, command, intent, user_id):
         tts = alice_dict['2_chap_13_2']['tts']
         req_save['save'] = 'chap2_13_2_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        req_save['save'] = 'chap2_13_x'
+        return message_help(req_save, version)
+
 
 
 def chap2_13_2_x(req_save, command, intent, user_id):
@@ -700,6 +807,7 @@ def chap2_13_2_x(req_save, command, intent, user_id):
     text_reject = alice_dict['2_chap_13_2_2']['text']
     tts_reject = alice_dict['2_chap_13_2_2']['tts']
     new_save = {'accept': 'chap2_14', 'reject': 'chap2_14'}
+    req_save['save'] = 'chap2_13_2_1'
     return confirm_reject_handler(req_save, "chap2_13_2_x.FRY", intent, text_commands=intent, text=text, tts=tts,
                                   reject_enable=True, reject_commands=intent, text_reject=text_reject,
                                   tts_reject=tts_reject, new_save=new_save, reject_command="chap2_13_2_x.NOT_FRY")
@@ -718,7 +826,8 @@ def chap2_15_x(req_save, command, intent, user_id):
     tts = alice_dict['2_chap_15_x']['tts']
     text_reject = alice_dict['2_chap_15_1x']['text']
     tts_reject = alice_dict['2_chap_15_1x']['tts']
-    new_save = {'accept': 'chap2_14', 'reject': 'chap2_14'}
+    new_save = {'accept': 'chap2_15_x_x', 'reject': 'chap2_15_x_x'}
+    req_save['save'] = 'chap2_15_x'
     return confirm_reject_handler(req_save, "chap2_15_x.TOUCH", intent, text_commands=intent, text=text, tts=tts,
                                   reject_enable=True, reject_commands=intent, text_reject=text_reject,
                                   tts_reject=tts_reject, new_save=new_save, reject_command="chap2_15_x.NOT_TOUCH")
@@ -730,6 +839,7 @@ def chap2_15_x_x(req_save, command, intent, user_id):
     text_reject = alice_dict['2_chap_15_x_1x']['text']
     tts_reject = alice_dict['2_chap_15_x_1x']['tts']
     new_save = {'accept': 'chap2_16_x', 'reject': 'chap2_16_x'}
+    req_save['save'] = 'chap2_15_x_x'
     return confirm_reject_handler(req_save, "chap2_15_x_x.BLOW", intent, text_commands=intent, text=text, tts=tts,
                                   reject_enable=True, reject_commands=intent, text_reject=text_reject,
                                   tts_reject=tts_reject, new_save=new_save, reject_command="chap2_15_x_x.NOT_BLOW")
@@ -739,6 +849,7 @@ def chap2_16_x(req_save, command, intent, user_id):
     fire = req_save['other']['runes']['fire']
     terra = req_save['other']['runes']['earth']
     if "chap2_16_x.WATER" in intent:
+        req_save['other']['runes']['water'] = True
         if water:
             text = 'Вы уже зажгли эту руну! Для продолжения вы можете использовать руну "Земля" или "Огонь"'
             tts = 'Вы уже зажгли эту руну! Для продолжения вы можете использовать руну "Земля" или "Огонь"'
@@ -764,11 +875,12 @@ def chap2_16_x(req_save, command, intent, user_id):
             req_save['save'] = 'chap2_16_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_16_x.FIRE" in intent:
-        text = alice_dict['2_chap_16_3x']
-        tts = alice_dict['2_chap_16_3x']
+        text = alice_dict['2_chap_16_3x']['text']
+        tts = alice_dict['2_chap_16_3x']['tts']
         req_save['save'] = 'chap2_16_3x_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     elif "chap2_16_x.EARTH" in intent:
+        req_save['other']['runes']['earth'] = True
         if terra:
             text = 'Вы уже зажгли эту руну! Для продолжения вы можете использовать руну "Вода" или "Огонь"'
             tts = 'Вы уже зажгли эту руну! Для продолжения вы можете использовать руну "Вода" или "Огонь"'
@@ -794,7 +906,88 @@ def chap2_16_x(req_save, command, intent, user_id):
             req_save['save'] = 'chap2_16_x'
         return message_sent(text=text, tts=tts, version=version, save=req_save)
     else:
-        return message_help(req_save, version)
+        if not water and not terra and not fire:
+            text = 'Какую руну использовать далее - "Воды", "Земли" или "Огня".'
+            tts = text
+            buttons = [{
+                    "title": 'Вода',
+                    "hide": True
+                },
+                {
+                    "title": "Земля",
+                    "hide": True
+                },
+                {
+                    "title": "Огонь",
+                    "hide": True
+                }]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        if not water and not terra and fire:
+            text = 'Какую руну использовать далее - "Воды", "Земли".'
+            tts = text
+            buttons = [{
+                    "title": 'Вода',
+                    "hide": True
+                },
+                {
+                    "title": "Земля",
+                    "hide": True
+                }]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        elif not water and terra and not fire:
+            text = 'Какую руну использовать далее - "Воды", "Огня"'
+            tts = text
+            buttons = [{
+                    "title": 'Вода',
+                    "hide": True
+                },
+                {
+                    "title": "Огонь",
+                    "hide": True
+                }]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        elif water and not terra and not fire:
+            text = 'Какую руну использовать далее - "Земли", "Огня"'
+            tts = text
+            buttons = [{
+                    "title": 'Земля',
+                    "hide": True
+                },
+                {
+                    "title": "Огонь",
+                    "hide": True
+                }]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        elif water and terra and not fire:
+            text = 'Три руны зажжены. Для продолжения зажгите руну Огня, сказав "Огонь"'
+            tts = text
+            buttons = [
+                {
+                    "title": "Огонь",
+                    "hide": True
+                }
+            ]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        elif water and not terra and fire:
+            text = 'Три руны зажжены. Для продолжения зажгите руну Земли, сказав "Земля"'
+            tts = text
+            buttons = [
+                {
+                    "title": "Земля",
+                    "hide": True
+                }
+            ]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
+        elif not water and terra and fire:
+            text = 'Три руны зажжены. Для продолжения зажгите руну Воды, сказав "Вода"'
+            tts = text
+            buttons = [
+                {
+                    "title": "Вода",
+                    "hide": True
+                }
+            ]
+            return message_sent(text=text, tts=tts, save=req_save, version=version, buttons=buttons)
 
 
 def chap2_16_3x_x(req_save, command, intent, user_id):
@@ -806,6 +999,7 @@ def chap2_16_3x_x(req_save, command, intent, user_id):
     elif "chap2_16_3x_x.RUN" in intent:
         water = req_save['other']['runes']['water']
         terra = req_save['other']['runes']['earth']
+        req_save['other']['runes']['fire'] = True
         if water and terra:
             text = alice_dict['2_chap_16_3x_x']['text'] + '''Все руны загораются, но никаких изменений не происходит.
              Прикоснуться к стене?'''
@@ -824,6 +1018,10 @@ def chap2_16_3x_x(req_save, command, intent, user_id):
             text = 'Вторая руна зажжена! Использовать "Землю" или "Воду".'
             tts = 'Вторая руна зажжена! Использовать "Землю" или "Воду".'
             req_save['save'] = 'chap2_16_x'
+        return message_sent(text=text, tts=tts, version=version, save=req_save)
+    else:
+        text = 'В лесу вы увидели огненного скелета. Для продолжения вы можете "Убежать в пещеру" или "Сразиться с монстром".'
+        tts = text
         return message_sent(text=text, tts=tts, version=version, save=req_save)
 
 
@@ -873,14 +1071,12 @@ def chap2_20(req_save, command, intent, user_id):
 
 
 def chap2_21(req_save, command, intent, user_id):
-    COMMANDS_1 = ['']
-    COMMANDS_2 = ['']
     text_reject = '''Отказы не принимаются!
-"Открытие магического потенциала требует осознанности и сосредоточенности. Важно научиться контролировать свои мысли и эмоции, чтобы не допустить их разрушительного влияния на магические практики.
+"Открытие магического потенциала требует осознанности и сосредоточенности. Важно научиться контролировать свои мысли и эмоции.
 
- Вдохи играют важную роль в открытии магического потенциала, так как они помогают контролировать энергию в теле. Начни с глубокого дыхания, вдыхая и выдыхая медленно и равномерно. Сосредоточься на своем дыхании, постепенно осознавая свое тело.
+Начни с глубокого дыхания, вдыхая и выдыхая медленно и равномерно. Сосредоточься на своем дыхании, постепенно осознавая свое тело.
 
- Глаза являются важным инструментом при открытии магического потенциала. Закрой глаза и представь себе живую картину, используя свою воображение. Визуализируй, как магическая энергия проникает в твои руки и тело. Руками ты можешь контролировать магическую энергию. Сосредоточься на своих руках, представив их как инструмент для магической работы. Попробуй выполнить медитативные движения, используя свои руки, чтобы улучшить свою концентрацию и контроль над энергией."
+Глаза являются важным инструментом при открытии магического потенциала. Закрой глаза и представь себе живую картину, используя свою воображение. Визуализируй, как магическая энергия проникает в твои руки и тело. Руками ты можешь контролировать магическую энергию. Сосредоточься на своих руках, представив их как инструмент для магической работы. Попробуй выполнить медитативные движения, используя свои руки, чтобы улучшить свою концентрацию и контроль над энергией."
 
 "Повтори за мной: глубоко вдохни, закрой глаза и представь, как магическая энергия проникает в твои руки и тело, выдыхай. Сделай вдох и сосредоточься на своих руках, представив их как инструмент для магической работы, выдыхай."'''
     tts_reject = '''Отказы не принимаются!
@@ -891,9 +1087,9 @@ def chap2_21(req_save, command, intent, user_id):
 <speaker audio="dialogs-upload/b2735f27-2dcf-4c5a-ad8c-a08d78959ad0/4ed27bbe-aea0-4654-9710-6e92c518e610.opus">'''
 
     text = '''
-"Открытие магического потенциала требует осознанности и сосредоточенности. Важно научиться контролировать свои мысли и эмоции, чтобы не допустить их разрушительного влияния на магические практики.
+"Открытие магического потенциала требует осознанности и сосредоточенности. Важно научиться контролировать свои мысли и эмоции.
 
-Вдохи играют важную роль в открытии магического потенциала, так как они помогают контролировать энергию в теле. Начни с глубокого дыхания, вдыхая и выдыхая медленно и равномерно. Сосредоточься на своем дыхании, постепенно осознавая свое тело.
+Начни с глубокого дыхания, вдыхая и выдыхая медленно и равномерно. Сосредоточься на своем дыхании, постепенно осознавая свое тело.
 
 Глаза являются важным инструментом при открытии магического потенциала. Закрой глаза и представь себе живую картину, используя свою воображение. Визуализируй, как магическая энергия проникает в твои руки и тело. Руками ты можешь контролировать магическую энергию. Сосредоточься на своих руках, представив их как инструмент для магической работы. Попробуй выполнить медитативные движения, используя свои руки, чтобы улучшить свою концентрацию и контроль над энергией."
 
@@ -905,9 +1101,9 @@ def chap2_21(req_save, command, intent, user_id):
 
 <speaker audio="dialogs-upload/b2735f27-2dcf-4c5a-ad8c-a08d78959ad0/4ed27bbe-aea0-4654-9710-6e92c518e610.opus">'''
     new_save = {'accept': 'chap2_22', 'reject': 'chap2_22'}
-    return confirm_reject_handler(req_save, command, intent, text_commands=COMMANDS_1, text=text, tts=tts,
-                                  reject_enable=True, reject_commands=COMMANDS_2, text_reject=text_reject,
-                                  tts_reject=tts_reject, new_save=new_save)
+    return confirm_reject_handler(req_save, "chap2_21.START", intent, text_commands=intent, text=text, tts=tts,
+                                  reject_enable=True, reject_commands=intent, text_reject=text_reject,
+                                  tts_reject=tts_reject, new_save=new_save, reject_command="chap2_21.NOT_START")
 
 
 def chap2_22(req_save, command, intent, user_id):
@@ -919,3 +1115,44 @@ def chap2_22(req_save, command, intent, user_id):
 Поздравляем, с прохождением пролога! Открыта новая команда "Меню", тут ты сможешь посмотреть свои квесты и открытые способности и многое другое! Для продолжения скажи "Меню".'''
     req_save['save'] = 'chap2_23'
     return message_sent(text=text, tts=tts, version=version, save=req_save)
+
+
+def chap2_23(req_save, command, intent, user_id):
+    text = '''Чтобы узнать команды навыка, скажи "Посмотреть команды".
+    
+Для просмотра списка квестов, скажите "Открыть книгу квестов"'''
+    tts = '''Чтобы узнать команды навыка, скажи "Посмотреть команды".
+    
+Для просмотра списка квестов, скажите "Открыть книгу квестов" Текущие квесты: Отправиться на поиски приключений sil <[200]> Открыть магический потенциал. sil <[300]> Для подробного описания квеста, произнесите его название!'''
+    req_save['save'] = 'Home'
+    req_save['other']['Menu'] = True
+    req_save['chapter'] = ''
+    CLUSTER = MongoClient("mongodb+srv://Alisa:pasword@alisa.cayawc6.mongodb.net/?retryWrites=true&w=majority")
+    DB = CLUSTER["AlisaBase"]
+    COLLECTION = DB["users"]
+    COLLECTION.update_one({"id": user_id}, {
+        "$set": {"name": req_save['name'], "save": req_save['save'], "chapter": req_save['chapter'],
+                 "health": req_save["health"], "power": req_save["power"], "other": req_save["other"]}})
+    card = {
+        "type": "ItemsList",
+        "header": {
+            "text": text,
+        },
+        "items": [
+            {
+                "image_id": "1540737/752a35762b13e455b445",
+                "title": "Отправиться на поиски приключений",
+                "description": "Захватывающие приключения ждут вас!",
+            },
+
+            {
+                "image_id": "213044/87de8dcc08f0eee9426b",
+                "title": "Открыть магический потенциал",
+                "description": "Магия - это очень круто",
+            },
+        ],
+        "footer": {
+            "text": "Для подробного описания квеста, произнесите его название!",
+        }
+    }
+    return message_sent_with_card(text=text, tts=tts, save=req_save, version=version, card=card)
